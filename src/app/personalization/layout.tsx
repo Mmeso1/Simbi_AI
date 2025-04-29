@@ -15,15 +15,20 @@ export default function PersonalizationLayout({
       {/* Progress Indicator */}
       <ProgressBar progress={percent} />
 
-      <div className="flex items-start w-3/4 justify-center h-[70vh] shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] mx-auto mt-16 rounded-4xl">
-        <section className="flex flex-1 rounded-l-4xl h-full bg-[#7A5FFF] p-6 items-center justify-center">
-          <div className="text-left text-white font-medium text-[32px] leading-[40px] tracking-[-0.03em] max-w-[80%]">
+      <div className="flex w-3/4 min-h-[70vh] mx-auto mt-16 overflow-hidden rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)]">
+        <section className="flex flex-1 bg-[#7A5FFF] items-center">
+          <div className="mx-auto max-w-[50%] text-white font-medium text-[32px] leading-[40px] tracking-[-0.03em]">
             Learning Preferences
           </div>
         </section>
 
         {/* main content */}
-        <main className="flex-2 bg-white p-6 ">{children}</main>
+        <section className="flex-2 bg-white p-6 relative">
+          <main>{children}</main>
+          <button className="text-white text-xl bg-[#7A5FFF] px-7 py-3 rounded-lg absolute bottom-14 right-14">
+            Next
+          </button>
+        </section>
       </div>
     </div>
   );
