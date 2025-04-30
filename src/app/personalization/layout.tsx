@@ -21,7 +21,7 @@ export default function PersonalizationLayout({
       {/* Progress Indicator */}
       <ProgressBar progress={percent} />
 
-      <div className="flex w-3/4 min-h-[70vh] mx-auto mt-16 overflow-hidden rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)]">
+      <div className="flex w-3/4 min-h-[70vh] mx-auto my-16 overflow-hidden rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)]">
         <section className="flex flex-1 bg-[#7A5FFF] items-center">
           <div className="mx-auto max-w-[50%] text-white font-medium text-[32px] leading-[40px] tracking-[-0.03em]">
             {section.title}
