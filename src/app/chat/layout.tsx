@@ -52,6 +52,12 @@ export default function ChatLayout({
               <img src="/chatbot/library.svg" alt="library icon" />
               <span>Library</span>
             </button>
+            <Link
+              href={"/"}
+              className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full"
+            >
+              <span>Back to study plan</span>
+            </Link>
           </div>
         </section>
 
@@ -80,7 +86,9 @@ export default function ChatLayout({
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-white">{children}</main>
+        <main className="flex flex-1 items-center bg-white -mb-40">
+          {children}
+        </main>
       </div>
     </div>
   );
