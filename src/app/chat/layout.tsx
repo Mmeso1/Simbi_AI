@@ -1,15 +1,24 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useChatStore } from "@/store/chatStore";
 
 export default function ChatLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { display } = useChatStore();
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-[250px] bg-[#1F125C] p-5 text-white">
+      <aside
+        className="fixed top-0 left-0 
+          h-screen w-[250px] 
+          bg-[#1F125C] p-5 text-white 
+          overflow-auto"
+      >
         <div className="top-bar flex items-center justify-between mt-4">
           <Image
             src="/chatbot/sidebar-toggler.svg"
@@ -75,20 +84,38 @@ export default function ChatLayout({
       </aside>
 
       {/* Main Area */}
-      <div className="flex flex-col flex-1 pt-12 px-12">
+      <div className=" ml-[250px] flex flex-col flex-1 pt-12 px-12 ">
         {/* Header */}
-        <header className="h-[60px] p-4 flex items-center justify-between">
-          <img
-            src="/chatbot/pfp.png"
-            alt="Profile"
-            className="rounded-[50%] w-15 h-15 object-cover ml-auto"
-          />
+        <header className="h-[60px] p-4 flex items-center">
+          <div className="flex items-center gap-4 ml-auto">
+            {display && (
+              <>
+                <Image
+                  src="/chatbot/share.svg"
+                  width={20}
+                  height={20}
+                  alt="share icon"
+                />
+                <Image
+                  src="/chatbot/elipsis.svg"
+                  width={20}
+                  height={20}
+                  alt="elipsis"
+                />
+              </>
+            )}
+            <img
+              src="/chatbot/pfp.png"
+              alt="Profile"
+              className={`rounded-full ${
+                display ? "w-10 h-10" : "w-15 h-15"
+              } object-cover`}
+            />
+          </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex flex-1 items-center bg-white -mb-40">
-          {children}
-        </main>
+        <main className="flex-1 flex items-center bg-white">{children}</main>
       </div>
     </div>
   );

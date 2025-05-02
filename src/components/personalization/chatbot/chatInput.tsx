@@ -2,12 +2,13 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useChatStore } from "@/store/chatStore";
 
 interface ChatInputProps {
   display?: boolean;
 }
 
-export default function ChatInput(display: ChatInputProps) {
+export default function ChatInput({ display }: ChatInputProps) {
   const bubbleOptions = ["Search", "Generate", "Create"];
   const [inputValue, setInputValue] = useState("");
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -15,9 +16,13 @@ export default function ChatInput(display: ChatInputProps) {
   };
 
   const router = useRouter();
+  const { setPrompt } = useChatStore();
 
+  const handleSend = () => {
+    setPrompt(inputValue);
+  };
   return (
-    <div className="w-full px-4 bg-[#FDFDFF]">
+    <div className={`w-full px-4 ${display ? "-mb-40" : " mb-0"}`}>
       {/* Heading and Simbi image */}
       {display && (
         <div className="w-full max-w-3xl text-center ml-50">
@@ -30,7 +35,11 @@ export default function ChatInput(display: ChatInputProps) {
       )}
 
       {/* Input bar */}
-      <div className="relative flex flex-col justify-center w-full h-[250px] bg-white border border-[#7A5FFF] rounded-2xl px-6">
+      <div
+        className={`relative flex flex-col justify-center w-full ${
+          display ? "h-[250px]" : "h-[200px]"
+        } bg-white border border-[#7A5FFF] rounded-2xl px-6`}
+      >
         <textarea
           placeholder="Ask anything"
           onChange={handleInputChange}
@@ -73,6 +82,7 @@ export default function ChatInput(display: ChatInputProps) {
                     inputValue.trim().slice(0, 20)
                   );
                   router.push(`/chat/${chatID}`);
+                  handleSend();
                 }}
                 className="text-[#7A5FFF] font-extralight cursor-pointer"
               >
