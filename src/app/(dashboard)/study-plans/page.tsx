@@ -137,7 +137,7 @@ export default function StudyPlanPage() {
           >
             <Image
               src="/DashboardIcons/filterIcon.svg"
-              alt="Filter image"
+              alt="Filter image icon"
               height={10.47}
               width={11.11}
               className=""
