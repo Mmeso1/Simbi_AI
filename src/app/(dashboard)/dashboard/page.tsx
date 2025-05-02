@@ -34,6 +34,7 @@ export default function DashboardPage() {
     "November",
     "December",
   ];
+
   // Generate Study Plan Pop up
   const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
   const [toggleProductivity, setToggleProductivity] = useState<string>("Week"); // for productivity scorecard section
