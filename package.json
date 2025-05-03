@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@tailwindcss/oxide": "^4.1.5",
     "@types/react-big-calendar": "^1.16.1",
     "date-fns": "^4.1.0",
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-big-calendar": "^1.18.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
     "recharts": "^2.15.3",
+    "zod": "^3.24.3",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
@@ -28,5 +32,10 @@
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "lightningcss-darwin-x64-darwin": "^1.19.0",
+    "lightningcss-linux-x64-gnu": "^1.19.0",
+    "lightningcss-win32-x64-msvc": "^1.19.0"
   }
 }

@@ -3,6 +3,7 @@ import { usePersonalizationStore } from "@/store/usePersonalization";
 import { sections } from "@/data/personalizationData";
 // import Image from "next/image";
 import ProgressBar from "@/components/personalization/ProgressBar";
+import Image from "next/image";
 
 export default function PersonalizationLayout({
   children,
@@ -16,7 +17,7 @@ export default function PersonalizationLayout({
   return (
     <div className="bg-[#FDFDFF] px-10 mt-10">
       {/* Logo */}
-      <img src="/logo.svg" className="ml-27 mb-10" alt="logo" />
+      <Image src="/logo.svg" className="ml-27 mb-10" alt="logo" />
 
       {/* Progress Indicator */}
       <ProgressBar progress={percent} />
