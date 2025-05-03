@@ -1,14 +1,13 @@
-'use client';
-import Image from 'next/image';
-import { Button } from '@/components/telegram/Button';
-import { Baloo_Thambi_2 } from 'next/font/google';
+"use client";
+import Image from "next/image";
+import { Button } from "@/components/telegram/Button";
+// import { Baloo_Thambi_2 } from 'next/font/google';
 
-import React from 'react'
+import React from "react";
 
 const TelegramConnect = () => {
   return (
-    <section className="w-full max-w-[500px] mx-auto p-6 sm:p-8 rounded-[30px] linear-gradient bg-[#957FFF] relative shadow-xl overflow-hidden border border-gray-200 bg-[#957FFF]">
-      
+    <section className="w-full max-w-[500px] mx-auto p-6 sm:p-8 rounded-[30px] linear-gradient relative shadow-xl overflow-hidden border border-gray-200 bg-[#957FFF]">
       {/* Background pattern inside the box only */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
         <div className="w-full h-full bg-[url('/DashboardIcons/teleg.png') ] bg-cover" />
@@ -32,10 +31,12 @@ const TelegramConnect = () => {
           Earn $SIMBI tokens, unlock NFT badges, and sync your study progress.
         </p>
 
-        <Button onClick={() => alert('Connecting to Telegram...')}>Continue</Button>
+        <Button onClick={() => alert("Connecting to Telegram...")}>
+          Continue
+        </Button>
       </div>
     </section>
   );
 };
 
-export default TelegramConnect
+export default TelegramConnect;
