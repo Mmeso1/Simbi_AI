@@ -30,6 +30,8 @@ export default function ChatInput({ display }: ChatInputProps) {
             src="/chatbot/text.svg"
             alt="talk to simbi text"
             className="mb-6"
+            width={270}
+            height={270}
           />
         </div>
       )}

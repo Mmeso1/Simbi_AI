@@ -54,11 +54,21 @@ export default function ChatLayout({
 
           <div className="menu-options space-y-5">
             <button className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full">
-              <Image src="/chatbot/explore.svg" alt="explore icon" />
+              <Image
+                src="/chatbot/explore.svg"
+                alt="explore icon"
+                width={22}
+                height={22}
+              />
               <span>Explore Simbi</span>
             </button>
             <button className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full">
-              <Image src="/chatbot/library.svg" alt="library icon" />
+              <Image
+                src="/chatbot/library.svg"
+                alt="library icon"
+                width={22}
+                height={22}
+              />
               <span>Library</span>
             </button>
             <Link
@@ -107,6 +117,8 @@ export default function ChatLayout({
             <Image
               src="/chatbot/pfp.png"
               alt="Profile"
+              width={40}
+              height={40}
               className={`rounded-full ${
                 display ? "w-10 h-10" : "w-15 h-15"
               } object-cover`}
