@@ -26,7 +26,7 @@ export default function StudyCourses() {
     },
   ];
   return (
-    <div className="grid md:grid-cols-2 ">
+    <>
       {courses.map((course) => (
         <div
           className="flex bg-graytime py-2 px-4 rounded-[12px] items-center justify-between w-[242px] gap-5"
@@ -52,6 +52,6 @@ export default function StudyCourses() {
           />
         </div>
       ))}
-    </div>
+    </>
   );
 }
