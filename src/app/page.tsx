@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import '@/app/globals.css';
+import "@/app/globals.css";
 import React from "react";
 
 export default function Home() {
@@ -9,7 +9,12 @@ export default function Home() {
       {/* Header */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
         <div className="flex items-center space-x-2">
-          <Image src="/images/logo.png" alt="Simbi Logo" width={100} height={75} />
+          <Image
+            src="/images/logo.png"
+            alt="Simbi Logo"
+            width={100}
+            height={75}
+          />
           {/* <span className="font-semibold text-lg">SIMBI</span> */}
         </div>
         <button className="text-sm">Language</button>
@@ -17,33 +22,71 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="text-center py-16 px-4">
-        <Image src="/images/heroe.png" alt="Simbi Character" width={150} height={150} className="mx-auto" />
-        <h1 className="text-2xl font-semibold mt-4">Meet Simbi!<br />Your AI Study Buddy.</h1>
+        <Image
+          src="/images/heroe.png"
+          alt="Simbi Character"
+          width={150}
+          height={150}
+          className="mx-auto"
+        />
+        <h1 className="text-2xl font-semibold mt-4">
+          Meet Simbi!
+          <br />
+          Your AI Study Buddy.
+        </h1>
         <p className="mt-2 text-sm text-gray-600 max-w-md mx-auto">
-          Simbi helps you plan, stay motivated and learn effectively with a touch of personality
+          Simbi helps you plan, stay motivated and learn effectively with a
+          touch of personality
         </p>
         <div className="mt-4 space-x-2">
-          <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">Get Started</button>
-          <button className="text-sm border px-4 py-2 rounded-md">I Have an Account</button>
+          <button
+            className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm cursor-pointer transform transition ease-out duration-200 
+  hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            Get Started
+          </button>
+          <button
+            className="text-sm border px-4 py-2 rounded-md cursor-pointer transform transition ease-out duration-200 
+  hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            I Have an Account
+          </button>
         </div>
       </section>
 
       {/* Features */}
       <section className="grid grid-cols-4 md:grid-cols-1 gap-4 px-6 py-12">
-        {['Smart Study', 'Accountability', 'Resources', 'Rewards'].map((title, i) => (
-          <div key={i} className="bg-white shadow-md rounded-lg p-4 text-center">
-            <Image src={`/feature-${i + 1}.png`} alt={title} width={150} height={100} className="mx-auto" />
-            <h3 className="font-semibold mt-2">{title}</h3>
-            <p className="text-xs text-gray-500 mt-1">
-              Description for {title.toLowerCase()}.
-            </p>
-          </div>
-        ))}
+        {["Smart Study", "Accountability", "Resources", "Rewards"].map(
+          (title, i) => (
+            <div
+              key={i}
+              className="bg-white shadow-md rounded-lg p-4 text-center"
+            >
+              <Image
+                src={`/feature-${i + 1}.png`}
+                alt={title}
+                width={150}
+                height={100}
+                className="mx-auto"
+              />
+              <h3 className="font-semibold mt-2">{title}</h3>
+              <p className="text-xs text-gray-500 mt-1">
+                Description for {title.toLowerCase()}.
+              </p>
+            </div>
+          )
+        )}
       </section>
 
       {/* Simbi is here for */}
       <section className="bg-white py-12 px-6 text-center">
-        <Image src="/simbi-2.png" alt="Simbi Character" width={100} height={100} className="mx-auto" />
+        <Image
+          src="/simbi-2.png"
+          alt="Simbi Character"
+          width={100}
+          height={100}
+          className="mx-auto"
+        />
         <h2 className="text-xl font-semibold mt-4">Simbi is here for</h2>
         <ul className="mt-4 space-y-2 text-sm text-gray-700 max-w-md mx-auto">
           <li>Self-learners & exam preppers who want structure</li>
@@ -58,15 +101,23 @@ export default function Home() {
         <h2 className="text-xl font-semibold">Why Simbi works</h2>
         <div className="grid grid-cols-4 md:grid-cols-1 gap-6 mt-8">
           {[
-            'All That Understands You',
-            'A Study Buddy With Real Personality',
-            'Web3 Rewards',
-            'Everywhere You Want',
+            "All That Understands You",
+            "A Study Buddy With Real Personality",
+            "Web3 Rewards",
+            "Everywhere You Want",
           ].map((title, i) => (
             <div key={i} className="bg-white rounded-lg p-4 shadow text-sm">
-              <Image src={`/icon-${i + 1}.png`} alt={title} width={32} height={32} className="mx-auto mb-2" />
+              <Image
+                src={`/icon-${i + 1}.png`}
+                alt={title}
+                width={32}
+                height={32}
+                className="mx-auto mb-2"
+              />
               <h3 className="font-semibold mb-1">{title}</h3>
-              <p className="text-gray-600">Short explanation about {title.toLowerCase()}.</p>
+              <p className="text-gray-600">
+                Short explanation about {title.toLowerCase()}.
+              </p>
             </div>
           ))}
         </div>
@@ -76,25 +127,38 @@ export default function Home() {
       <section className="text-center px-6 py-12">
         <h2 className="text-lg font-semibold">Real talk from Simbi</h2>
         <div className="bg-white rounded-md shadow p-6 mt-4 max-w-md mx-auto">
-          <p className="text-sm text-gray-700">"You missed your flashcards again? Your rewards are screaming for mercy. Open the app before I start grading your day."</p>
+          <p className="text-sm text-gray-700">
+            "You missed your flashcards again? Your rewards are screaming for
+            mercy. Open the app before I start grading your day."
+          </p>
           <p className="mt-2 font-bold text-purple-800">- Simbi</p>
         </div>
-        <Image src="/simbi-3.png" alt="Simbi character" width={100} height={100} className="mx-auto mt-6" />
-        <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md mt-4 text-sm">Get Started in 60 Seconds</button>
+        <Image
+          src="/simbi-3.png"
+          alt="Simbi character"
+          width={100}
+          height={100}
+          className="mx-auto mt-6"
+        />
+        <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md mt-4 text-sm">
+          Get Started in 60 Seconds
+        </button>
       </section>
 
       {/* Getting Started Steps */}
       <section className="px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
           {[
-            'Create your free account',
-            'Tell Simbi what you’re studying',
-            'Get a personalized plan with built-in accountability',
-            'Use the Telegram Bot for on-the-go support',
-            'Earn crypto rewards and unlock custom NFT badges',
+            "Create your free account",
+            "Tell Simbi what you’re studying",
+            "Get a personalized plan with built-in accountability",
+            "Use the Telegram Bot for on-the-go support",
+            "Earn crypto rewards and unlock custom NFT badges",
           ].map((step, i) => (
             <div key={i} className="bg-[#F7F6FD] p-4 rounded-lg shadow">
-              <p><span className="font-bold">{i + 1}.</span> {step}</p>
+              <p>
+                <span className="font-bold">{i + 1}.</span> {step}
+              </p>
             </div>
           ))}
         </div>
@@ -102,11 +166,17 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="text-center py-12">
-        <h2 className="text-xl font-semibold">Study Smarter. Stay on track. Get Roasted (lovingly)</h2>
+        <h2 className="text-xl font-semibold">
+          Study Smarter. Stay on track. Get Roasted (lovingly)
+        </h2>
         <p className="text-sm mt-2">Sign up and get acquainted with Simbi!</p>
         <div className="mt-4 space-x-2">
-          <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">Get Started</button>
-          <button className="text-sm border px-4 py-2 rounded-md">I Have an Account</button>
+          <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+            Get Started
+          </button>
+          <button className="text-sm border px-4 py-2 rounded-md">
+            I Have an Account
+          </button>
         </div>
       </section>
 
@@ -147,8 +217,12 @@ export default function Home() {
           </div>
 
           <div className="mt-4 md:mt-0">
-            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">Get Started</button>
-            <button className="block mt-2 text-sm border px-4 py-2 rounded-md">I Have an Account</button>
+            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+              Get Started
+            </button>
+            <button className="block mt-2 text-sm border px-4 py-2 rounded-md">
+              I Have an Account
+            </button>
           </div>
         </div>
       </footer>
