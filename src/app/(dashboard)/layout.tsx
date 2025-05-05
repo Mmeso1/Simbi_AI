@@ -17,7 +17,7 @@ export default function DashboardLayout({
     <main className="flex">
       <nav className="w-[222px] pt-[59px] px-[27px] bg-darkblue min-h-screen">
         {/* The reusable dashboard component on the left */}
-        <div className="flex w-[148.96px] gap-[4.96px] items-center justify-center">
+        <div className="flex w-[148.96px] gap-[4.96px] items-center justify-center cursor-pointer hover:scale-110">
           <Image
             src="/DashboardIcons/mini-logo.svg"
             alt="an Image of simbi"
@@ -25,7 +25,7 @@ export default function DashboardLayout({
             height={41}
           />
           <h3
-            className={`${balooThambi2.className} text-white  font-bold text-[2rem]`}
+            className={`${balooThambi2.className} text-white  font-bold text-[2rem] `}
           >
             SIMBI
           </h3>
