@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "export NODE_OPTIONS=--max_old_space_size=8192 && next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm i --legacy-peer-deps",
     "lint": "next lint"
   },
   "dependencies": {
