@@ -32,6 +32,14 @@
   --color-graybg: rgba(247, 248, 248, 1);
   --color-lightbluebg: rgba(228, 223, 255, 0.5);
   --color-bluebg: rgba(201, 192, 212, 1);
+  --color-softLightBlue: rgba(233, 232, 255, 1);
+  --color-bgwhite: rgba(250, 250, 250, 1);
+  --color-progress: rgba(213, 212, 255, 1);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: gray;
 }
 
 .blue {
