@@ -2,6 +2,7 @@
 import Image from "next/image";
 import "@/app/globals.css";
 import React from "react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -24,7 +25,7 @@ export default function Home() {
         <div className="flex flex-row">
           <div className="flex w-2/5">
             <Image
-              src="/images/hero.png"
+              src="/images/hero.svg"
               alt="Simbi Character"
               width={250}
               height={250}
@@ -43,12 +44,16 @@ export default function Home() {
               touch of personality
             </p>
             <div className="mt-4 space-x-2">
-              <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
-                Get Started
-              </button>
-              <button className="text-sm border px-4 py-2 rounded-md">
-                I Have an Account
-              </button>
+              <Link href="/auth/signin">
+                <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+                  Get Started
+                </button>
+              </Link>
+              <Link href="/auth/signup">
+                <button className="text-sm border px-4 py-2 rounded-md">
+                  I Have an Account
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -59,24 +64,24 @@ export default function Home() {
         {[
           {
             title: "Smart Study",
-            image: "/images/frame1.png",
+            image: "/images/frame1.svg",
             description:
               "Plan your studies with personalized guidance from Simbi.",
           },
           {
             title: "Accountability",
-            image: "/images/frame2.png",
+            image: "/images/frame2.svg",
             description:
               "Stay on track with reminders and motivational nudges.",
           },
           {
             title: "Resources",
-            image: "/images/frame3.png",
+            image: "/images/frame3.svg",
             description: "Get access to curated learning materials.",
           },
           {
             title: "Rewards",
-            image: "/images/frame4.png",
+            image: "/images/frame4.svg",
             description: "Earn crypto and NFTs for reaching your study goals.",
           },
         ].map(({ title, image, description }, i) => (
@@ -101,7 +106,7 @@ export default function Home() {
       <section className="bg-white py-12 px-6 text-center flex flex-row">
         <div className="flex w-1/2">
           <Image
-            src="/images/simbi-2.png"
+            src="/images/simbi-2.svg"
             alt="Simbi Character"
             width={200}
             height={200}
