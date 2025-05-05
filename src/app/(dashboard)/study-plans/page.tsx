@@ -7,15 +7,10 @@ import EmptyStudyPlan from "@/components/study-plans/EmptyStudyPlan";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Inter } from "next/font/google";
+
 import StudyForm from "@/components/study-plans/StudyForm";
 import { useRouter } from "next/navigation";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
+import { inter } from "@/lib/fonts";
 
 // Fake Type for api mockup/ schema
 

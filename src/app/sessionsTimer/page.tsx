@@ -64,6 +64,8 @@ export default function SessionTimerPage() {
           <div className="flex items-center mt-10 font-medium text-[4rem] text-black justify-center  mx-auto gap-[10px]">
             <input
               type="number"
+              min={0}
+              max={23}
               value={hours}
               onChange={(e) => setHours(parseInt(e.target.value) || 0)}
               placeholder="00"
@@ -72,6 +74,8 @@ export default function SessionTimerPage() {
             <span>:</span>
             <input
               type="number"
+              min={0}
+              max={60}
               value={minutes}
               onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
               placeholder="00"
@@ -80,6 +84,8 @@ export default function SessionTimerPage() {
             <span>:</span>
             <input
               type="number"
+              min={0}
+              max={60}
               value={seconds}
               onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
               placeholder="00"

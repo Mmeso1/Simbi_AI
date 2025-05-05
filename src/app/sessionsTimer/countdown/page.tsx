@@ -1,30 +1,26 @@
 "use client";
 import { balooThambi2 } from "@/lib/fonts";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import TimeFetcher from "@/components/countdown/TimeFetcher";
 
 export default function CountDownPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const initialTime = parseInt(searchParams.get("time") || "0");
+  const [initialTime, setInitialTime] = useState<number>(0);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
 
   // Start count-up timer
   useEffect(() => {
-    if (isRunning && timeElapsed < initialTime) {
-      const timer = setInterval(() => {
-        setTimeElapsed((prev) => (prev < initialTime ? prev + 1 : prev));
-      }, 1000);
+    if (!isRunning || initialTime <= 0 || timeElapsed >= initialTime) return;
 
-      return () => clearInterval(timer);
-    }
+    const timer = setInterval(() => {
+      setTimeElapsed((prev) => (prev < initialTime ? prev + 1 : prev));
+    }, 1000);
 
-    if (timeElapsed >= initialTime) {
-      setIsRunning(false);
-    }
+    return () => clearInterval(timer);
   }, [isRunning, timeElapsed, initialTime]);
 
   // Format seconds to hh:mm:ss
@@ -41,6 +37,12 @@ export default function CountDownPage() {
 
   return (
     <section className="w-[90%] mx-auto pb-20">
+      <Suspense
+        fallback={<p className="text-center mt-10">Loading session...</p>}
+      >
+        <TimeFetcher onTimeParsed={(time) => setInitialTime(time)} />
+      </Suspense>
+
       <header className="h-[120px] flex items-center justify-between">
         <aside className="flex w-[148.96px] gap-[4.96px] items-center justify-center cursor-pointer hover:scale-110">
           <Image
@@ -85,9 +87,13 @@ export default function CountDownPage() {
           </button>
           <button
             onClick={() => setIsRunning((prev) => !prev)}
-            className="hover:bg-blue-900 hover:text-white py-[10px] px-[15px] font-medium rounded-[8px] border-lightblue border-[1px]"
+            className={`py-[10px] px-[15px] font-medium rounded-[8px] border-lightblue border-[1px] ${
+              isRunning
+                ? "hover:bg-blue-900 hover:text-white"
+                : "bg-blue-900 text-white"
+            }`}
           >
-            Break
+            {isRunning ? "Pause" : "Resume"}
           </button>
         </div>
 
@@ -100,16 +106,22 @@ export default function CountDownPage() {
         </div>
       </section>
 
-      <div className="relative w-[50%] mx-auto h-[14px] bg-progress  overflow-visible mt-7 rounded-[36px]">
-        {/*  Time Progress monitor */}
+      <div className="relative w-[50%] mx-auto h-[14px] bg-progress overflow-visible mt-7 rounded-[36px]">
         <div
           className="absolute left-0 top-0 h-full bg-lightblue transition-all duration-500 rounded-[100px]"
-          style={{ width: `${(timeElapsed / initialTime) * 100}%` }}
+          style={{
+            width: `${
+              initialTime > 0 ? (timeElapsed / initialTime) * 100 : 0
+            }%`,
+          }}
         />
-
         <div
-          className="absolute  top-1/2 -translate-y-1/2 transition-all duration-500"
-          style={{ left: `calc(${(timeElapsed / initialTime) * 100}% - 20px)` }}
+          className="absolute top-1/2 -translate-y-1/2 transition-all duration-500"
+          style={{
+            left: `calc(${
+              initialTime > 0 ? (timeElapsed / initialTime) * 100 : 0
+            }% - 20px)`,
+          }}
         >
           <Image
             src="/DashboardIcons/timeSimbi.svg"
@@ -130,8 +142,8 @@ export default function CountDownPage() {
 
       <div className="mt-32 w-[80%] mx-auto text-right">
         <button
-          disabled={timeElapsed > 0}
-          className={`lightblue px-20 bg-lightblue py-[7px] hover:bg-blue-900 rounded-[8px] text-white`}
+          disabled={isRunning || timeElapsed < initialTime}
+          className={`px-20 bg-lightblue py-[7px] hover:bg-blue-900 rounded-[8px] text-white`}
         >
           Finish
         </button>
