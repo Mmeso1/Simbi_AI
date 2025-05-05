@@ -61,10 +61,11 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <aside className="w-2/3 min-h-screen border-r-2 px-10 border-r-gray">
+      <aside className="w-[63%] min-h-screen border-r-[0.9px] px-10 border-r-grayborder">
         {/* Dashboard Middle section */}
 
         <header className="mt-[30px]">
+          dddd
           <HeaderSearch />
           <div className="bg-bluemaguerite h-[231px] mt-[60px] w-full rounded-[20px] text-deeppurple px-6 relative">
             <h1 className="font-semibold pt-7 text-[2.5rem]">Welcome back</h1>
@@ -82,7 +83,7 @@ export default function DashboardPage() {
               alt="An image of simbi waving"
               height={189}
               width={200}
-              className="absolute -top-25 right-15"
+              className="absolute -top-25 right-7"
             />
           </div>
         </header>
@@ -168,7 +169,7 @@ export default function DashboardPage() {
           </div>
         </section>
       </aside>
-      <aside className="w-1/3 px-6 min-h-screen">
+      <aside className="w-[37%] px-6 min-h-screen">
         {/* for toggling the navbar on the headerNotification */}
 
         {toggleUserNavBar && (

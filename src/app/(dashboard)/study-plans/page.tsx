@@ -8,14 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import { Inter } from "next/font/google";
 import StudyForm from "@/components/study-plans/StudyForm";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
+import { useRouter } from "next/navigation";
+import { inter } from "@/lib/fonts";
 
 // Fake Type for api mockup/ schema
 
@@ -35,12 +30,18 @@ export default function StudyPlanPage() {
     "December",
   ];
 
+  const router = useRouter();
   const [task, setTask] = useState(true);
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
 
   const handleToggleUserNavBar = () => {
     // for toggling the navbar on the headerNotification
     setToggleUserNavBar((prevState) => !prevState);
+  };
+
+  const startStudySession = () => {
+    // Start study session by setting timer
+    router.push("/sessionsTimer");
   };
 
   // Generate Study Plan Pop up
@@ -146,7 +147,10 @@ export default function StudyPlanPage() {
               Filter
             </span>
           </button>
-          <button className="bg-lightblue hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold">
+          <button
+            onClick={startStudySession}
+            className="bg-lightblue hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold"
+          >
             Start a Study Session
           </button>
         </div>

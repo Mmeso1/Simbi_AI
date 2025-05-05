@@ -28,8 +28,8 @@ export default function Rewards() {
         </aside>
       </div>
       <div className="flex mt-5 gap-x-7 gap-y-10 font-normal text-sm ">
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] w-[180px] h-[159px] p-6 relative">
-          <h3 className="text-[0.75rem] font-medium">Milestones completed</h3>
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[180px] p-6 relative">
+          <h3 className="text-[0.75rem] font-medium">Milestones Completed</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
           <p className="absolute rounded-[20px] w-[4px] h-[30px] text-lightblue right-14 bottom-10 semibold text-[2rem]">
