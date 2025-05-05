@@ -1,42 +1,52 @@
 "use client";
-import Image from "next/image";
-import { Button } from "@/components/telegram/Button";
-// import { Baloo_Thambi_2 } from 'next/font/google';
-
 import React from "react";
 
-const TelegramConnect = () => {
-  return (
-    <section className="w-full max-w-[500px] mx-auto p-6 sm:p-8 rounded-[30px] linear-gradient relative shadow-xl overflow-hidden border border-gray-200 bg-[#957FFF]">
-      {/* Background pattern inside the box only */}
-      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-        <div className="w-full h-full bg-[url('/DashboardIcons/teleg.png') ] bg-cover" />
-      </div>
+import Image from "next/image";
 
-      {/* Foreground content */}
-      <div className="relative z-10 flex flex-col items-center text-center">
+
+export default function ConnectPage() {
+  return (
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-[#b194f7] to-[#f7c59f] rounded-[30px] overflow-hidden p-4">
+      {/* Absolute Telegram Icons */}
+      {[
+        { top: '7%', left: '3%' },
+        { top: '-12%', right: '25%' },
+        { top: '5%', right: '-1%' },
+        { bottom: '35%', left: '-15%' },
+        { bottom: '30%', right: '-13%' },
+      ].map((pos, i) => (
+        <Image
+          key={i}
+          src="/DashboardIcons/teleg.png"
+          alt="Telegram icon"
+          width={142.2560577392578}
+          height={154.2216339111328}
+          className="absolute animate-pulse"
+          style={{ ...pos }}
+        />
+      ))}
+
+      {/* Main Content */}
+      <div className="text-center z-10 max-w-md">
         <Image
           src="/DashboardIcons/tele.png"
-          alt=""
-          width={120}
-          height={120}
-          className="mb-5"
+          alt="Simbi character"
+          width={162.5}
+          height={288.96832275390625}
+          className="mx-auto mb-6"
         />
-
-        <h2 className="text-lg sm:text-xl font-semibold text-black mb-2">
+        <h2 className="text-xl sm:text-2xl font-semibold text-black">
           Connect to <span className="text-blue-700 font-bold">TELEGRAM</span>
         </h2>
-
-        <p className="text-sm sm:text-base text-gray-700 mb-6">
-          Earn $SIMBI tokens, unlock NFT badges, and sync your study progress.
+        <p className="text-sm text-gray-800 mt-2 leading-relaxed">
+          Transform every study milestone into value.<br />
+          Earn <strong>$SIMBI tokens</strong>, unlock exclusive NFT badges by crushing quizzes, 
+          connect your wallet and swap your study wins for cool prizes.
         </p>
-
-        <Button onClick={() => alert("Connecting to Telegram...")}>
+        <button className="mt-6 bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-lg text-sm font-medium">
           Continue
-        </Button>
+        </button>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default TelegramConnect;
+}
