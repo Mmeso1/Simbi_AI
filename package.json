@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "export NODE_OPTIONS=--max_old_space_size=8192 && next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm i --legacy-peer-deps",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,7 +16,8 @@
     "react": "^19.0.0",
     "react-big-calendar": "^1.18.0",
     "react-dom": "^19.0.0",
-    "recharts": "^2.15.3"
+    "recharts": "^2.15.3",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
