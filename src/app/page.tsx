@@ -9,7 +9,7 @@ export default function Home() {
     <main className="bg-[#F5F4FC] text-gray-800">
       {/* Header */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
           <Image
             src="/images/logo.png"
             alt="Simbi Logo"
@@ -44,12 +44,12 @@ export default function Home() {
               touch of personality
             </p>
             <div className="mt-4 space-x-2">
-              <Link href="/auth/signin">
+              <Link href="/auth/signup">
                 <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
                   Get Started
                 </button>
               </Link>
-              <Link href="/auth/signup">
+              <Link href="/auth/signin">
                 <button className="text-sm border px-4 py-2 rounded-md">
                   I Have an Account
                 </button>
@@ -106,7 +106,7 @@ export default function Home() {
       <section className="bg-white py-12 px-6 text-center flex flex-row">
         <div className="flex w-1/2">
           <Image
-            src="/images/simbi-2.svg"
+            src="/images/simbi-2.png"
             alt="Simbi Character"
             width={200}
             height={200}
@@ -166,6 +166,7 @@ export default function Home() {
               <p className="text-gray-600">{description}</p>
             </div>
           ))}
+          <></>
         </div>
       </section>
 
@@ -174,8 +175,8 @@ export default function Home() {
         <h2 className="text-lg font-semibold">Real talk from Simbi</h2>
         <div className="bg-white rounded-md shadow p-6 mt-4 max-w-md mx-auto">
           <p className="text-sm text-gray-700">
-            &quot;You missed your flashcards again? Your rewards are screaming
-            for mercy. Open the app before I start grading your day.&quot;
+            `&quot;`You missed your flashcards again? Your rewards are screaming
+            for mercy. Open the app before I start grading your day.`&quot;`
           </p>
           <p className="mt-2 font-bold text-purple-800">- Simbi</p>
         </div>
@@ -217,12 +218,16 @@ export default function Home() {
         </h2>
         <p className="text-sm mt-2">Sign up and get acquainted with Simbi!</p>
         <div className="mt-4 space-x-2">
-          <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
-            Get Started
-          </button>
-          <button className="text-sm border px-4 py-2 rounded-md">
-            I Have an Account
-          </button>
+          <Link href="/auth/signup">
+            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+              Get Started
+            </button>
+          </Link>
+          <Link href="/auth/signin">
+            <button className="text-sm border px-4 py-2 rounded-md">
+              I Have an Account
+            </button>
+          </Link>
         </div>
       </section>
 

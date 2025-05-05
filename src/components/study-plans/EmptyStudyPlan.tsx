@@ -1,6 +1,10 @@
 import Image from "next/image";
 
-export default function EmptyStudyPlan() {
+export default function EmptyStudyPlan({
+  handleToggleGenerateStudyPlan,
+}: {
+  handleToggleGenerateStudyPlan: () => void;
+}) {
   return (
     <section>
       <div className="w-[478px] min-h-[530.89px] items-center mt-24 flex flex-col gap-[30px] mx-auto">
@@ -20,7 +24,10 @@ export default function EmptyStudyPlan() {
             Generate a study plan to get started
           </p>
         </div>
-        <button className="bg-lightblue text-white rounded-[8px] px-[20px] py-[12px] font-semibold">
+        <button
+          onClick={handleToggleGenerateStudyPlan}
+          className="bg-lightblue cursor-pointer hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold"
+        >
           Generate your Study plan
         </button>
       </div>

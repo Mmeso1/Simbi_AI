@@ -1,10 +1,14 @@
 import Image from "next/image";
 
-export default function HeaderNotification() {
+export default function HeaderNotification({
+  handleToggleUserNavBar,
+}: {
+  handleToggleUserNavBar: () => void;
+}) {
   // Api fetching goes here
   return (
     <div className="flex justify-between items-center">
-      <aside className="relative">
+      <aside className="relative hover:bg-gray-300 duration-300 hover:p-4 rounded-full hover:scale-105">
         <Image
           src="/DashboardIcons/notificationBellIcon.svg"
           alt={"notification bell"}
@@ -31,7 +35,10 @@ export default function HeaderNotification() {
           <h3 className="text-[0.875rem]">Grace Fernades</h3>
           <p className="text-[0.75rem] text-lightblue">Basic plan</p>
         </div>
-        <button>
+        <button
+          className="hover:cursor-pointer"
+          onClick={handleToggleUserNavBar}
+        >
           <Image
             src="/DashboardIcons/arrowDownIcon.svg"
             alt="arrow down icon"

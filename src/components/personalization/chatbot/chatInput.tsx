@@ -26,7 +26,7 @@ export default function ChatInput({ display }: ChatInputProps) {
       {/* Heading and Simbi image */}
       {display && (
         <div className="w-full max-w-3xl text-center ml-50">
-          <img
+          <Image
             src="/chatbot/text.svg"
             alt="talk to simbi text"
             className="mb-6"
