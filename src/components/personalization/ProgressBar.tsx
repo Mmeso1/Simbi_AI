@@ -1,5 +1,6 @@
 // components/ProgressBar.tsx
 "use client";
+import Image from "next/image";
 import React from "react";
 
 interface ProgressBarProps {
@@ -21,7 +22,7 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
       />
 
       {/* Tip image */}
-      <img
+      <Image
         src="/progress-tip.svg"
         alt="progress tip"
         className="absolute top-1/2 transform -translate-y-1/2 transition-all duration-500 ease-in-out w-8 h-auto"
