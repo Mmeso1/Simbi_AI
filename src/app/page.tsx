@@ -44,12 +44,12 @@ export default function Home() {
             </p>
             <div className="mt-14 flex flex-col justify-center items-center">
               <Link href="/auth/signup" className="w-full">
-                <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full">
+                <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
                   Get Started
                 </button>
               </Link>
               <Link href="/auth/signin" className="w-full mt-3">
-                <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full">
+                <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full cursor-pointer">
                   I Have an Account
                 </button>
               </Link>
@@ -59,40 +59,54 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="grid grid-rows-1 md:grid-cols-4 gap-10 px-6 py-12">
-        {[
-          {
-            title: "Smart Study",
-            image: "/images/frame1.svg",
-            description:
-              "Plan your studies with personalized guidance from Simbi.",
-          },
-          {
-            title: "Accountability",
-            image: "/images/frame2.svg",
-            description:
-              "Stay on track with reminders and motivational nudges.",
-          },
-          {
-            title: "Resources",
-            image: "/images/frame3.svg",
-            description: "Get access to curated learning materials.",
-          },
-          {
-            title: "Rewards",
-            image: "/images/frame4.svg",
-            description: "Earn crypto and NFTs for reaching your study goals.",
-          },
-        ].map(({ title, image, description }, i) => (
-          <div
-            key={i}
-            className="bg-white border-[0.88px] border-[#C1BCFF] shadow-md rounded-lg text-center"
-          >
-            <Image src={image} alt={title} width={300} height={150} />
-            <h3 className="font-semibold mt-2">{title}</h3>
-            <p className="text-xs text-gray-500 mt-1">{description}</p>
-          </div>
-        ))}
+      <section className="px-10 py-18 my-28">
+        <div className="grid grid-rows-1 md:grid-cols-4 gap-10 h-96">
+          {[
+            {
+              title: "Smart Study",
+              image: "/images/frame1.svg",
+              description:
+                "Plan your studies with personalized guidance from Simbi.",
+            },
+            {
+              title: "Accountability",
+              image: "/images/frame2.svg",
+              description:
+                "Stay on track with reminders and motivational nudges.",
+            },
+            {
+              title: "Resources",
+              image: "/images/frame3.svg",
+              description: "Get access to curated learning materials.",
+            },
+            {
+              title: "Rewards",
+              image: "/images/frame4.svg",
+              description:
+                "Earn crypto and NFTs for reaching your study goals.",
+            },
+          ].map(({ title, image, description }, i) => (
+            <div
+              key={i}
+              className="bg-white border-[0.88px] border-[#C1BCFF] shadow-[0_19px_86.9px_0_#957FFF87] rounded-4xl overflow-hidden text-center transform transition-transform duration-300 ease-out
+         hover:scale-105"
+            >
+              <Image
+                src={image}
+                alt={title}
+                width={300}
+                height={200}
+                className="w-full h-auto object-cover"
+              />
+              <h3 className="font-medium text-[28px] text-left mt-4 px-4">
+                {title}
+              </h3>
+              <p className="text-sm text-gray-500 mt-1 text-left px-4">
+                {description}
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Simbi is here for */}
