@@ -1,4 +1,3 @@
-// src/app/auth/signup/page.tsx
 "use client";
 
 import Image from "next/image";
