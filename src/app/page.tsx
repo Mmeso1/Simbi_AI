@@ -7,7 +7,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 export default function Home() {
   return (
-    <main className="bg-[#FDFDFF] text-gray-800">
+    <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
       <header className="flex justify-between items-center px-30 py-8 bg-white">
         <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
@@ -33,7 +33,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col justify-center">
-            <h1 className="text-5xl font-medium leading-[60px]">
+            <h1 className="text-5xl font-normal leading-[60px]">
               Meet Simbi!
               <br />
               Your AI Study Buddy.
@@ -110,23 +110,31 @@ export default function Home() {
       </section>
 
       {/* Simbi is here for */}
-      <section className="bg-white py-12 px-6 text-center flex flex-row">
+      <section className="bg-white py-16 px-6 mr-20 text-center flex justify-end items-center">
         <div className="flex w-1/2">
           <Image
-            src="/images/simbi-2.png"
+            src="/images/simbi-2.svg"
             alt="Simbi Character"
-            width={200}
-            height={200}
-            className="mx-auto content-end"
+            width={250}
+            height={300}
+            className="mx-auto h-auto"
           />
         </div>
-        <div className="flex flex-col justify-center">
-          <h2 className="text-xl font-semibold mt-4">Simbi is here for</h2>
-          <ul className="mt-4 space-y-2 text-sm text-gray-700 max-w-md mx-auto text-left">
-            <li>Self-learners & exam preppers who want structure</li>
-            <li>Procrastinators who need a motivational kick</li>
-            <li>High school & university students tired of falling behind</li>
-            <li>All-learners blazing their own educational path</li>
+        <div className="flex flex-col justify-center text-left gap-4">
+          <h2 className="text-5xl font-medium mt-4">Simbi is here for</h2>
+          <ul className="mt-4 space-y-5 font-light text-3xl text-[#6B7280] max-w-md mx-auto">
+            <li className="leading-[31px]">
+              Self-learners & exam preppers who want structure
+            </li>
+            <li className="leading-[31px]">
+              Procrastinators who need a motivational kick
+            </li>
+            <li className="leading-[31px]">
+              High school & university students tired of falling behind
+            </li>
+            <li className="leading-[31px]">
+              All-learners blazing their own educational path
+            </li>
           </ul>
         </div>
       </section>
