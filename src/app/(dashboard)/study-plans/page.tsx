@@ -62,13 +62,15 @@ export default function StudyPlanPage() {
         </div>
       )}
       {/* The message icon fixed to the bottom of the screen */}
-      <Image
-        src="/DashboardIcons/messageSimbiIcon.svg"
-        alt="Image of an envelope"
-        height={97}
-        width={117}
-        className="fixed bottom-10 right-20"
-      />
+      <Link href="/chat">
+        <Image
+          src="/DashboardIcons/messageSimbiIcon.svg"
+          alt="Image of an envelope"
+          height={97}
+          width={117}
+          className="fixed bottom-10 right-20"
+        />
+      </Link>
       {/* for toggling the navbar on the headerNotification */}
       {toggleUserNavBar && (
         <div

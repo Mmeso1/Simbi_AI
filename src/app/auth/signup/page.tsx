@@ -1,14 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import "@/app/globals.css";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { TwoLinePasswordInput } from "@/components/auth/TwoLineInput";
+import FormInput from "@/components/auth/FormInput";
 
-export default function Signup() {
-  const router = useRouter();
-  const [form, setForm] = useState({
+export default function SignupPage() {
+  interface FormState {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    remember: boolean;
+  }
+
+  const [form, setForm] = useState<FormState>({
     firstName: "",
     lastName: "",
     email: "",
@@ -17,6 +25,7 @@ export default function Signup() {
     remember: false,
   });
 
+  // handleChange, handleSubmit…
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
@@ -25,110 +34,110 @@ export default function Signup() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // basic check — replace with real logic
-    if (form.password === form.confirmPassword) {
-      router.push("/unboarding");
-    } else {
-      alert("Passwords do not match");
-    }
-  };
-
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-300 to-orange-100">
-      <div className="flex flex-col md:flex-row bg-white rounded-3xl shadow-xl w-full max-w-5xl overflow-hidden">
-        {/* Left Section */}
-        <div className="md:w-1/2 bg-purple-100 flex flex-col items-center justify-center p-10 text-center">
-          <Image
-            src="/images/simbi-girl-sit.png"
-            alt="Simbi Girl"
-            width={150}
-            height={150}
+    <>
+      {/* Left panel */}
+      <div
+        className="w-full md:w-1/2 bg-[#E4DFFF] flex flex-col items-center justify-center p-8 md:p-14 text-center gap-8 
++                 h-[45vh] md:h-auto"
+      >
+        <h1 className="text-4xl md:text-5xl font-medium leading-[60px] tracking-[-3%]">
+          Get started with{" "}
+          <span className="text-[rgba(122,95,255,1)] font-bold">
+            <br />
+            SIMBI
+          </span>
+        </h1>
+        <Image
+          src="/images/simbi-girl-sit.svg"
+          alt="Simbi sitting"
+          className="w-48 h-48 md:w-[215px] md:h-[293px] object-contain"
+          width={215}
+          height={293}
+        />
+      </div>
+
+      {/* Right panel */}
+      <div className="md:w-1/2 flex flex-col justify-center p-10 space-y-6">
+        <h2 className="text-xl text-[#1E1E2F] font-medium">
+          Enter your Details
+        </h2>
+
+        <div className="space-y-5">
+          <FormInput
+            name="firstName"
+            type="text"
+            placeholder="First Name"
+            value={form.firstName}
+            onChange={handleChange}
+            required
           />
-          <h1 className="text-2xl md:text-3xl font-bold mt-4">
-            Get started with <span className="text-purple-600">SIMBI</span>
-          </h1>
+          <FormInput
+            name="lastName"
+            type="text"
+            placeholder="Last Name"
+            value={form.lastName}
+            onChange={handleChange}
+            required
+          />
+          <FormInput
+            name="email"
+            type="email"
+            placeholder="Your Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+
+          <TwoLinePasswordInput
+            id="password"
+            placeholderTitle="Password"
+            mask="********"
+            value={form.password}
+            onChange={handleChange}
+          />
+
+          <TwoLinePasswordInput
+            id="confirmPassword"
+            placeholderTitle="Confirm Password"
+            mask="********"
+            value={form.confirmPassword}
+            onChange={handleChange}
+          />
         </div>
 
-        {/* Right Section - Form */}
-        <div className="md:w-1/2 p-10">
-          <h2 className="text-lg font-semibold mb-4">Enter your Details</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={form.firstName}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={form.lastName}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-            <div className="flex items-center justify-between">
-              <label className="flex items-center text-sm">
-                <input
-                  type="checkbox"
-                  name="remember"
-                  checked={form.remember}
-                  onChange={handleChange}
-                  className="mr-2"
-                />
-                Remember Me
-              </label>
-              <Link
-                href="/auth/signin"
-                className="text-sm text-purple-600 hover:underline"
-              >
-                Already Have an Account
-              </Link>
-            </div>
-            <Link href="/personalization">
-              <button
-                type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-all"
-              >
-                Continue
-              </button>
-            </Link>
-          </form>
+        <div className="flex items-center">
+          <input
+            id="remember"
+            name="remember"
+            type="checkbox"
+            checked={form.remember}
+            onChange={handleChange}
+            className="mr-2 cursor-pointer"
+          />
+          <label
+            htmlFor="remember"
+            className="text-[#7A5FFF] text-sm cursor-pointer"
+          >
+            Remember Me
+          </label>
         </div>
+
+        <Link href="/auth/signin">
+          <p className="block text-[#4976F4] text-sm hover:underline cursor-pointer ml-5">
+            Already have an account?
+          </p>
+        </Link>
+
+        <Link href="/personalization">
+          <button
+            // onClick={handleSubmit}
+            className="w-full bg-[#7A5FFF] text-white py-3 rounded-lg transition-all hover:opacity-90 cursor-pointer"
+          >
+            Continue
+          </button>
+        </Link>
       </div>
-    </main>
+    </>
   );
 }
