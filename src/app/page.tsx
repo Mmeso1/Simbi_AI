@@ -140,45 +140,59 @@ export default function Home() {
       </section>
 
       {/* Why Simbi Works */}
-      <section className="bg-[#EDEBFB] py-12 px-6 text-center">
-        <h2 className="text-xl font-semibold">Why Simbi works</h2>
-        <div className="grid grid-rows-1 md:grid-cols-4 gap-6 mt-8">
+      <section className="bg-[#E4DFFF] py-36 px-16 text-center">
+        <h2 className="text-5xl font-medium">Why Simbi works</h2>
+        <div className="grid grid-rows-1 md:grid-cols-4 gap-6 mt-20 px-20 group">
           {[
             {
               title: "All That Understands You",
-              image: "/images/group1.png",
+              image: "/images/group1.svg",
               description:
                 "Personalized plans, custom quizzes, and supports that adapts to how you learn.",
+              textColor: "#7A5FFF",
             },
             {
               title: "'A Study Buddy With Real Personality",
-              image: "/images/group2.png",
+              image: "/images/group2.svg",
               description:
                 "SIMBI cheers when you win, roasts when you slack, and makes studying fun.",
+              textColor: "#16A349",
             },
             {
               title: "'Web3 Rewards",
-              image: "/images/group3.png",
+              image: "/images/group3.svg",
               description:
                 "Earn tokens, unlock NFTs and join study groups where crypto meets accountability.",
+              textColor: "#FF5A5F",
             },
             {
               title: "Everywhere You Want",
-              image: "/images/group4.png",
+              image: "/images/group4.svg",
               description:
                 "On your laptop, on your phone, on your telegram. SIMBI's got your back.",
+              textColor: "#F99D07",
             },
-          ].map(({ title, image, description }, i) => (
-            <div key={i} className="bg-white rounded-lg p-4 shadow text-sm">
+          ].map(({ title, image, description, textColor }, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-4xl p-4 py-8 shadow flex flex-col items-center gap-5
+        transform transition-transform duration-700 ease-out
+        group-hover:scale-95 hover:scale-105"
+            >
               <Image
                 src={image}
                 alt={title}
                 width={32}
-                height={32}
-                className="mx-auto mb-2"
+                height={67}
+                className="mx-auto mb-2 w-18 h-auto"
               />
-              <h3 className="font-semibold mb-1">{title}</h3>
-              <p className="text-gray-600">{description}</p>
+              <h3
+                className="text-2xl font-normal min-h-[3rem]"
+                style={{ color: textColor }}
+              >
+                {title}
+              </h3>
+              <p className="text-xl text-black font-light">{description}</p>
             </div>
           ))}
           <></>
