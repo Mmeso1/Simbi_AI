@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { balooThambi2 } from "@/lib/fonts";
 import NavBar from "@/components/dashboard/NavBar";
+import Link from "next/link";
 
 export default function DashboardLayout({
   children,
@@ -44,9 +45,11 @@ export default function DashboardLayout({
             {" "}
             Connect Telegram bot, wallet, join study groups
           </p>
-          <button className="bg-bluegradient #2aabee 0%, #229ed9 99.26%)]  w-[128px] h-[48px] rounded-[12px] flex items-center justify-center text-white font-semibold text-[0.875rem]">
-            Sync Telegram
-          </button>
+          <Link href="/telegram">
+            <button className="bg-bluegradient #2aabee 0%, #229ed9 99.26%)]  w-[128px] h-[48px] rounded-[12px] flex items-center justify-center text-white font-semibold text-[0.875rem]">
+              Sync Telegram
+            </button>
+          </Link>
         </div>
       </nav>
       <aside className="flex-1">
