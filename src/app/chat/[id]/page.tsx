@@ -1,5 +1,5 @@
 "use client";
-import ChatInput from "@/components/personalization/chatbot/chatInput";
+import ChatInput from "@/components/chatbot/chatInput";
 import { useChatStore } from "@/store/chatStore";
 import { useEffect } from "react";
 

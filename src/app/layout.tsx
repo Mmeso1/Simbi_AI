@@ -1,12 +1,5 @@
-import { Poppins } from "next/font/google";
+import { poppins } from "@/lib/fonts";
 import "./globals.css";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
 
 export const metadata = {
   title: "SIMBI – AI Study Buddy",

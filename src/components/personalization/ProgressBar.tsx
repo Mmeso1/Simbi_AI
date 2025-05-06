@@ -27,6 +27,8 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
         alt="progress tip"
         className="absolute top-1/2 transform -translate-y-1/2 transition-all duration-500 ease-in-out w-8 h-auto"
         style={{ left: `calc(${fill} - 0.5rem)` }}
+        width={32}
+        height={32}
       />
     </div>
   );
