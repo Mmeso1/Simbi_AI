@@ -3,27 +3,26 @@ import Image from "next/image";
 import "@/app/globals.css";
 import React from "react";
 import Link from "next/link";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function Home() {
   return (
-    <main className="bg-[#F5F4FC] text-gray-800">
+    <main className="bg-[#FDFDFF] text-gray-800">
       {/* Header */}
-      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-sm">
+      <header className="flex justify-between items-center px-30 py-8 bg-white">
         <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
-          <Image
-            src="/images/logo.png"
-            alt="Simbi Logo"
-            width={100}
-            height={75}
-          />
+          <Image src="/logo.svg" alt="Simbi Logo" width={155} height={50} />
         </div>
-        <button className="text-sm">Language</button>
+        <div className="w-[343px] border border-[#C9C0D4] rounded-xl p-3 flex items-center justify-between">
+          <button className="text-base font-medium">Language</button>
+          <IoIosArrowDown className="text-[#202024]" size={20} />
+        </div>
       </header>
 
       {/* Hero Section */}
-      <section className="text-center py-16 px-4">
-        <div className="flex flex-row">
-          <div className="flex w-2/5">
+      <section className="flex flex-col justify-center bg-[#E9E8FF] h-[78vh] text-center">
+        <div className="flex flex-row justify-center items-center gap-24">
+          <div className="">
             <Image
               src="/images/hero.svg"
               alt="Simbi Character"
@@ -34,23 +33,23 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col justify-center">
-            <h1 className="text-2xl font-semibold mt-4">
+            <h1 className="text-5xl font-medium leading-[60px]">
               Meet Simbi!
               <br />
               Your AI Study Buddy.
             </h1>
-            <p className="mt-2 text-sm text-gray-600 max-w-md mx-auto">
-              Simbi helps you plan, stay motivated and learn effectively with a
-              touch of personality
+            <p className="mt-2 text-2xl text-[#6B7280] mx-auto leading-[32px]">
+              Simbi helps you plan, stay motivated and <br />
+              learn effectively with a touch of personality
             </p>
-            <div className="mt-4 space-x-2">
-              <Link href="/auth/signup">
-                <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+            <div className="mt-14 flex flex-col justify-center items-center">
+              <Link href="/auth/signup" className="w-full">
+                <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full">
                   Get Started
                 </button>
               </Link>
-              <Link href="/auth/signin">
-                <button className="text-sm border px-4 py-2 rounded-md">
+              <Link href="/auth/signin" className="w-full mt-3">
+                <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full">
                   I Have an Account
                 </button>
               </Link>
@@ -87,15 +86,9 @@ export default function Home() {
         ].map(({ title, image, description }, i) => (
           <div
             key={i}
-            className="bg-white shadow-md rounded-lg p-4 text-center"
+            className="bg-white border-[0.88px] border-[#C1BCFF] shadow-md rounded-lg text-center"
           >
-            <Image
-              src={image}
-              alt={title}
-              width={300}
-              height={150}
-              className="mx-auto"
-            />
+            <Image src={image} alt={title} width={300} height={150} />
             <h3 className="font-semibold mt-2">{title}</h3>
             <p className="text-xs text-gray-500 mt-1">{description}</p>
           </div>
