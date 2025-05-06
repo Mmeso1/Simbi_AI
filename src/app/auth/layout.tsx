@@ -22,7 +22,7 @@ export default function AuthLayout({
       </div>
 
       {/* Centered card container */}
-      <div className="flex flex-col md:flex-row bg-white rounded-3xl shadow-[0_19px_86.9px_0_rgba(149,127,255,0.53)] w-full max-w-3/4 h-[85vh] overflow-hidden">
+      <div className="flex flex-col my-16 md:my-0 md:flex-row bg-white rounded-3xl shadow-[0_19px_86.9px_0_rgba(149,127,255,0.53)] w-full max-w-3/4 overflow-hidden">
         {children}
       </div>
     </main>

@@ -37,14 +37,21 @@ export default function SignIn() {
   return (
     <>
       {/* Left panel */}
-      <div className="md:w-1/2 bg-[#E4DFFF] flex flex-col items-center justify-center p-14 text-center gap-18">
-        <h1 className="text-5xl font-medium leading-[60px] tracking-[-3%]">
-          Welcome back to{" "}
-          <span className="text-[rgba(122,95,255,1)] font-bold">SIMBI</span>
+      <div
+        className="w-full md:w-1/2 bg-[#E4DFFF] flex flex-col items-center justify-center p-8 md:p-14 text-center gap-8 
++                 h-[45vh] md:h-auto"
+      >
+        <h1 className="text-4xl md:text-5xl font-medium leading-[60px] tracking-[-3%]">
+          Get started with{" "}
+          <span className="text-[rgba(122,95,255,1)] font-bold">
+            <br />
+            SIMBI
+          </span>
         </h1>
         <Image
           src="/images/hero.svg"
           alt="Simbi sitting"
+          className="w-48 h-48 md:w-[215px] md:h-[293px] object-contain"
           width={215}
           height={293}
         />
@@ -96,12 +103,14 @@ export default function SignIn() {
           </p>
         </div>
 
-        <button
-          // onClick={handleSubmit}
-          className="w-full bg-[#7A5FFF] text-white py-3 rounded-lg transition-all hover:opacity-90 cursor-pointer"
-        >
-          Continue
-        </button>
+        <Link href="/personalization">
+          <button
+            // onClick={handleSubmit}
+            className="w-full bg-[#7A5FFF] text-white py-3 rounded-lg transition-all hover:opacity-90 cursor-pointer"
+          >
+            Continue
+          </button>
+        </Link>
       </div>
     </>
   );
