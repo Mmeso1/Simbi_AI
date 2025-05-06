@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const step1Schema = z.object({
   planName: z.string().min(1, "Plan name is required"),
@@ -77,7 +78,7 @@ const steps = [
   },
   {
     id: 3,
-    name: "Summary",
+    name: "Milestone",
     fields: [
       "milestoneType",
       "motivationPreference",
@@ -190,10 +191,10 @@ export default function StudyForm({
             className="flex flex-col items-center justify-center h-full "
           >
             <span
-              className={`my-2 px-16 py-2 text-sm ${
+              className={`my-2 lg:px-16 px-4 py-2 text-sm ${
                 currentStep === step.id
-                  ? "font-semibold rounded-[12px] text-lightblue bg-lightbluebg text-[1.125rem]"
-                  : "text-deepdarkgray font-normal text-[1.125rem]"
+                  ? "font-semibold rounded-[12px] text-lightblue bg-lightbluebg text-xs lg:text-[1.125rem]"
+                  : "text-deepdarkgray font-normal text-xs lg:text-[1.125rem]"
               }`}
             >
               {step.name}
@@ -211,15 +212,15 @@ export default function StudyForm({
                 Study Plan Overview
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Name of Study Plan
                   </span>
                   <input
                     type="text"
                     placeholder="Reading Economics"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("planName")}
                   />
                   {errors.planName && (
@@ -228,14 +229,14 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Select Study Subjects
                   </span>
                   <input
                     type="text"
                     placeholder="Economics"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("studySubjects")}
                   />
                   {errors.studySubjects && (
@@ -246,20 +247,20 @@ export default function StudyForm({
                 </div>
               </div>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Start date - End date
                   </span>
                   <div className="flex justify-between">
                     <input
                       type="date"
-                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                       {...register("startDate")}
                     />
                     <input
                       type="date"
-                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                       {...register("endDate")}
                     />
                   </div>
@@ -274,12 +275,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Study goal type
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("studyGoalType")}
                   >
                     <option value="">-- Select goal type -- </option>
@@ -295,14 +296,14 @@ export default function StudyForm({
                 </div>
               </div>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Daily Study Time
                   </span>
                   <input
                     type="time"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("dailyStudyTime")}
                   />
                   {errors.dailyStudyTime && (
@@ -311,7 +312,7 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Days available
                   </span>
@@ -321,7 +322,7 @@ export default function StudyForm({
                     ).map((day) => (
                       <label
                         key={day}
-                        className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2 flex gap-1 items-center justify-center"
+                        className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2 flex gap-1 items-center justify-center"
                       >
                         <input
                           type="checkbox"
@@ -345,13 +346,13 @@ export default function StudyForm({
                 General
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Priority tag
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("priorityTag")}
                   >
                     <option value="">-- Select Priority tag -- </option>
@@ -365,12 +366,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Difficulty level
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("difficultyLevel")}
                   >
                     <option value="">-- Select Difficulty level -- </option>
@@ -386,15 +387,15 @@ export default function StudyForm({
                 </div>
               </div>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Study Level
                   </span>
                   <input
                     type="text"
                     placeholder="University - 200 lvl"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("studyLevel")}
                   />
                   {errors.studyLevel && (
@@ -403,12 +404,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Add Plan to Schedule
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("addToSchedule")}
                   >
                     <option value="Yes">Yes</option>
@@ -431,13 +432,13 @@ export default function StudyForm({
                 Study Preferences
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Preferred Study Session Method
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("preferredStudyMethod")}
                   >
                     <option value="">
@@ -453,12 +454,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Learning Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("learningStyle")}
                   >
                     <option value="">
@@ -478,15 +479,15 @@ export default function StudyForm({
                 </div>
               </div>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Daily Study Duration (in hours)
                   </span>
                   <input
                     type="number"
                     placeholder="1"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("dailyStudyDuration")}
                   />
                   {errors.dailyStudyDuration && (
@@ -495,14 +496,14 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Break reference (in minutes)
                   </span>
                   <input
                     type="number"
                     placeholder="15"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("breakReference")}
                   />
                   {errors.breakReference && (
@@ -517,13 +518,13 @@ export default function StudyForm({
                 General
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Simbi Study Tips
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("studyTips")}
                   >
                     <option value="">
@@ -538,12 +539,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Simbi Preferred Tone
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("preferredTone")}
                   >
                     <option value="">-- Select Simbi Preferred Tone --</option>
@@ -568,13 +569,13 @@ export default function StudyForm({
                 Milestone
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Milestone Type
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("milestoneType")}
                   >
                     <option value="">-- Select Milestone Type -- </option>
@@ -594,12 +595,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Motivation Preference
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("motivationPreference")}
                   >
                     <option value="">-- Select Motivation Preference --</option>
@@ -613,13 +614,13 @@ export default function StudyForm({
                 </div>
               </div>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Check-in-Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("checkInStyle")}
                   >
                     <option value="">-- -- </option>
@@ -632,12 +633,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Telegram reminder
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("telegramReminder")}
                   >
                     <option value="Yes">Yes</option>
@@ -655,13 +656,13 @@ export default function StudyForm({
                 General
               </h2>
 
-              <div className="flex justify-between gap-6">
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Reward Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("rewardStyle")}
                   >
                     <option value="">-- --</option>
@@ -675,12 +676,12 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col w-1/2 py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Reward Frequency
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark placeholder:text-dark py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
                     {...register("rewardFrequency")}
                   >
                     <option value="">-- --</option>
@@ -698,20 +699,27 @@ export default function StudyForm({
             </div>
           )}
 
-          <div className="flex justify-between items-center mt-6">
-            <div className="flex items-center w-1/2 gap-x-6">
-              <p className="font-semibold text-lightblue">Chat with Simbi</p>
+          <div className="flex justify-between items-center mt-6 md:flex-row flex-col-reverse">
+            <div className="flex items-center justify-end md:justify-start   w-full  my-7 md:my-0 text-left  md:w-1/2 gap-x-6 ">
+              <Link href="/chat">
+                <p className="font-semibold cursor-pointer text-lightblue">
+                  Chat with Simbi
+                </p>
+              </Link>
               <span className=" hover:bg-grayborder hover:rounded-full duration-500 hover:scale-105 cursor-pointer">
-                <Image
-                  src="/DashboardIcons/messageSimbiIcon.svg"
-                  alt="message Envelope icon"
-                  height={48.48}
-                  width={61}
-                  className="cursor-pointer"
-                />
+                <Link href="/chat">
+                  {" "}
+                  <Image
+                    src="/DashboardIcons/messageSimbiIcon.svg"
+                    alt="message Envelope icon"
+                    height={48.48}
+                    width={61}
+                    className="cursor-pointer"
+                  />
+                </Link>
               </span>
             </div>
-            <div className="flex items-center w-1/2">
+            <div className="flex items-center md:w-1/2 w-full">
               {currentStep > 1 && (
                 <button
                   type="button"

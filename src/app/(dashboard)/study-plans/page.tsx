@@ -11,6 +11,8 @@ import { useState } from "react";
 import StudyForm from "@/components/study-plans/StudyForm";
 import { useRouter } from "next/navigation";
 import { inter } from "@/lib/fonts";
+import { FaBars } from "react-icons/fa";
+import SideBar from "@/components/dashboard/SideBar";
 
 // Fake Type for api mockup/ schema
 
@@ -33,6 +35,12 @@ export default function StudyPlanPage() {
   const router = useRouter();
   const [task, setTask] = useState(true);
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
+  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
+
+  const handleToggleMiniNavBar = () => {
+    // for toggling the mininavbar;
+    setToggleMiniNavBar((prevState) => !prevState);
+  };
 
   const handleToggleUserNavBar = () => {
     // for toggling the navbar on the headerNotification
@@ -52,23 +60,32 @@ export default function StudyPlanPage() {
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
   return (
-    <section className="mx-auto w-[90%]">
+    <section className="mx-auto w-[90%] pb-20">
       {/* Logic  for toggling the Generate Study Plan pop up  */}
       {toggleGenerateStudyPlan && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] w-[70%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%]  w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
           <StudyForm
             handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
           />
         </div>
       )}
+
+      {toggleMiniNavBar && (
+        <div className="w-[222px] top-0 left-0 fixed z-50 ">
+          <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
+        </div>
+      )}
+
       {/* The message icon fixed to the bottom of the screen */}
-      <Image
-        src="/DashboardIcons/messageSimbiIcon.svg"
-        alt="Image of an envelope"
-        height={97}
-        width={117}
-        className="fixed bottom-10 right-20"
-      />
+      <Link href="/chat">
+        <Image
+          src="/DashboardIcons/messageSimbiIcon.svg"
+          alt="Image of an envelope"
+          height={97}
+          width={117}
+          className="fixed bottom-10 right-20 cursor-pointer"
+        />
+      </Link>
       {/* for toggling the navbar on the headerNotification */}
       {toggleUserNavBar && (
         <div
@@ -98,16 +115,27 @@ export default function StudyPlanPage() {
           </button>
         </div>
       )}
-      <header className="mt-[30px] flex justify-between items-center">
-        <div className="w-2/3">
+      <header className="mt-[30px] flex xl:flex-row flex-col-reverse gap-y-5 justify-between items-center">
+        <div className="xl:w-[40%] w-full">
           <HeaderSearch />
         </div>
-        <div className="w-[30%]">
+        <div className="xl:w-[30%] hidden md:block w-full">
           <HeaderNotification handleToggleUserNavBar={handleToggleUserNavBar} />
         </div>
+        <div className="flex w-full md:hidden items-center justify-between mb-10">
+          <span className="text-3xl block md:hidden text-dark">
+            <FaBars onClick={handleToggleMiniNavBar} />
+          </span>
+          <div className="block xl:hidden w-2/3 md:w-full">
+            <HeaderNotification
+              handleToggleUserNavBar={handleToggleUserNavBar}
+            />
+          </div>
+        </div>
       </header>
-      <div className="flex items-center justify-between mt-16 border-b-[0.95px] pb-5 px-6 border-b-grayborder">
-        <div className="flex w-[446.91px] items-center justify-between">
+
+      <div className="flex items-center xl:flex-row flex-col-reverse gap-y-6 justify-between mt-16 border-b-[0.95px] pb-5 xl:px-6 px-0  border-b-grayborder">
+        <div className="flex w-[446.91px] items-center justify-evenly">
           <div className="flex">
             <DashboardHeaders text="Study Plans" />
             <Image
@@ -118,13 +146,13 @@ export default function StudyPlanPage() {
               className="ml-4"
             />
           </div>
-          <button className="font-semibold relative after:absolute after:left-0 after:-bottom-9 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
             Daily
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 after:-bottom-9 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem]  text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem]  text-deepdarkgray  hover:text-lightblue">
             Weekly
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 after:-bottom-9 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
             Monthly
           </button>
         </div>
@@ -155,7 +183,7 @@ export default function StudyPlanPage() {
           </button>
         </div>
       </div>
-      <div className="flex justify-between items-center px-6 mt-3">
+      <div className="flex justify-between flex-col gap-3 md:flex-row items-center px-6 mt-3">
         <div className="flex items-center justify-center gap-6">
           <Image
             src="/DashboardIcons/calendar Icon.svg"
@@ -199,15 +227,40 @@ export default function StudyPlanPage() {
           />
         </div>
       ) : (
-        <div className="mt-16 flex w-full gap-10">
-          <div className="w-2/3">
-            <div className="grid grid-cols-2">
+        <div className="mt-16 flex w-full lg:flex-row flex-col gap-10">
+          <div className="lg:w-2/3 w-full">
+            <div className="lg:hidden block rounded-[20px] lg:w-[330px] w-full min-h-[190px] bg-bluemaguerite p-4 relative mb-10">
+              {/* Pep Talk Simbi */}
+              <h3 className="text-deeppurple font-semibold text-[2rem] leading-[40px]">
+                Simbi&apos;s Pep talk
+              </h3>
+              <p className="text-deeppurple mt-3 font-normal">
+                Study Plan – let’s pretend you’ll stick to it 😉
+              </p>
+
+              <button
+                onClick={handleToggleGenerateStudyPlan}
+                className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base "
+              >
+                Generate a new Study Plan
+              </button>
+
+              <Image
+                src="/DashboardIcons/peptalkSimbi.svg"
+                alt="Pep talking Simbi"
+                height={200}
+                width={130}
+                className="absolute right-2 sm:right-7 -top-7"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StudyCourses />
             </div>
           </div>
 
-          <div className="1/3">
-            <div className="rounded-[20px] w-[330px] min-h-[190px] bg-bluemaguerite p-4 relative">
+          <div className="lg:w-1/3  w-full">
+            <div className="hidden lg:block rounded-[20px] lg:w-[330px] w-full min-h-[190px] bg-bluemaguerite p-4 relative">
               {/* Pep Talk Simbi */}
               <h3 className="text-deeppurple font-semibold text-[2rem] leading-[40px]">
                 Simbi&apos;s <br /> Pep talk
@@ -225,21 +278,21 @@ export default function StudyPlanPage() {
               />
             </div>
 
-            <div className="mt-10 rounded-[8px] border-[1px] min-h-[144px] w-[330px] p-4 border-gray-200 overflow-x-auto">
+            <div className="mt-10 rounded-[8px] shadow-md  border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200 overflow-x-auto">
               {/* Urgent deadlines */}
               <h3 className="text-error font-medium">Urgent deadlines</h3>
-              <div className="mt-2">
-                <div className="w-full grid grid-cols-1 gap-y-3 ml-4">
+              <div className="mt-2 px-2">
+                <div className="w-full grid grid-cols-1 gap-y-3 ">
                   <StudyCourses />
                 </div>
               </div>
             </div>
 
-            <div className="mt-10 rounded-[8px] border-[1px] min-h-[144px] w-[330px] p-4 border-gray-200">
+            <div className="mt-10 rounded-[8px] shadow-md border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200">
               {/* Missed deadlines */}
               <h3 className="text-error font-medium">Missed deadlines</h3>
-              <div className="mt-2">
-                <div className="w-full grid grid-cols-1 gap-y-3 ml-4">
+              <div className="mt-2 px-2">
+                <div className="w-full grid grid-cols-1 gap-y-3 ">
                   <StudyCourses />
                 </div>
               </div>

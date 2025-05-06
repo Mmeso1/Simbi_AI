@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <main className="flex">
-      <nav className="w-[222px] pt-[59px] px-[27px] bg-darkblue min-h-screen">
+      <nav className="w-[222px] hidden md:block pt-[59px] px-[27px] bg-darkblue min-h-screen">
         {/* The reusable dashboard component on the left */}
         <div className="flex w-[148.96px] gap-[4.96px] items-center justify-center cursor-pointer hover:scale-110">
           <Image
