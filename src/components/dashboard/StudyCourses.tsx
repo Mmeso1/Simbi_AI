@@ -29,19 +29,21 @@ export default function StudyCourses() {
     <>
       {courses.map((course) => (
         <div
-          className="flex bg-graytime py-2 px-4 rounded-[12px] items-center justify-between w-[242px] gap-5"
+          className="flex bg-graytime py-4 px-4 rounded-[12px] items-center justify-between w-full gap-5"
           key={course.id}
         >
-          <Image
-            src={course.titleIcon}
-            alt="title Icon"
-            height={30}
-            width={30}
-          />
+          <div className="flex items-center gap-x-4">
+            <Image
+              src={course.titleIcon}
+              alt="title Icon"
+              height={30}
+              width={30}
+            />
 
-          <div className="">
-            <p className="text-[0.875rem] font-medium">{course.title}</p>
-            <p className="text-[0.75rem] text-gray ">{course.time}</p>
+            <div className="">
+              <p className="text-[0.875rem] font-medium">{course.title}</p>
+              <p className="text-[0.75rem] text-gray ">{course.time}</p>
+            </div>
           </div>
 
           <Image

@@ -12,6 +12,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Inter } from "next/font/google";
 import StudyForm from "@/components/study-plans/StudyForm";
+import { FaBars } from "react-icons/fa";
+import SideBar from "@/components/dashboard/SideBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +42,14 @@ export default function DashboardPage() {
   const [toggleProductivity, setToggleProductivity] = useState<string>("Week"); // for productivity scorecard section
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
 
+  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
+
+  const handleToggleMiniNavBar = () => {
+    // for toggling the mininavbar;
+
+    setToggleMiniNavBar((prevState) => !prevState);
+  };
+
   const handleToggleUserNavBar = () => {
     // for toggling the navbar on the headerNotification
     setToggleUserNavBar((prevState) => !prevState);
@@ -51,30 +61,54 @@ export default function DashboardPage() {
   };
 
   return (
-    <section className="flex poppins">
+    <section
+      className={
+        toggleGenerateStudyPlan
+          ? "flex poppins xl:flex-row flex-col overflow-x-hidden text-white"
+          : "flex poppins xl:flex-row flex-col overflow-x-hidden"
+      }
+    >
       {/* Logic  for toggling the Generate Study Plan pop up  */}
       {toggleGenerateStudyPlan && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] w-[70%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%]  w-[95%]   -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
           <StudyForm
             handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
           />
         </div>
       )}
 
-      <aside className="w-[63%] min-h-screen border-r-[0.9px] px-10 border-r-grayborder">
+      {toggleMiniNavBar && (
+        <div className="w-[222px] fixed z-50 ">
+          <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
+        </div>
+      )}
+
+      <aside className="xl:w-[63%]  w-full min-h-screen xl:pb-20 border-r-0 xl:border-r-[0.9px] px-4 border-r-grayborder">
         {/* Dashboard Middle section */}
 
         <header className="mt-[30px]">
-          dddd
-          <HeaderSearch />
-          <div className="bg-bluemaguerite h-[231px] mt-[60px] w-full rounded-[20px] text-deeppurple px-6 relative">
-            <h1 className="font-semibold pt-7 text-[2.5rem]">Welcome back</h1>
-            <p className="text-[1.125rem] font-[400] ">
+          <div className="flex  items-center justify-between mb-10">
+            <span className="text-3xl block md:hidden text-dark">
+              <FaBars onClick={handleToggleMiniNavBar} />
+            </span>
+            <div className="block xl:hidden w-2/3 md:w-full">
+              <HeaderNotification
+                handleToggleUserNavBar={handleToggleUserNavBar}
+              />
+            </div>
+          </div>
+
+          <div className="w-[60%] md:w-[52%]">
+            <HeaderSearch />
+          </div>
+          <div className="bg-bluemaguerite h-[231px] mt-[60px] w-full rounded-[20px] text-deeppurple px-6 relative ">
+            <h1 className="font-semibold pt-7 text-[2.5rem] ">Welcome back</h1>
+            <p className="text-[1.125rem] font-[400] z-50">
               I’m Simbi, ready to learn and have fun?
             </p>
             <button
               onClick={handleToggleGenerateStudyPlan}
-              className="font-medium cursor-pointer hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base "
+              className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base "
             >
               Generate a new Study Plan
             </button>
@@ -83,7 +117,7 @@ export default function DashboardPage() {
               alt="An image of simbi waving"
               height={189}
               width={200}
-              className="absolute -top-25 right-7"
+              className="absolute  -top-25 -right-10 sm:right-7"
             />
           </div>
         </header>
@@ -131,12 +165,12 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-10 w-full ">
             <ProgressBars />
           </div>
 
           <div className="flex items-center justify-between gap-x-16 w-full mt-16">
-            <div className="w-2/3 flex justify-between items-center">
+            <div className="md:w-2/3 w-full flex justify-between items-center">
               <DashboardHeaders text="Active Study Plan" />
               <Link
                 className="text-lightblue text-[0.75rem] cursor-pointer hover:underline hover:decoration-1 hover:decoration-lightblue hover:font-semibold "
@@ -146,7 +180,7 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="w-2/3 flex justify-center gap-x-6 items-center">
+            <div className="md:w-2/3 hidden md:flex justify-center gap-x-6 items-center">
               <Image
                 src="/DashboardIcons/calendar Icon.svg"
                 alt="calendar Icon"
@@ -163,13 +197,13 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-5 w-full">
-            <div className="grid grid-cols-2 gap-x-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-16">
               <StudyCourses />
             </div>
           </div>
         </section>
       </aside>
-      <aside className="w-[37%] px-6 min-h-screen">
+      <aside className="xl:w-[37%] w-full px-6 min-h-screen">
         {/* for toggling the navbar on the headerNotification */}
 
         {toggleUserNavBar && (
@@ -223,12 +257,17 @@ export default function DashboardPage() {
         )}
         <section className="mt-[30px]">
           {/* Right side */}
-          <HeaderNotification handleToggleUserNavBar={handleToggleUserNavBar} />
+          <div className="xl:block hidden">
+            <HeaderNotification
+              handleToggleUserNavBar={handleToggleUserNavBar}
+            />
+          </div>
 
           <section className="mt-[50px]">
-            <DashboardHeaders text="Rewards and Milestones" />
-            <Rewards />
-
+            <div className="w-full">
+              <DashboardHeaders text="Rewards and Milestones" />
+              <Rewards />
+            </div>
             <div className="border-[0.75px] border-grayborder rounded-[6px] mt-20 px-6 py-4">
               <h3 className="flex justify-between items-center">
                 <span className="font-semibold text-[0.875rem]">

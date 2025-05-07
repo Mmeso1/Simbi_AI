@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function Rewards() {
   return (
-    <section className="">
-      <div className="flex mt-5 gap-x-7 gap-y-10 font-normal text-sm ">
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] w-[180px] h-[159px] p-4 relative">
+    <section className="w-full">
+      <div className="flex mt-5 gap-y-10 gap-x-1 font-normal justify-between text-sm flex-wrap">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-4 relative">
           <h3 className="text-[0.75rem] font-medium">
             Current <br /> NFT <br /> badge
           </h3>
@@ -18,7 +18,7 @@ export default function Rewards() {
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
         </aside>
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] w-[180px] h-[159px] p-6 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Rewards Earned (token)</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
@@ -26,9 +26,8 @@ export default function Rewards() {
             15
           </p>
         </aside>
-      </div>
-      <div className="flex mt-5 gap-x-7 gap-y-10 font-normal text-sm ">
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[180px] p-6 relative">
+
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Milestones Completed</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
@@ -36,7 +35,7 @@ export default function Rewards() {
             12
           </p>
         </aside>
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[180px] p-6 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Active Plans</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>

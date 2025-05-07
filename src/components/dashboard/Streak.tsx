@@ -22,7 +22,7 @@ export default function Streak() {
 
   const display = streakData.map((data) => (
     <div
-      className="border-[0.56px] w-[151px] h-[69px] flex flex-col gap-[13px] rounded-[3px] p-[9px] border-grayborder justify-center"
+      className="border-[0.56px] w-[151px] h-[69px]  flex flex-col gap-[13px] rounded-[3px] p-[9px] border-grayborder justify-center"
       key={data.title}
     >
       <h3 className="text-[0.875rem] text-graytext font-normal">
@@ -33,7 +33,7 @@ export default function Streak() {
   ));
 
   return (
-    <section className="grid grid-cols-3 w-[80%] gap-[22.5px] ">
+    <section className="flex  items-center flex-wrap w-[80%] gap-[22.5px] ">
       {display}
     </section>
   );
