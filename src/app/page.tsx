@@ -252,7 +252,7 @@ export default function Home() {
       </section>
 
       {/* Getting Started Steps */}
-      <section className="py-12 bg-[#E4DFFF]">
+      <section className="pt-12 pb-18 bg-[#E4DFFF]">
         <div className="flex flex-col items-center text-center relative my-20 px-6">
           <Image
             src="/images/simbi-head.svg"
@@ -332,48 +332,60 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#EDEBFB] px-6 py-12 text-sm text-gray-600">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+      <footer className="bg-[#EDEBFB] p-30 text-sm text-gray-600">
+        <div className="flex flex-col md:flex-row gap-20 items-center">
           <div className="mb-4 md:mb-0">
-            <div className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Simbi Logo" width={24} height={24} />
-              <span className="font-semibold">SIMBI</span>
-            </div>
-            <p className="mt-2">© Simbi Inc. 2025. We love our users!</p>
+            <Image
+              src="/logo.svg"
+              alt="Simbi Logo"
+              width={24}
+              height={24}
+              className="w-56 h-auto"
+            />
           </div>
 
-          <div className="flex space-x-12 text-left">
+          <div className="flex gap-54 text-left">
             <div>
-              <p className="font-semibold">Mobile App</p>
-              <ul>
-                <li>Features</li>
-                <li>How it works</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold">Community</p>
-              <ul>
-                <li>For Friends</li>
-                <li>Live rooms</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold">Company</p>
-              <ul>
-                <li>About us</li>
+              <p className="font-normal text-black text-base mb-4">Company</p>
+              <ul className="text-base text-[#525252] space-y-4">
+                <li>About</li>
                 <li>Careers</li>
-                <li>Contact us</li>
+                <li>Press</li>
               </ul>
             </div>
-          </div>
+            <div>
+              <p className="font-normal text-black text-base mb-4">Resources</p>
+              <ul className="text-base text-[#525252] space-y-4">
+                <li>Blog</li>
+                <li>Help Centers</li>
+                <li>Tutorials</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-normal text-black text-base mb-4">Connect</p>
+              <div className="flex items-center space-x-2">
+                <Image
+                  src="images/twitter.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
 
-          <div className="mt-4 md:mt-0">
-            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
-              Get Started
-            </button>
-            <button className="block mt-2 text-sm border px-4 py-2 rounded-md">
-              I Have an Account
-            </button>
+                <Image
+                  src="images/linkedin.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
+
+                <Image
+                  src="images/facebook.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </footer>
