@@ -4,8 +4,24 @@ import "@/app/globals.css";
 import React from "react";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
+import { roboto } from "@/lib/fonts";
 
 export default function Home() {
+  const steps = [
+    { text: "Create your free account", color: "#7A5FFF" },
+    { text: "Tell Simbi what you’re studying", color: "#16A349" },
+    {
+      text: "Get a personalized plan with built-in accountability",
+      color: "#FF5A5F",
+    },
+    { text: "Use the Telegram Bot for on-the-go support", color: "#F99D07" },
+    {
+      text: "Earn crypto rewards and unlock custom NFT badges",
+      color: "#6046FF",
+    },
+    { text: "Ace your academic goals", color: "#0099FF" },
+  ];
+
   return (
     <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
@@ -200,40 +216,93 @@ export default function Home() {
       </section>
 
       {/* Real talk */}
-      <section className="text-center px-6 py-12">
-        <h2 className="text-lg font-semibold">Real talk from Simbi</h2>
-        <div className="bg-white rounded-md shadow p-6 mt-4 max-w-md mx-auto">
-          <p className="text-sm text-gray-700">
-            `&quot;`You missed your flashcards again? Your rewards are screaming
-            for mercy. Open the app before I start grading your day.`&quot;`
+      <section className="flex justify-center items-center px-6 py-32 gap-10">
+        <h2 className="text-5xl font-medium max-w-1/6">Real talk from Simbi</h2>
+        <div className="bg-white rounded-xl shadow-[0_19px_50px_0_#957FFF87] max-w-[745px] py-8 px-9 ">
+          <Image
+            src="/images/quote.svg"
+            alt="Quote"
+            width={100}
+            height={100}
+            className="w-10"
+          />
+          <div className="inner-sect flex items-center gap-6">
+            <p className="text-lg text-gray-700 ">
+              You missed your flashcards again? Your neurons are screaming for
+              mercy. Open the app before I start erasing your GPA.
+            </p>
+            <Image
+              src="/images/simbi-3.svg"
+              alt="Simbi Character"
+              width={100}
+              height={100}
+              className="mx-auto mt-4"
+            />
+          </div>
+
+          <p
+            className={`mt-2 font-black text-[28px] leading-[100%] ${roboto.className}`}
+          >
+            Simbi,{" "}
+            <span className="poppins font-normal text-xs leading-[150%]">
+              your best frenemy!
+            </span>
           </p>
-          <p className="mt-2 font-bold text-purple-800">- Simbi</p>
         </div>
-        <Image
-          src="/simbi-3.png"
-          alt="Simbi character"
-          width={100}
-          height={100}
-          className="mx-auto mt-6"
-        />
-        <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md mt-4 text-sm">
-          Get Started in 60 Seconds
-        </button>
       </section>
 
       {/* Getting Started Steps */}
-      <section className="px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
-          {[
-            "Create your free account",
-            "Tell Simbi what you’re studying",
-            "Get a personalized plan with built-in accountability",
-            "Use the Telegram Bot for on-the-go support",
-            "Earn crypto rewards and unlock custom NFT badges",
-          ].map((step, i) => (
-            <div key={i} className="bg-[#F7F6FD] p-4 rounded-lg shadow">
-              <p>
-                <span className="font-bold">{i + 1}.</span> {step}
+      <section className="py-12 bg-[#E4DFFF]">
+        <div className="flex flex-col items-center text-center relative my-20 px-6">
+          <Image
+            src="/images/simbi-head.svg"
+            alt="Simbi character"
+            width={100}
+            height={100}
+            className="mx-auto mt-6 w-54 h-auto"
+          />
+          <button className="absolute top-50 bg-[#7A5FFF] text-white px-4 py-2 rounded-md text-[32px] w-3/4 h-auto">
+            Get Started in 60 Seconds
+          </button>
+        </div>
+        <div className="relative w-full">
+          {/* Path background */}
+          <Image
+            src="/images/map-group.svg"
+            alt="Path"
+            width={600}
+            height={200}
+            className="w-full"
+          />
+
+          <div className="absolute bottom-68 left-22 animate-float">
+            <div className="relative">
+              <Image
+                src="/images/stand-1.svg"
+                alt="Stand"
+                width={100}
+                height={100}
+                className="w-42 h-auto"
+              />
+              <Image
+                src="/images/head-1.svg"
+                alt="Stand"
+                width={100}
+                height={100}
+                className="absolute top-10 left-8"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-18 mx-48 text-left text-sm">
+          {steps.map((item, i) => (
+            <div
+              key={i}
+              className="bg-[#F7F6FD] px-6 py-7 rounded-2xl border border-[#1E1E2F] shadow-[10px_11px_28.9px_0_rgba(149,127,255,0.61)]"
+            >
+              <p style={{ color: item.color }} className="font-light text-2xl">
+                <span>{i + 1}.</span> {item.text}
               </p>
             </div>
           ))}
