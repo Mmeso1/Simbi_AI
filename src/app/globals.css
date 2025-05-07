@@ -63,6 +63,29 @@ body {
 
 /* globals.css */
 
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  20% {
+    transform: translateY(-50px);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 4s infinite;
+}
+
+/* globals.css */
+
 .scrollbar-none {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
