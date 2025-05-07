@@ -198,7 +198,9 @@ export default function DashboardPage() {
 
           <div className="mt-5 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-16">
-              <StudyCourses />
+              <StudyCourses
+                handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+              />
             </div>
           </div>
         </section>
