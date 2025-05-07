@@ -91,7 +91,7 @@ export default function DashboardPage() {
             <span className="text-3xl block md:hidden text-dark">
               <FaBars onClick={handleToggleMiniNavBar} />
             </span>
-            <div className="block xl:hidden w-2/3 md:w-full">
+            <div className="block xl:hidden w-[73%] md:w-full">
               <HeaderNotification
                 handleToggleUserNavBar={handleToggleUserNavBar}
               />
@@ -117,7 +117,7 @@ export default function DashboardPage() {
               alt="An image of simbi waving"
               height={189}
               width={200}
-              className="absolute  -top-25 -right-10 sm:right-7"
+              className="absolute hidden sm:block -top-25 -right-10 sm:right-7"
             />
           </div>
         </header>

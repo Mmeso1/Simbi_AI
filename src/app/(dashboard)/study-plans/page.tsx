@@ -83,7 +83,7 @@ export default function StudyPlanPage() {
           alt="Image of an envelope"
           height={97}
           width={117}
-          className="fixed bottom-10 right-20 cursor-pointer"
+          className="fixed bottom-10 z-50 right-20 cursor-pointer"
         />
       </Link>
       {/* for toggling the navbar on the headerNotification */}
@@ -91,30 +91,52 @@ export default function StudyPlanPage() {
         <div
           className={
             toggleUserNavBar
-              ? `${inter.className} opacity-100 duration-1000 rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6`
-              : `${inter.className} rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
+              ? `${inter.className} opacity-100 duration-1000 rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6`
+              : `${inter.className} rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
           }
         >
-          <button className="flex items-center gap-6 group w-full">
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/cupIcon.png"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
             <span className="font-normal group-hover:text-lightblue duration-300 ">
-              Start Study Session
+              Upgrade Plan
             </span>
-          </button>
-          <button
-            onClick={handleToggleGenerateStudyPlan}
-            className="flex items-center gap-6 group w-full"
-          >
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/customizeIcons.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
             <span className="font-normal group-hover:text-lightblue duration-300 ">
-              Edit Study Plan
+              Customize Simbi
             </span>
-          </button>
-          <button className="flex items-center gap-6 group w-full">
-            <span className="font-normal text-error group-hover:text-lightblue duration-300 ">
-              Deactivate Study Plan
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/purpleLogOutIcon.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
             </span>
-          </button>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Log Out
+            </span>
+          </Link>
         </div>
       )}
+
       <header className="mt-[30px] flex xl:flex-row flex-col-reverse gap-y-5 justify-between items-center">
         <div className="xl:w-[40%] w-full">
           <HeaderSearch />
@@ -126,7 +148,7 @@ export default function StudyPlanPage() {
           <span className="text-3xl block md:hidden text-dark">
             <FaBars onClick={handleToggleMiniNavBar} />
           </span>
-          <div className="block xl:hidden w-2/3 md:w-full">
+          <div className="block xl:hidden w-[73%] md:w-full">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
             />
@@ -250,12 +272,14 @@ export default function StudyPlanPage() {
                 alt="Pep talking Simbi"
                 height={200}
                 width={130}
-                className="absolute right-2 sm:right-7 -top-7"
+                className="absolute hidden sm:block right-2 sm:right-7 -top-7"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <StudyCourses />
+              <StudyCourses
+                handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+              />
             </div>
           </div>
 
@@ -278,12 +302,16 @@ export default function StudyPlanPage() {
               />
             </div>
 
-            <div className="mt-10 rounded-[8px] shadow-md  border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200 overflow-x-auto">
+            <div className="mt-10 rounded-[8px] shadow-md  border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200">
               {/* Urgent deadlines */}
               <h3 className="text-error font-medium">Urgent deadlines</h3>
               <div className="mt-2 px-2">
                 <div className="w-full grid grid-cols-1 gap-y-3 ">
-                  <StudyCourses />
+                  <StudyCourses
+                    handleToggleGenerateStudyPlan={
+                      handleToggleGenerateStudyPlan
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -293,7 +321,11 @@ export default function StudyPlanPage() {
               <h3 className="text-error font-medium">Missed deadlines</h3>
               <div className="mt-2 px-2">
                 <div className="w-full grid grid-cols-1 gap-y-3 ">
-                  <StudyCourses />
+                  <StudyCourses
+                    handleToggleGenerateStudyPlan={
+                      handleToggleGenerateStudyPlan
+                    }
+                  />
                 </div>
               </div>
             </div>
