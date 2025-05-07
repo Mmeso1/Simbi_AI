@@ -5,23 +5,10 @@ import React from "react";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 import { roboto } from "@/lib/fonts";
+import Testimonials from "@/components/testimonials/testimony";
+import { steps, testimonies } from "@/data/homepageData";
 
 export default function Home() {
-  const steps = [
-    { text: "Create your free account", color: "#7A5FFF" },
-    { text: "Tell Simbi what you’re studying", color: "#16A349" },
-    {
-      text: "Get a personalized plan with built-in accountability",
-      color: "#FF5A5F",
-    },
-    { text: "Use the Telegram Bot for on-the-go support", color: "#F99D07" },
-    {
-      text: "Earn crypto rewards and unlock custom NFT badges",
-      color: "#6046FF",
-    },
-    { text: "Ace your academic goals", color: "#0099FF" },
-  ];
-
   return (
     <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
@@ -310,24 +297,38 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="w-3/5 mx-auto text-center my-36">
-        <h2 className="text-[#1E1E2F] text-center font-poppins text-[48px] font-medium leading-[60px] tracking-[-1.44px]">
-          Study Smarter. Stay on track. Get Roasted (lovingly)
-        </h2>
-        <p className="mt-3 text-[#6B7280] text-center font-poppins text-[24px] font-normal leading-[32px] tracking-[-0.72px]">
-          Sign up and get acquainted with Simbi!
-        </p>
-        <div className="mt-18 space-x-2 mx-auto">
-          <Link href="/auth/signup">
-            <button className="bg-[#7A5FFF] text-white px-14 py-3 rounded-md text-sm">
-              Get Started
-            </button>
-          </Link>
-          <Link href="/auth/signin">
-            <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-14 py-3 rounded-md">
-              I Have an Account
-            </button>
-          </Link>
+      <section className="w-3/4 mx-auto text-center my-36">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 pt-10 pb-30">
+          {testimonies.map((item, i) => (
+            <Testimonials
+              key={i}
+              name={item.name}
+              title={item.title}
+              text={item.text}
+              color={item.color}
+            />
+          ))}
+        </div>
+
+        <div className="mt-30">
+          <h2 className="text-[#1E1E2F] text-center font-poppins text-[48px] font-medium leading-[60px] tracking-[-1.44px]">
+            Study Smarter. Stay on track. Get <br /> Roasted (lovingly)
+          </h2>
+          <p className="mt-3 text-[#6B7280] text-center font-poppins text-[24px] font-normal leading-[32px] tracking-[-0.72px]">
+            Sign up and get acquainted with Simbi!
+          </p>
+          <div className="mt-18 space-x-2 mx-auto">
+            <Link href="/auth/signup">
+              <button className="bg-[#7A5FFF] text-white px-14 py-3 rounded-md text-sm">
+                Get Started
+              </button>
+            </Link>
+            <Link href="/auth/signin">
+              <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-14 py-3 rounded-md">
+                I Have an Account
+              </button>
+            </Link>
+          </div>
         </div>
       </section>
 
