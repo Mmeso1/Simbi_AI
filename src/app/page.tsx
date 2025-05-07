@@ -310,19 +310,21 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="text-center py-12">
-        <h2 className="text-xl font-semibold">
+      <section className="w-3/5 mx-auto text-center my-36">
+        <h2 className="text-[#1E1E2F] text-center font-poppins text-[48px] font-medium leading-[60px] tracking-[-1.44px]">
           Study Smarter. Stay on track. Get Roasted (lovingly)
         </h2>
-        <p className="text-sm mt-2">Sign up and get acquainted with Simbi!</p>
-        <div className="mt-4 space-x-2">
+        <p className="mt-3 text-[#6B7280] text-center font-poppins text-[24px] font-normal leading-[32px] tracking-[-0.72px]">
+          Sign up and get acquainted with Simbi!
+        </p>
+        <div className="mt-18 space-x-2 mx-auto">
           <Link href="/auth/signup">
-            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
+            <button className="bg-[#7A5FFF] text-white px-14 py-3 rounded-md text-sm">
               Get Started
             </button>
           </Link>
           <Link href="/auth/signin">
-            <button className="text-sm border px-4 py-2 rounded-md">
+            <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-14 py-3 rounded-md">
               I Have an Account
             </button>
           </Link>
