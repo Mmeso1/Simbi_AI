@@ -1,6 +1,7 @@
 import { Baloo_Thambi_2 } from "next/font/google";
 import { Poppins } from "next/font/google";
 import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 export const balooThambi2 = Baloo_Thambi_2({
   subsets: ["latin"],
@@ -9,7 +10,7 @@ export const balooThambi2 = Baloo_Thambi_2({
 
 export const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
   variable: "--font-poppins",
   display: "swap",
 });
@@ -17,5 +18,12 @@ export const poppins = Poppins({
 export const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+export const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-roboto",
   display: "swap",
 });

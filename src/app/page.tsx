@@ -4,10 +4,13 @@ import "@/app/globals.css";
 import React from "react";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
+import { roboto } from "@/lib/fonts";
+import Testimonials from "@/components/testimonials/testimony";
+import { steps, testimonies } from "@/data/homepageData";
 
 export default function Home() {
   return (
-    <main className="bg-[#FDFDFF] text-gray-800">
+    <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
       <header className="flex justify-between items-center px-30 py-8 bg-white">
         <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
@@ -33,7 +36,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col justify-center">
-            <h1 className="text-5xl font-medium leading-[60px]">
+            <h1 className="text-5xl font-normal leading-[60px]">
               Meet Simbi!
               <br />
               Your AI Study Buddy.
@@ -110,67 +113,89 @@ export default function Home() {
       </section>
 
       {/* Simbi is here for */}
-      <section className="bg-white py-12 px-6 text-center flex flex-row">
+      <section className="bg-white py-16 px-6 mr-20 text-center flex justify-end items-center">
         <div className="flex w-1/2">
           <Image
-            src="/images/simbi-2.png"
+            src="/images/simbi-2.svg"
             alt="Simbi Character"
-            width={200}
-            height={200}
-            className="mx-auto content-end"
+            width={250}
+            height={300}
+            className="mx-auto h-auto"
           />
         </div>
-        <div className="flex flex-col justify-center">
-          <h2 className="text-xl font-semibold mt-4">Simbi is here for</h2>
-          <ul className="mt-4 space-y-2 text-sm text-gray-700 max-w-md mx-auto text-left">
-            <li>Self-learners & exam preppers who want structure</li>
-            <li>Procrastinators who need a motivational kick</li>
-            <li>High school & university students tired of falling behind</li>
-            <li>All-learners blazing their own educational path</li>
+        <div className="flex flex-col justify-center text-left gap-4">
+          <h2 className="text-5xl font-medium mt-4">Simbi is here for</h2>
+          <ul className="mt-4 space-y-5 font-light text-3xl text-[#6B7280] max-w-md mx-auto">
+            <li className="leading-[31px]">
+              Self-learners & exam preppers who want structure
+            </li>
+            <li className="leading-[31px]">
+              Procrastinators who need a motivational kick
+            </li>
+            <li className="leading-[31px]">
+              High school & university students tired of falling behind
+            </li>
+            <li className="leading-[31px]">
+              All-learners blazing their own educational path
+            </li>
           </ul>
         </div>
       </section>
 
       {/* Why Simbi Works */}
-      <section className="bg-[#EDEBFB] py-12 px-6 text-center">
-        <h2 className="text-xl font-semibold">Why Simbi works</h2>
-        <div className="grid grid-rows-1 md:grid-cols-4 gap-6 mt-8">
+      <section className="bg-[#E4DFFF] py-36 px-16 text-center">
+        <h2 className="text-5xl font-medium">Why Simbi works</h2>
+        <div className="grid grid-rows-1 md:grid-cols-4 gap-6 mt-20 px-20 group">
           {[
             {
               title: "All That Understands You",
-              image: "/images/group1.png",
+              image: "/images/group1.svg",
               description:
                 "Personalized plans, custom quizzes, and supports that adapts to how you learn.",
+              textColor: "#7A5FFF",
             },
             {
               title: "'A Study Buddy With Real Personality",
-              image: "/images/group2.png",
+              image: "/images/group2.svg",
               description:
                 "SIMBI cheers when you win, roasts when you slack, and makes studying fun.",
+              textColor: "#16A349",
             },
             {
               title: "'Web3 Rewards",
-              image: "/images/group3.png",
+              image: "/images/group3.svg",
               description:
                 "Earn tokens, unlock NFTs and join study groups where crypto meets accountability.",
+              textColor: "#FF5A5F",
             },
             {
               title: "Everywhere You Want",
-              image: "/images/group4.png",
+              image: "/images/group4.svg",
               description:
                 "On your laptop, on your phone, on your telegram. SIMBI's got your back.",
+              textColor: "#F99D07",
             },
-          ].map(({ title, image, description }, i) => (
-            <div key={i} className="bg-white rounded-lg p-4 shadow text-sm">
+          ].map(({ title, image, description, textColor }, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-4xl p-4 py-8 shadow flex flex-col items-center gap-5
+        transform transition-transform duration-700 ease-out
+        group-hover:scale-95 hover:scale-105"
+            >
               <Image
                 src={image}
                 alt={title}
                 width={32}
-                height={32}
-                className="mx-auto mb-2"
+                height={67}
+                className="mx-auto mb-2 w-18 h-auto"
               />
-              <h3 className="font-semibold mb-1">{title}</h3>
-              <p className="text-gray-600">{description}</p>
+              <h3
+                className="text-2xl font-normal min-h-[3rem]"
+                style={{ color: textColor }}
+              >
+                {title}
+              </h3>
+              <p className="text-xl text-black font-light">{description}</p>
             </div>
           ))}
           <></>
@@ -178,40 +203,93 @@ export default function Home() {
       </section>
 
       {/* Real talk */}
-      <section className="text-center px-6 py-12">
-        <h2 className="text-lg font-semibold">Real talk from Simbi</h2>
-        <div className="bg-white rounded-md shadow p-6 mt-4 max-w-md mx-auto">
-          <p className="text-sm text-gray-700">
-            `&quot;`You missed your flashcards again? Your rewards are screaming
-            for mercy. Open the app before I start grading your day.`&quot;`
+      <section className="flex justify-center items-center px-6 py-32 gap-10">
+        <h2 className="text-5xl font-medium max-w-1/6">Real talk from Simbi</h2>
+        <div className="bg-white rounded-xl shadow-[0_19px_50px_0_#957FFF87] max-w-[745px] py-8 px-9 ">
+          <Image
+            src="/images/quote.svg"
+            alt="Quote"
+            width={100}
+            height={100}
+            className="w-10"
+          />
+          <div className="inner-sect flex items-center gap-6">
+            <p className="text-lg text-gray-700 ">
+              You missed your flashcards again? Your neurons are screaming for
+              mercy. Open the app before I start erasing your GPA.
+            </p>
+            <Image
+              src="/images/simbi-3.svg"
+              alt="Simbi Character"
+              width={100}
+              height={100}
+              className="mx-auto mt-4"
+            />
+          </div>
+
+          <p
+            className={`mt-2 font-black text-[28px] leading-[100%] ${roboto.className}`}
+          >
+            Simbi,{" "}
+            <span className="poppins font-normal text-xs leading-[150%]">
+              your best frenemy!
+            </span>
           </p>
-          <p className="mt-2 font-bold text-purple-800">- Simbi</p>
         </div>
-        <Image
-          src="/simbi-3.png"
-          alt="Simbi character"
-          width={100}
-          height={100}
-          className="mx-auto mt-6"
-        />
-        <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md mt-4 text-sm">
-          Get Started in 60 Seconds
-        </button>
       </section>
 
       {/* Getting Started Steps */}
-      <section className="px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
-          {[
-            "Create your free account",
-            "Tell Simbi what you’re studying",
-            "Get a personalized plan with built-in accountability",
-            "Use the Telegram Bot for on-the-go support",
-            "Earn crypto rewards and unlock custom NFT badges",
-          ].map((step, i) => (
-            <div key={i} className="bg-[#F7F6FD] p-4 rounded-lg shadow">
-              <p>
-                <span className="font-bold">{i + 1}.</span> {step}
+      <section className="pt-12 pb-18 bg-[#E4DFFF]">
+        <div className="flex flex-col items-center text-center relative my-20 px-6">
+          <Image
+            src="/images/simbi-head.svg"
+            alt="Simbi character"
+            width={100}
+            height={100}
+            className="mx-auto mt-6 w-54 h-auto"
+          />
+          <button className="absolute top-50 bg-[#7A5FFF] text-white px-4 py-2 rounded-md text-[32px] w-3/4 h-auto">
+            Get Started in 60 Seconds
+          </button>
+        </div>
+        <div className="relative w-full">
+          {/* Path background */}
+          <Image
+            src="/images/map-group.svg"
+            alt="Path"
+            width={600}
+            height={200}
+            className="w-full"
+          />
+
+          <div className="absolute bottom-68 left-22 animate-float">
+            <div className="relative">
+              <Image
+                src="/images/stand-1.svg"
+                alt="Stand"
+                width={100}
+                height={100}
+                className="w-42 h-auto"
+              />
+              <Image
+                src="/images/head-1.svg"
+                alt="Stand"
+                width={100}
+                height={100}
+                className="absolute top-10 left-8"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-18 mx-48 text-left text-sm">
+          {steps.map((item, i) => (
+            <div
+              key={i}
+              className="bg-[#F7F6FD] px-6 py-7 rounded-2xl border border-[#1E1E2F] shadow-[10px_11px_28.9px_0_rgba(149,127,255,0.61)]"
+            >
+              <p style={{ color: item.color }} className="font-light text-2xl">
+                <span>{i + 1}.</span> {item.text}
               </p>
             </div>
           ))}
@@ -219,68 +297,96 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="text-center py-12">
-        <h2 className="text-xl font-semibold">
-          Study Smarter. Stay on track. Get Roasted (lovingly)
-        </h2>
-        <p className="text-sm mt-2">Sign up and get acquainted with Simbi!</p>
-        <div className="mt-4 space-x-2">
-          <Link href="/auth/signup">
-            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
-              Get Started
-            </button>
-          </Link>
-          <Link href="/auth/signin">
-            <button className="text-sm border px-4 py-2 rounded-md">
-              I Have an Account
-            </button>
-          </Link>
+      <section className="w-3/4 mx-auto text-center my-36">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 pt-10 pb-30">
+          {testimonies.map((item, i) => (
+            <Testimonials
+              key={i}
+              name={item.name}
+              title={item.title}
+              text={item.text}
+              color={item.color}
+            />
+          ))}
+        </div>
+
+        <div className="mt-30">
+          <h2 className="text-[#1E1E2F] text-center font-poppins text-[48px] font-medium leading-[60px] tracking-[-1.44px]">
+            Study Smarter. Stay on track. Get <br /> Roasted (lovingly)
+          </h2>
+          <p className="mt-3 text-[#6B7280] text-center font-poppins text-[24px] font-normal leading-[32px] tracking-[-0.72px]">
+            Sign up and get acquainted with Simbi!
+          </p>
+          <div className="mt-18 space-x-2 mx-auto">
+            <Link href="/auth/signup">
+              <button className="bg-[#7A5FFF] text-white px-14 py-3 rounded-md text-sm">
+                Get Started
+              </button>
+            </Link>
+            <Link href="/auth/signin">
+              <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-14 py-3 rounded-md">
+                I Have an Account
+              </button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#EDEBFB] px-6 py-12 text-sm text-gray-600">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+      <footer className="bg-[#EDEBFB] p-30 text-sm text-gray-600">
+        <div className="flex flex-col md:flex-row gap-20 items-center">
           <div className="mb-4 md:mb-0">
-            <div className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Simbi Logo" width={24} height={24} />
-              <span className="font-semibold">SIMBI</span>
-            </div>
-            <p className="mt-2">© Simbi Inc. 2025. We love our users!</p>
+            <Image
+              src="/logo.svg"
+              alt="Simbi Logo"
+              width={24}
+              height={24}
+              className="w-56 h-auto"
+            />
           </div>
 
-          <div className="flex space-x-12 text-left">
+          <div className="flex gap-54 text-left">
             <div>
-              <p className="font-semibold">Mobile App</p>
-              <ul>
-                <li>Features</li>
-                <li>How it works</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold">Community</p>
-              <ul>
-                <li>For Friends</li>
-                <li>Live rooms</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold">Company</p>
-              <ul>
-                <li>About us</li>
+              <p className="font-normal text-black text-base mb-4">Company</p>
+              <ul className="text-base text-[#525252] space-y-4">
+                <li>About</li>
                 <li>Careers</li>
-                <li>Contact us</li>
+                <li>Press</li>
               </ul>
             </div>
-          </div>
+            <div>
+              <p className="font-normal text-black text-base mb-4">Resources</p>
+              <ul className="text-base text-[#525252] space-y-4">
+                <li>Blog</li>
+                <li>Help Centers</li>
+                <li>Tutorials</li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-normal text-black text-base mb-4">Connect</p>
+              <div className="flex items-center space-x-2">
+                <Image
+                  src="images/twitter.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
 
-          <div className="mt-4 md:mt-0">
-            <button className="bg-[#6046FF] text-white px-4 py-2 rounded-md text-sm">
-              Get Started
-            </button>
-            <button className="block mt-2 text-sm border px-4 py-2 rounded-md">
-              I Have an Account
-            </button>
+                <Image
+                  src="images/linkedin.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
+
+                <Image
+                  src="images/facebook.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </footer>
