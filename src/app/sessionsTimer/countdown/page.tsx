@@ -106,7 +106,7 @@ export default function CountDownPage() {
         </div>
       </section>
 
-      <div className="relative w-[50%] mx-auto h-[14px] bg-progress overflow-visible mt-7 rounded-[36px]">
+      <div className="relative w-full lg:w-[50%] mx-auto h-[14px] bg-progress overflow-visible mt-7 rounded-[36px]">
         <div
           className="absolute left-0 top-0 h-full bg-lightblue transition-all duration-500 rounded-[100px]"
           style={{
@@ -132,7 +132,7 @@ export default function CountDownPage() {
         </div>
       </div>
 
-      <div className="mt-20 mx-auto w-[80%]">
+      <div className="mt-20 mx-auto w-full lg:w-[80%]">
         <textarea
           placeholder="Take note during your session..."
           className="font-medium rounded-[8px] focus:outline-grayborder focus:outline-1 w-full py-[24px] px-[33px] resize-y border-[1px] shadow-md shadow-grayborder border-grayborder"

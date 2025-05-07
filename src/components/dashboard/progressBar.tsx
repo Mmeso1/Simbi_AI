@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function progressBar() {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between w-full flex-wrap items-center text-center gap-y-4">
       <Image
         src="/DashboardIcons/studyHoursIcon.png"
         alt="study image"

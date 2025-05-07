@@ -7,7 +7,7 @@ export default function EmptyStudyPlan({
 }) {
   return (
     <section>
-      <div className="w-[478px] min-h-[530.89px] items-center mt-24 flex flex-col gap-[30px] mx-auto">
+      <div className="min-h-[530.89px] items-center mt-24 flex flex-col gap-[30px] mx-auto ">
         <div>
           <Image
             src="/DashboardIcons/notStudyingSimbi.svg"
@@ -16,7 +16,7 @@ export default function EmptyStudyPlan({
             width={321}
           />
         </div>
-        <div className="text-center">
+        <div className="text-center overflow-hidden">
           <p className="font-semibold text-[2rem] text-grayheader">
             No Study Plan created Yet
           </p>

@@ -94,11 +94,11 @@ export default function SessionTimerPage() {
           </div>
 
           <div className="mt-10">
-            <p className="font-semibold text-[1.25rem]">
+            <p className="font-semibold text-center lg:text-left text-[1.25rem]">
               Simbi&apos;s Current State
             </p>
 
-            <div className="my-7  flex justify-between items-center gap-x-20 w-[80%] mx-auto">
+            <div className="my-7  flex justify-between items-center flex-wrap w-full lg:w-[80%] mx-auto">
               <div className="shadow-md cursor-pointer group flex flex-col items-center  gap-[10px] hover:shadow-md duration-1000 rounded-[8px] ease-in-out hover:shadow-lightblue w-[30%] hover:scale-105">
                 <Image
                   src="/DashboardIcons/simbiFocusedState.png"

@@ -23,17 +23,19 @@ export default function HeaderNotification({
           className="absolute left-[13px] top-0"
         />
       </aside>
-      <aside className="bg-bluemaguerite w-[65%] p-2 rounded-[10px] flex justify-between ">
-        <Image
-          src="/DashboardIcons/dashboardUserImg.png"
-          alt="Image of the user"
-          height={40}
-          width={40}
-          className="rounded-[10px]"
-        />
-        <div className="flex flex-col font-medium ">
-          <h3 className="text-[0.875rem]">Grace Fernades</h3>
-          <p className="text-[0.75rem] text-lightblue">Basic plan</p>
+      <aside className="bg-bluemaguerite w-[70%] p-2 rounded-[10px] flex justify-between ">
+        <div className="flex items-center gap-4">
+          <Image
+            src="/DashboardIcons/dashboardUserImg.png"
+            alt="Image of the user"
+            height={40}
+            width={40}
+            className="rounded-[10px]"
+          />
+          <div className="flex flex-col font-medium ">
+            <h3 className="text-[0.875rem]">Grace Fernades</h3>
+            <p className="text-[0.75rem] text-lightblue">Basic plan</p>
+          </div>
         </div>
         <button
           className="hover:cursor-pointer"
