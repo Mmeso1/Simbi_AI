@@ -102,13 +102,15 @@ export default function DashboardPage() {
             <HeaderSearch />
           </div>
           <div className="bg-bluemaguerite h-[231px] mt-[60px] w-full rounded-[20px] text-deeppurple px-6 relative ">
-            <h1 className="font-semibold pt-7 text-[2.5rem] ">Welcome back</h1>
-            <p className="text-[1.125rem] font-[400] z-50">
+            <h1 className="font-semibold pt-7 sm:text-[2.5rem] text-[2rem] ">
+              Welcome back
+            </h1>
+            <p className="sm:text-[1.125rem] text-[1rem] font-[400] z-50">
               I’m Simbi, ready to learn and have fun?
             </p>
             <button
               onClick={handleToggleGenerateStudyPlan}
-              className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base "
+              className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base"
             >
               Generate a new Study Plan
             </button>
@@ -117,7 +119,7 @@ export default function DashboardPage() {
               alt="An image of simbi waving"
               height={189}
               width={200}
-              className="absolute hidden sm:block -top-25 -right-10 sm:right-7"
+              className="absolute sm:block -top-25 -right-10 sm:right-7"
             />
           </div>
         </header>

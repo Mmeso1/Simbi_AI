@@ -4,7 +4,7 @@ export default function Rewards() {
   return (
     <section className="w-full">
       <div className="flex mt-5 gap-y-10 gap-x-1 font-normal justify-between text-sm flex-wrap">
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-4 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-4 relative">
           <h3 className="text-[0.75rem] font-medium">
             Current <br /> NFT <br /> badge
           </h3>
@@ -18,7 +18,7 @@ export default function Rewards() {
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
         </aside>
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Rewards Earned (token)</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
@@ -27,7 +27,7 @@ export default function Rewards() {
           </p>
         </aside>
 
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Milestones Completed</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
@@ -35,7 +35,7 @@ export default function Rewards() {
             12
           </p>
         </aside>
-        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] size-[170px] p-6 relative">
+        <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-6 relative">
           <h3 className="text-[0.75rem] font-medium">Active Plans</h3>
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
