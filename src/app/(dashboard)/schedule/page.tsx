@@ -118,7 +118,7 @@ export default function SchedulePage() {
         </div>
       </header>
 
-      <StudyScheduleCalendar />
+      <StudyScheduleCalendar handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan} />
 
       {/* The message icon fixed to the bottom of the screen */}
       <Link href="/chat">
