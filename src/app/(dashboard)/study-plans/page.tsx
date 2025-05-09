@@ -36,6 +36,8 @@ export default function StudyPlanPage() {
   const [task, setTask] = useState(true);
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
+  // Generate Study Plan Pop up
+  const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
 
   const handleToggleMiniNavBar = () => {
     // for toggling the mininavbar;
@@ -51,9 +53,6 @@ export default function StudyPlanPage() {
     // Start study session by setting timer
     router.push("/sessionsTimer");
   };
-
-  // Generate Study Plan Pop up
-  const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
 
   const handleToggleGenerateStudyPlan = () => {
     // for toggling the Generate Study Plan pop up

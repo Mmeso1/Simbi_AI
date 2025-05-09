@@ -23,7 +23,7 @@ export default function HeaderNotification({
           className="absolute left-[13px] top-0"
         />
       </aside>
-      <aside className="bg-bluemaguerite w-[70%] p-2 rounded-[10px] flex justify-between ">
+      <aside className="bg-bluemaguerite w-[70%] max-w-xs p-2 rounded-[10px] flex justify-between ">
         <div className="flex items-center gap-4">
           <Image
             src="/DashboardIcons/dashboardUserImg.png"
