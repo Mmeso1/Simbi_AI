@@ -49,9 +49,9 @@ const StudyScheduleCalendar = ({
   };
 
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <div className="flex items-center xl:flex-row flex-col-reverse gap-y-6 justify-between mt-16 border-b-[0.95px] pb-5 xl:px-6 px-0 border-b-grayborder mb-10">
-        <div className="flex w-[446.91px] items-center justify-evenly">
+        <div className="flex sm:w-[446.91px] w-[400px] items-center justify-between">
           <div className="flex">
             <DashboardHeaders text="Study Schedule" />
             <Image
@@ -66,8 +66,8 @@ const StudyScheduleCalendar = ({
             onClick={() => setView("day")}
             className={
               view === "day"
-                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.75rem] hover:text-lightblue text-lightblue after:bg-lightblue"
-                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray hover:text-lightblue"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  hover:text-lightblue text-lightblue after:bg-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  text-deepdarkgray hover:text-lightblue"
             }
           >
             Daily
@@ -76,8 +76,8 @@ const StudyScheduleCalendar = ({
             onClick={() => setView("week")}
             className={
               view === "week"
-                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.75rem] hover:text-lightblue text-lightblue after:bg-lightblue"
-                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray hover:text-lightblue"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  hover:text-lightblue text-lightblue after:bg-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  text-deepdarkgray hover:text-lightblue"
             }
           >
             Weekly
@@ -86,8 +86,8 @@ const StudyScheduleCalendar = ({
             onClick={() => setView("month")}
             className={
               view === "month"
-                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.75rem] hover:text-lightblue text-lightblue after:bg-lightblue"
-                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray hover:text-lightblue"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  hover:text-lightblue text-lightblue after:bg-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7 after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  text-deepdarkgray hover:text-lightblue"
             }
           >
             Monthly

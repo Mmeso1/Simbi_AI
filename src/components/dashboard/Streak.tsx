@@ -33,7 +33,7 @@ export default function Streak() {
   ));
 
   return (
-    <section className="flex  items-center flex-wrap w-[80%] gap-[22.5px] ">
+    <section className="flex items-center flex-wrap w-full sm:w-[80%] gap-[10.5px] justify-center sm:justify-start mt-5">
       {display}
     </section>
   );

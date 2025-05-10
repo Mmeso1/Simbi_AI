@@ -142,7 +142,8 @@ export default function CountDownPage() {
 
       <div className="mt-32 w-[80%] mx-auto text-right">
         <button
-          disabled={isRunning || timeElapsed < initialTime}
+          onClick={() => router.push("/study-plans")}
+          disabled={timeElapsed < initialTime}
           className={`px-20 bg-lightblue py-[7px] hover:bg-blue-900 rounded-[8px] text-white`}
         >
           Finish

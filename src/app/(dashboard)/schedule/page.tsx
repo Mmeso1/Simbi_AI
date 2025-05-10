@@ -110,7 +110,7 @@ export default function SchedulePage() {
           <span className="text-3xl block md:hidden text-dark">
             <FaBars onClick={handleToggleMiniNavBar} />
           </span>
-          <div className="block xl:hidden w-[73%] md:w-full">
+          <div className="block xl:hidden sm:w-[73%] w-[80%] md:w-full">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
             />
@@ -118,7 +118,9 @@ export default function SchedulePage() {
         </div>
       </header>
 
-      <StudyScheduleCalendar handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan} />
+      <StudyScheduleCalendar
+        handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+      />
 
       {/* The message icon fixed to the bottom of the screen */}
       <Link href="/chat">

@@ -16,7 +16,7 @@ export default function EmptyStudyPlan({
             width={321}
           />
         </div>
-        <div className="text-center overflow-hidden">
+        <div className="text-center">
           <p className="font-semibold text-[2rem] text-grayheader">
             No Study Plan created Yet
           </p>
