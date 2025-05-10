@@ -115,6 +115,7 @@ export default function Milestone() {
         </div>
       )}
       <div className="p-4 sm:p-6 space-y-10">
+        {/* Responsive header */}
         <div className="flex  items-center justify-between mb-10">
           <span className="text-3xl block md:hidden text-dark">
             <FaBars onClick={handleToggleMiniNavBar} />

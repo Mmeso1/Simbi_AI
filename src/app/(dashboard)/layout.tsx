@@ -30,7 +30,7 @@ export default function DashboardLayout({
 
         <div className="mt-[180px]">
           <Image
-            src="/DashboardIcons/sitting simbi.png"
+            src="/DashboardIcons/sitting simbi.svg"
             alt="Sitting Simbi"
             height={169}
             width={168}
