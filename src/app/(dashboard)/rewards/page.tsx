@@ -67,35 +67,37 @@ const RewardPage = () => {
 
         <div className="flex flex-col md:flex-row gap-16 mt-24 px-10">
           {/* Total Tokens */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center flex-1">
+          <div className="bg-white rounded-xl p-6 shadow flex flex-col items-center text-center flex-1">
             <div className="flex items-center space-x-2 mb-4">
               <Image
                 src="/DashboardIcons/coins.png"
                 alt="yellow coins"
-                width={30}
-                height={30}
+                width={38}
+                height={38}
               />
-              <h2 className="text-lg font-semibold">Total Tokens Earned</h2>
+              <h2 className="text-xl font-semibold">Total Tokens Earned</h2>
             </div>
             <Image
               src="/DashboardIcons/bigg.png"
               alt="Token"
-              width={80}
-              height={80}
+              width={100}
+              height={100}
               className="mb-4"
             />
-            <p className="text-3xl font-extrabold">
+            <p className="text-4xl font-extrabold">
               200
-              <span className="text-sm text-gray-500 font-normal">/tokens</span>
+              <span className="text-base text-gray-500 font-normal">
+                /tokens
+              </span>
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row items-center flex-2">
+          <div className="bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center flex-2">
             <Image
               src="/DashboardIcons/big.png"
               alt="Character"
-              width={100}
-              height={100}
+              width={150}
+              height={225}
               className="mb-4 md:mb-0 md:mr-6"
             />
             <div className="flex-1 text-center md:text-left">
@@ -103,14 +105,14 @@ const RewardPage = () => {
                 <Image
                   src="/DashboardIcons/star-03.png"
                   alt="star icon"
-                  width={24}
-                  height={24}
+                  width={31}
+                  height={31}
                 />
-                <h3 className="text-lg font-semibold">Current NFT Badges</h3>
+                <h3 className="text-xl font-semibold">Current NFT Badges</h3>
               </div>
-              <p className="text-sm font-medium mb-2">
+              <p className="text-base font-medium my-3">
                 Bronze study badge unlocked
-                <span className="ml-2 text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded-full">
+                <span className="ml-2 text-xs bg-[#C1BCFF] text-[#1F125C] px-2 py-1 rounded-full">
                   New
                 </span>
               </p>
@@ -121,8 +123,8 @@ const RewardPage = () => {
                       <Image
                         src={`/DashboardIcons/lock1.png`}
                         alt={badge}
-                        width={60}
-                        height={60}
+                        width={64}
+                        height={96}
                         className="opacity-40"
                       />
                     </div>
@@ -136,38 +138,48 @@ const RewardPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-20 py-20">
           {[
             {
-              icon: "🔥",
+              icon: "/DashboardIcons/study-streak.svg",
               title: "Study Streak",
               desc: "Complete 7 consecutive days of study",
               tokens: 7,
               progress: "5/7 days",
             },
             {
-              icon: "⭐",
+              icon: "/DashboardIcons/study-star.svg",
               title: "Perfect Score",
               desc: "Achieve 100% on any quiz",
               tokens: 6,
               progress: null,
             },
             {
-              icon: "🕒",
+              icon: "/DashboardIcons/study-time.svg",
               title: "Time Master",
               desc: "Study for 20 hours total",
               tokens: 5,
               progress: "15/20 hours",
             },
           ].map((item, idx) => (
-            <div key={idx} className="bg-white rounded-xl shadow p-5">
+            <div
+              key={idx}
+              className="bg-white rounded-xl shadow p-5 h-44 space-y-10"
+            >
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">{item.icon}</span>
+                <Image
+                  src={item.icon}
+                  width={34}
+                  height={30}
+                  alt="reward icons"
+                />
                 <h4 className="text-lg font-semibold">{item.title}</h4>
               </div>
-              <p className="text-sm text-gray-600">{item.desc}</p>
+              <p className="text-base text-[#6B7280] font-normal">
+                {item.desc}
+              </p>
               <div className="flex flex-wrap items-center justify-between mt-4 gap-2">
-                <div className="flex items-center space-x-2 bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                <div className="flex items-center space-x-2 bg-[#C1BCFF] text-black px-3 py-1 rounded-full text-sm">
                   <span>+{item.tokens} tokens</span>
                 </div>
                 <Image
@@ -186,9 +198,9 @@ const RewardPage = () => {
           ))}
         </div>
 
-        <div className="mt-12">
-          <h3 className="text-xl font-bold mb-4">Upcoming Rewards</h3>
-          <div className="bg-white rounded-xl shadow divide-y">
+        <div>
+          <h3 className="text-2xl font-normal mb-4">Upcoming Rewards</h3>
+          <div className="bg-white rounded-xl shadow divide-y divide-gray-200 px-5 pt-10 pb-6">
             {[
               {
                 icon: "🎁",
@@ -208,13 +220,15 @@ const RewardPage = () => {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-2"
+                className="flex flex-col text-base font-medium sm:flex-row justify-between items-start sm:items-center p-4 gap-2"
               >
                 <div className="flex items-center space-x-4">
                   <span className="text-2xl">{item.icon}</span>
                   <div>
-                    <p className="font-semibold">{item.title}</p>
-                    <p className="text-sm text-gray-500">{item.subtitle}</p>
+                    <p className="text-base font-medium">{item.title}</p>
+                    <p className="text-sm text-[#525252] font-normal">
+                      {item.subtitle}
+                    </p>
                   </div>
                 </div>
                 <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">
