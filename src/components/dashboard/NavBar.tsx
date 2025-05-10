@@ -40,9 +40,9 @@ export default function NavBar() {
       href: "/rewards",
     },
     {
-      label: "Setting",
+      label: "Let's chat",
       icon: "/DashboardIcons/settingIcon.svg",
-      href: "/setting",
+      href: "/chat",
     },
     {
       label: "Logout",
