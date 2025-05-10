@@ -96,3 +96,11 @@ body {
 .poppins {
   font-family: "Poppins", sans-serif;
 }
+
+/* for signup page */
+@media screen and (max-width: 420px) {
+  .auth-layout {
+    max-width: 100%;
+    margin: 10px;
+  }
+}
