@@ -6,8 +6,6 @@ import Image from "next/image";
 import clsx from "clsx";
 import SideBar from "@/components/dashboard/SideBar";
 import HeaderNotification from "@/components/dashboard/HeaderNotification";
-import { Inter } from "next/font/google";
-import Link from "next/link";
 import { FaBars } from "react-icons/fa";
 
 const tabs = ["Active", "Inactive", "Completed"];
@@ -87,7 +85,7 @@ const upcomingMilestones = [
 
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
-  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
+  const [, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
 
   const filteredMilestones = milestones.filter((milestone) => {
