@@ -91,18 +91,18 @@ export default function Milestone() {
   });
 
   return (
-    <div className="p-6 space-y-10">
-      <h2 className="text-3xl font-semibold text-gray-900">Milestone Tracker</h2>
+    <div className="p-4 sm:p-6 space-y-10">
+      <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">Milestone Tracker</h2>
 
       {/* Tabs and Filter */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex space-x-8 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap">
+        <div className="flex space-x-4 sm:space-x-8 border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setSelectedTab(tab)}
               className={clsx(
-                'pb-2 text-lg font-medium',
+                'pb-2 text-base sm:text-lg font-medium',
                 selectedTab === tab ? 'border-b-2 border-violet-500 text-violet-600' : 'text-gray-500'
               )}
             >
@@ -116,20 +116,20 @@ export default function Milestone() {
       </div>
 
       {/* Controls */}
-      <div className="flex justify-between items-center flex-wrap gap-4">
-        <div className="flex items-center space-x-2 text-violet-600 text-lg font-medium">
-          <Calendar className="w-5 h-5" />
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 flex-wrap">
+        <div className="flex flex-wrap items-center gap-2 text-violet-600 text-sm sm:text-base font-medium">
+          <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
           <span>Today, 23 April 2025</span>
           <button className="px-2 py-1 bg-violet-100 rounded-md">{'<'}</button>
           <button className="px-4 py-1 bg-violet-500 text-white rounded-md">Today</button>
           <button className="px-2 py-1 bg-violet-100 rounded-md">{'>'}</button>
         </div>
-        <div className="flex space-x-3">
-          <button className="p-3 bg-gray-100 rounded-2xl">
-            <Calendar className="w-6 h-6" />
+        <div className="flex space-x-2">
+          <button className="p-2 sm:p-3 bg-gray-100 rounded-2xl">
+            <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
-          <button className="p-3 bg-white border rounded-2xl">
-            <List className="w-6 h-6 text-violet-600" />
+          <button className="p-2 sm:p-3 bg-white border rounded-2xl">
+            <List className="w-5 h-5 sm:w-6 sm:h-6 text-violet-600" />
           </button>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function Milestone() {
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-semibold">{m.subject}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold">{m.subject}</h3>
                   <p className="text-sm text-gray-600">Next: {m.next}</p>
                 </div>
                 <div className="text-gray-400">•••</div>
@@ -181,26 +181,26 @@ export default function Milestone() {
         <div className="space-y-4">
           <div className="bg-purple-100 rounded-2xl p-4 flex items-center justify-between">
             <div>
-              <h3 className="text-2xl font-bold text-purple-900">Simbi’s Pep talk</h3>
-              <p className="mt-2 text-purple-800">Milestone soon! Did someone finally grow up?</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-purple-900">Simbi’s Pep talk</h3>
+              <p className="mt-2 text-purple-800 text-sm sm:text-base">Milestone soon! Did someone finally grow up?</p>
             </div>
-            <Image src="/DashboardIcons/wavingSimbi.svg" alt="" width={100} height={100} />
+            <Image src="/DashboardIcons/wavingSimbi.svg" alt="" width={80} height={80} className="sm:w-[100px] sm:h-[100px]" />
           </div>
 
           <div className="bg-purple-100 rounded-2xl p-4">
-            <p className="text-gray-600">Total token</p>
-            <p className="text-lg font-semibold">15 tokens</p>
+            <p className="text-sm text-gray-600">Total token</p>
+            <p className="text-base sm:text-lg font-semibold">15 tokens</p>
           </div>
           <div className="bg-green-100 rounded-2xl p-4">
-            <p className="text-gray-600">Total Study hours</p>
-            <p className="text-lg font-semibold">10 hours</p>
+            <p className="text-sm text-gray-600">Total Study hours</p>
+            <p className="text-base sm:text-lg font-semibold">10 hours</p>
           </div>
         </div>
       </div>
 
       {/* Earned Milestones */}
       <div className="space-y-4">
-        <h3 className="text-2xl font-semibold text-gray-900">Earned Milestones</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Earned Milestones</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {earnedMilestones.map((item, idx) => (
             <div
@@ -208,8 +208,8 @@ export default function Milestone() {
               className="bg-white rounded-2xl p-4 shadow border"
             >
               <div className="flex items-center space-x-3">
-                <span className="text-2xl">{item.icon}</span>
-                <h4 className="font-semibold text-lg text-purple-900">{item.title}</h4>
+                <span className="text-xl sm:text-2xl">{item.icon}</span>
+                <h4 className="font-semibold text-base sm:text-lg text-purple-900">{item.title}</h4>
               </div>
               <p className="text-sm text-gray-500 mt-1">{item.description}</p>
               <div className="flex justify-between mt-3 text-sm">
@@ -223,19 +223,22 @@ export default function Milestone() {
 
       {/* Upcoming Milestones */}
       <div className="space-y-4">
-        <h3 className="text-2xl font-semibold text-gray-900">Upcoming Milestones</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Upcoming Milestones</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {upcomingMilestones.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-4 shadow border flex items-center justify-between"
+              className="bg-white rounded-2xl p-4 shadow border flex flex-col sm:flex-row sm:items-center justify-between"
             >
-              <div>
-                <h4 className="font-semibold text-lg text-purple-900">{item.title}</h4>
-                <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg sm:text-xl">{item.icon}</span>
+                  <h4 className="font-semibold text-base sm:text-lg text-purple-900">{item.title}</h4>
+                </div>
+                <p className="text-sm text-gray-500">{item.description}</p>
+                <p className="text-sm text-gray-500">Progress: {item.goal}</p>
               </div>
-              <p className="text-sm text-gray-500 mt-1">Progress: {item.goal}</p>
-              <span className="text-violet-600 text-xl">⏳</span>
+              <span className="text-violet-600 text-lg sm:text-xl hidden sm:block">⏳</span>
             </div>
           ))}
         </div>
