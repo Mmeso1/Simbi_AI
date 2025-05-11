@@ -11,14 +11,18 @@ export interface LoginData {
   password: string;
 }
 
+export interface User {
+  email: string;
+  id?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+// response from logging in
 export interface AuthResponse {
-  user: {
-    id: string;
-    email: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-  };
+  status: string;
+  message: string;
   access_token: string;
   refresh_token: string;
 }

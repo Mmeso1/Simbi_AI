@@ -3,21 +3,21 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import { TwoLinePasswordInput } from "@/components/auth/TwoLineInput";
 import FormInput from "@/components/auth/FormInput";
 import { LoginData } from "@/types/auth";
-import { loginUser } from "@/api/auth";
+import useAuthStore from "@/store/authStore";
 
 export default function SignIn() {
   const router = useRouter();
+  const { login, loading, error } = useAuthStore();
 
   const [form, setForm] = useState<LoginData>({
     email: "",
     password: "",
   });
 
-  // handleChange, handleSubmit…
+  // update form state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
@@ -26,28 +26,12 @@ export default function SignIn() {
     }));
   };
 
-  const [serverError, setServerError] = useState("");
-  const [loading, setLoading] = useState(false);
-
+  // call the store’s login action
   const handleSubmit = async () => {
-    setLoading(true);
-    setServerError("");
-
-    try {
-      const res = await loginUser(form);
-      console.log("Login response:", res.data);
-      // const { access_token, refresh_token } = res.data;
-      // console.log("Access Token:", access_token);
-      // console.log("Refresh Token:", refresh_token);
-      // router.push("/personalization");
-    } catch (error: any) {
-      const msg =
-        error?.response?.data?.message || "Something went wrong. Try again.";
-      setServerError(msg);
-      console.log("Login error:", msg);
-    } finally {
-      setLoading(false);
-    }
+    const res = await login(form, () => {
+      router.push("/personalization");
+    });
+    console.log(res);
   };
 
   return (
@@ -75,9 +59,9 @@ export default function SignIn() {
         <h2 className="text-xl text-[#501EE3] font-medium">Sign In</h2>
 
         {/* Error message box */}
-        {serverError && (
+        {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-            {serverError}
+            {error}
           </div>
         )}
 
