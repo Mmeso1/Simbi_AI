@@ -9,25 +9,24 @@ import Image from "next/image";
 import Link from "next/link";
 
 const step1Schema = z.object({
-  planName: z.string().min(1, "Plan name is required"),
-  studySubjects: z.string().min(1, "Study subject is required"),
+  name: z.string().min(1, "Plan name is required"),
+  subjects: z.array(z.string()).min(1, "At least one subject is required"),
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().min(1, "End date is required"),
-  studyGoalType: z.string().min(1, "Study goal type is required"),
   dailyStudyTime: z.string().min(1, "Daily study time is required"),
   daysAvailable: z.array(z.string()).min(1, "Select at least one day"),
   priorityTag: z.string().min(1, "Priority tag is required"),
   difficultyLevel: z.string().min(1, "Difficulty level is required"),
   studyLevel: z.string().min(1, "Study level is required"),
-  addToSchedule: z.string().min(1, "This field is required"),
+  addToSchedule: z.boolean(),
 });
 
 const step2Schema = z.object({
   preferredStudyMethod: z.string().min(1, "Preferred study method is required"),
   learningStyle: z.string().min(1, "Learning style is required"),
   dailyStudyDuration: z.string().min(1, "Daily study duration is required"),
-  breakReference: z.string().min(1, "Break reference is required"),
-  studyTips: z.string().min(1, "This field is required"),
+  breakDuration: z.string().min(1, "Break duration is required"),
+  needStudyTips: z.boolean(),
   preferredTone: z.string().min(1, "Preferred tone is required"),
 });
 
@@ -35,27 +34,33 @@ const step3Schema = z.object({
   milestoneType: z.string().min(1, "Milestone type is required"),
   motivationPreference: z.string().min(1, "Motivation preference is required"),
   checkInStyle: z.string().min(1, "Check-in style is required"),
-  telegramReminder: z.string().min(1, "This field is required"),
+  telegramReminder: z.boolean(),
   rewardStyle: z.string().min(1, "Reward style is required"),
   rewardFrequency: z.string().min(1, "Reward frequency is required"),
 });
 
 const formSchema = step1Schema.merge(step2Schema).merge(step3Schema);
 
-type FormData = z.infer<typeof formSchema>;
+export type FormData = z.infer<typeof formSchema>;
 
-type Day = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+type Day =
+  | "Sunday"
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday";
 
 const steps = [
   {
     id: 1,
     name: "Plan Overview",
     fields: [
-      "planName",
-      "studySubjects",
+      "name",
+      "subjects",
       "startDate",
       "endDate",
-      "studyGoalType",
       "dailyStudyTime",
       "daysAvailable",
       "priorityTag",
@@ -71,8 +76,8 @@ const steps = [
       "preferredStudyMethod",
       "learningStyle",
       "dailyStudyDuration",
-      "breakReference",
-      "studyTips",
+      "breakDuration",
+      "needStudyTips",
       "preferredTone",
     ],
   },
@@ -102,9 +107,11 @@ export default function StudyForm({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
-      daysAvailable: ["Mon", "Tue", "Wed"] as Day[],
-      telegramReminder: "Yes",
-      addToSchedule: "Yes",
+      daysAvailable: ["Monday", "Tuesday", "Wednesday"] as Day[],
+      telegramReminder: true,
+      addToSchedule: true,
+      needStudyTips: false,
+      subjects: [],
     },
   });
 
@@ -128,20 +135,39 @@ export default function StudyForm({
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    // Api goes here
-    router.push("/study-plans");
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await fetch("/api/studyPlan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        router.push("/study-plans");
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to generate study plan:", errorData);
+        alert(`Error: ${errorData.error || "Failed to generate study plan"}`);
+      }
+    } catch (error) {
+      console.error("Error submitting study plan:", error);
+      alert("An unexpected error occurred");
+    }
   };
 
   const daysAvailable = watch("daysAvailable") || [];
+  const subjects = watch("subjects") || [];
 
   const toggleDay = (day: Day) => {
     const newDays = daysAvailable.includes(day)
       ? daysAvailable.filter((d) => d !== day)
       : [...daysAvailable, day];
 
-    // Ensure at least one day is selected
     if (newDays.length === 0) {
       return;
     }
@@ -149,24 +175,31 @@ export default function StudyForm({
     setValue("daysAvailable", newDays);
   };
 
+  const handleSubjectsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const subjectsArray = value
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s);
+    setValue("subjects", subjectsArray);
+  };
+
   return (
-    <div className=" w-full  mx-auto p-6 bg-white z-100 shadow-2xl">
-      {/* Header */}
+    <div className="w-full mx-auto p-6 bg-white z-100 shadow-2xl">
       <header className="flex border-b-[0.6px] border-grayborder justify-between h-[100px] items-center">
-        <div className="flex items-center gap-6 ">
+        <div className="flex items-center gap-6">
           <Image
             src="/DashboardIcons/houseIcon.svg"
             alt="House Icon"
             width={20}
             height={18}
           />
-
           <div className="flex h-[43px] flex-col gap-2 justify-center">
             <h1 className="font-semibold text-lightblue text-[1.125rem]">
               Generate a Study Plan
             </h1>
             <p className="font-normal text-[0.875rem]">
-              Lets&apos;s generate your study plan
+              Let&apos;s generate your study plan
             </p>
           </div>
         </div>
@@ -183,12 +216,11 @@ export default function StudyForm({
         </span>
       </header>
 
-      {/* Progress bar */}
       <div className="flex justify-between items-center sticky top-10 bg-graybg px-6 rounded-[12px] h-[60px] my-10">
         {steps.map((step) => (
           <div
             key={step.id}
-            className="flex flex-col items-center justify-center h-full "
+            className="flex flex-col items-center justify-center h-full"
           >
             <span
               className={`my-2 lg:px-16 px-4 py-2 text-sm ${
@@ -205,13 +237,11 @@ export default function StudyForm({
 
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Step 1 */}
           {currentStep === 1 && (
             <div className="space-y-6">
               <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
                 Study Plan Overview
               </h2>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
@@ -219,13 +249,13 @@ export default function StudyForm({
                   </span>
                   <input
                     type="text"
-                    placeholder="Reading Economics"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("planName")}
+                    placeholder="Mathematics"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    {...register("name")}
                   />
-                  {errors.planName && (
+                  {errors.name && (
                     <p className="text-sm text-red-600 mt-1">
-                      {errors.planName.message}
+                      {errors.name.message}
                     </p>
                   )}
                 </div>
@@ -235,18 +265,18 @@ export default function StudyForm({
                   </span>
                   <input
                     type="text"
-                    placeholder="Economics"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("studySubjects")}
+                    placeholder="Numbers, Algebra, Equation"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    onChange={handleSubjectsChange}
+                    value={subjects.join(", ")}
                   />
-                  {errors.studySubjects && (
+                  {errors.subjects && (
                     <p className="text-sm text-red-600 mt-1">
-                      {errors.studySubjects.message}
+                      {errors.subjects.message}
                     </p>
                   )}
                 </div>
               </div>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
@@ -255,12 +285,12 @@ export default function StudyForm({
                   <div className="flex justify-between">
                     <input
                       type="date"
-                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                       {...register("startDate")}
                     />
                     <input
                       type="date"
-                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                      className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                       {...register("endDate")}
                     />
                   </div>
@@ -277,33 +307,11 @@ export default function StudyForm({
                 </div>
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Study goal type
-                  </span>
-                  <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("studyGoalType")}
-                  >
-                    <option value="">-- Select goal type -- </option>
-                    <option value="Pass final exams">Pass final exams</option>
-                    <option value="Prepare for exams">Prepare for exams</option>
-                    <option value="Read for pleasure">Read for pleasure</option>
-                  </select>
-                  {errors.studyGoalType && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {errors.studyGoalType.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex justify-between gap-6 md:flex-row flex-col">
-                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
-                  <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Daily Study Time
                   </span>
                   <input
                     type="time"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("dailyStudyTime")}
                   />
                   {errors.dailyStudyTime && (
@@ -312,17 +320,27 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
+              </div>
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Days available
                   </span>
                   <div className="flex justify-between items-center">
                     {(
-                      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as Day[]
+                      [
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                      ] as Day[]
                     ).map((day) => (
                       <label
                         key={day}
-                        className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2 flex gap-1 items-center justify-center"
+                        className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2 flex gap-1 items-center justify-center"
                       >
                         <input
                           type="checkbox"
@@ -330,7 +348,7 @@ export default function StudyForm({
                           onChange={() => toggleDay(day)}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
-                        {day}
+                        {day.slice(0, 3)}
                       </label>
                     ))}
                   </div>
@@ -340,25 +358,18 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-              </div>
-
-              <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
-                General
-              </h2>
-
-              <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Priority tag
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("priorityTag")}
                   >
-                    <option value="">-- Select Priority tag -- </option>
-                    <option value="Very Urgent">Very Urgent</option>
-                    <option value="Urgent">Urgent</option>
-                    <option value="Relaxed">Relaxed</option>
+                    <option value="">-- Select Priority tag --</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                   </select>
                   {errors.priorityTag && (
                     <p className="text-sm text-red-600 mt-1">
@@ -366,15 +377,20 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
+              </div>
+              <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
+                General
+              </h2>
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Difficulty level
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("difficultyLevel")}
                   >
-                    <option value="">-- Select Difficulty level -- </option>
+                    <option value="">-- Select Difficulty level --</option>
                     <option value="Hard">Hard</option>
                     <option value="Intermediate">Intermediate</option>
                     <option value="Easy">Easy</option>
@@ -385,17 +401,14 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
-              </div>
-
-              <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Study Level
                   </span>
                   <input
                     type="text"
-                    placeholder="University - 200 lvl"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    placeholder="Undergraduate"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("studyLevel")}
                   />
                   {errors.studyLevel && (
@@ -404,16 +417,20 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
+              </div>
+              <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Add Plan to Schedule
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("addToSchedule")}
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    {...register("addToSchedule", {
+                      setValueAs: (v) => v === "true",
+                    })}
                   >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                   {errors.addToSchedule && (
                     <p className="text-sm text-red-600 mt-1">
@@ -421,32 +438,30 @@ export default function StudyForm({
                     </p>
                   )}
                 </div>
+                <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]"></div>
               </div>
             </div>
           )}
-
-          {/* Step 2 */}
           {currentStep === 2 && (
             <div className="space-y-6">
               <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
                 Study Preferences
               </h2>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Preferred Study Session Method
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("preferredStudyMethod")}
                   >
                     <option value="">
-                      -- Select Preferred Study Method --{" "}
+                      -- Select Preferred Study Method --
                     </option>
-                    <option value="Pomodoro/quizzes">Pomodoro/quizzes</option>
                     <option value="Pomodoro">Pomodoro</option>
                     <option value="Quizzes">Quizzes</option>
+                    <option value="Pomodoro/quizzes">Pomodoro/quizzes</option>
                   </select>
                   {errors.preferredStudyMethod && (
                     <p className="text-sm text-red-600 mt-1">
@@ -459,17 +474,15 @@ export default function StudyForm({
                     Learning Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("learningStyle")}
                   >
                     <option value="">
                       -- Select Preferred Learning Style --
                     </option>
-                    <option value="Reading and writing">
-                      Reading & writing
-                    </option>
-                    <option value="Reading">Reading only</option>
-                    <option value="Video">Video</option>
+                    <option value="Visual">Visual</option>
+                    <option value="Auditory">Auditory</option>
+                    <option value="Kinesthetic">Kinesthetic</option>
                   </select>
                   {errors.learningStyle && (
                     <p className="text-sm text-red-600 mt-1">
@@ -478,16 +491,15 @@ export default function StudyForm({
                   )}
                 </div>
               </div>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Daily Study Duration (in hours)
+                    Daily Study Duration
                   </span>
                   <input
-                    type="number"
-                    placeholder="1"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    type="text"
+                    placeholder="2h"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("dailyStudyDuration")}
                   />
                   {errors.dailyStudyDuration && (
@@ -498,59 +510,55 @@ export default function StudyForm({
                 </div>
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Break reference (in minutes)
+                    Break Duration
                   </span>
                   <input
-                    type="number"
-                    placeholder="15"
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("breakReference")}
+                    type="text"
+                    placeholder="15m"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    {...register("breakDuration")}
                   />
-                  {errors.breakReference && (
+                  {errors.breakDuration && (
                     <p className="text-sm text-red-600 mt-1">
-                      {errors.breakReference.message}
+                      {errors.breakDuration.message}
                     </p>
                   )}
                 </div>
               </div>
-
               <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
                 General
               </h2>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Simbi Study Tips
+                    Need Study Tips
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("studyTips")}
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    {...register("needStudyTips", {
+                      setValueAs: (v) => v === "true",
+                    })}
                   >
-                    <option value="">
-                      -- Do you want Simbi Study Tips --{" "}
-                    </option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
-                  {errors.studyTips && (
+                  {errors.needStudyTips && (
                     <p className="text-sm text-red-600 mt-1">
-                      {errors.studyTips.message}
+                      {errors.needStudyTips.message}
                     </p>
                   )}
                 </div>
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Simbi Preferred Tone
+                    Preferred Tone
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("preferredTone")}
                   >
-                    <option value="">-- Select Simbi Preferred Tone --</option>
-                    <option value="Tough love (sass Simbi)">
-                      Tough love (sass Simbi)
-                    </option>
+                    <option value="">-- Select Preferred Tone --</option>
+                    <option value="Encouraging">Encouraging</option>
+                    <option value="Tough love">Tough love</option>
                   </select>
                   {errors.preferredTone && (
                     <p className="text-sm text-red-600 mt-1">
@@ -561,24 +569,24 @@ export default function StudyForm({
               </div>
             </div>
           )}
-
-          {/* Step 3 */}
           {currentStep === 3 && (
             <div className="space-y-6">
               <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
                 Milestone
               </h2>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Milestone Type
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("milestoneType")}
                   >
-                    <option value="">-- Select Milestone Type -- </option>
+                    <option value="">-- Select Milestone Type --</option>
+                    <option value="Chapter Completion">
+                      Chapter Completion
+                    </option>
                     <option value="Study 3 days in a row">
                       Study 3 days in a row
                     </option>
@@ -600,10 +608,11 @@ export default function StudyForm({
                     Motivation Preference
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("motivationPreference")}
                   >
                     <option value="">-- Select Motivation Preference --</option>
+                    <option value="Quotes">Quotes</option>
                     <option value="Steady hustle">Steady hustle</option>
                   </select>
                   {errors.motivationPreference && (
@@ -613,19 +622,18 @@ export default function StudyForm({
                   )}
                 </div>
               </div>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Check-in-Style
+                    Check-in Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("checkInStyle")}
                   >
-                    <option value="">-- -- </option>
-                    <option value="Daily">Daily</option>
-                    <option value="Weekly">Weekly</option>
+                    <option value="">-- Select Check-in Style --</option>
+                    <option value="Daily Summary">Daily Summary</option>
+                    <option value="Weekly Summary">Weekly Summary</option>
                   </select>
                   {errors.checkInStyle && (
                     <p className="text-sm text-red-600 mt-1">
@@ -635,14 +643,16 @@ export default function StudyForm({
                 </div>
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Telegram reminder
+                    Telegram Reminder
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
-                    {...register("telegramReminder")}
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
+                    {...register("telegramReminder", {
+                      setValueAs: (v) => v === "true",
+                    })}
                   >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                   {errors.telegramReminder && (
                     <p className="text-sm text-red-600 mt-1">
@@ -651,21 +661,20 @@ export default function StudyForm({
                   )}
                 </div>
               </div>
-
               <h2 className="text-[1.125rem] text-dark border-b-2 border-dashed pb-2 border-grayborder font-semibold">
                 General
               </h2>
-
               <div className="flex justify-between gap-6 md:flex-row flex-col">
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
                     Reward Style
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("rewardStyle")}
                   >
-                    <option value="">-- --</option>
+                    <option value="">-- Select Reward Style --</option>
+                    <option value="Small Treat">Small Treat</option>
                     <option value="Collecting tokens to trade later">
                       Collecting tokens to trade later
                     </option>
@@ -681,10 +690,11 @@ export default function StudyForm({
                     Reward Frequency
                   </span>
                   <select
-                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark  py-2"
+                    className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     {...register("rewardFrequency")}
                   >
-                    <option value="">-- --</option>
+                    <option value="">-- Select Reward Frequency --</option>
+                    <option value="Weekly">Weekly</option>
                     <option value="After Key milestones">
                       After Key milestones
                     </option>
@@ -698,17 +708,15 @@ export default function StudyForm({
               </div>
             </div>
           )}
-
           <div className="flex justify-between items-center mt-6 md:flex-row flex-col-reverse">
-            <div className="flex items-center justify-end md:justify-start   w-full  my-7 md:my-0 text-left  md:w-1/2 gap-x-6 ">
+            <div className="flex items-center justify-end md:justify-start w-full my-7 md:my-0 text-left md:w-1/2 gap-x-6">
               <Link href="/chat">
                 <p className="font-semibold cursor-pointer text-lightblue">
                   Chat with Simbi
                 </p>
               </Link>
-              <span className=" hover:bg-grayborder hover:rounded-full duration-500 hover:scale-105 cursor-pointer">
+              <span className="hover:bg-grayborder hover:rounded-full duration-500 hover:scale-105 cursor-pointer">
                 <Link href="/chat">
-                  {" "}
                   <Image
                     src="/DashboardIcons/messageSimbiIcon.svg"
                     alt="message Envelope icon"
