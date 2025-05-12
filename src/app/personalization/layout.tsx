@@ -24,32 +24,46 @@ export default function PersonalizationLayout({
   };
 
   return (
-    <div className="bg-[#FDFDFF] px-10 mt-10">
+    <div className="bg-[#FDFDFF] px-4 sm:px-6 md:px-10 mt-10">
       {/* Logo */}
-      <Image
-        src="/logo.svg"
-        className="ml-27 mb-10"
-        alt="logo"
-        width={150}
-        height={150}
-      />
+      <div className="mb-6 sm:mb-10">
+        <Image
+          src="/delly.svg"
+          alt="logo"
+          width={150}
+          height={150}
+          className="h-auto w-[120px] sm:w-[150px]"
+        />
+      </div>
 
-      {/* Progress Indicator */}
-      <ProgressBar progress={percent} />
+      {/* Top Title (mobile only) */}
+      <div className="md:hidden mb-4">
+        <div className="bg-[#7A5FFF] text-white text-center text-[clamp(1.25rem,4vw,1.75rem)] font-semibold px-6 py-4 rounded-2xl w-full">
+          {section.title}
+        </div>
+      </div>
 
-      <div className="flex w-3/4 min-h-[70vh] mx-auto my-16 overflow-hidden rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)]">
-        <section className="flex flex-1 bg-[#7A5FFF] items-center">
-          <div className="mx-auto max-w-[50%] text-white font-medium text-[32px] leading-[40px] tracking-[-0.03em]">
+      {/* Progress Bar (always full width of content area) */}
+      <div className="w-full mb-10">
+        <ProgressBar progress={percent} />
+      </div>
+
+      {/* Main Card */}
+      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto mb-16 rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] overflow-hidden min-h-[70vh]">
+
+        {/* Side Title (hidden on small screens) */}
+        <section className="hidden md:flex md:basis-[40%] bg-[#7A5FFF] items-center justify-center p-6">
+          <div className="text-white font-medium text-[clamp(1.5rem,3vw,2rem)] leading-snug text-center max-w-[90%]">
             {section.title}
           </div>
         </section>
 
-        {/* main content */}
-        <section className="flex-2 bg-white p-6 relative">
-          <main>{children}</main>
+        {/* Right Content Area */}
+        <section className="flex-1 bg-white p-6 relative flex flex-col justify-between">
+          <main className="flex-1">{children}</main>
           <button
             onClick={handleNext}
-            className="text-white text-xl bg-[#7A5FFF] px-7 py-3 rounded-lg absolute bottom-14 right-14 cursor-pointer"
+            className="text-white text-base sm:text-lg md:text-xl bg-[#7A5FFF] px-6 py-3 mt-6 rounded-lg self-end"
           >
             {currentSection < sections.length - 1 ? "Next" : "Finish"}
           </button>
