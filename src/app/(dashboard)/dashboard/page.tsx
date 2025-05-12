@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Inter } from "next/font/google";
 import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,6 +44,8 @@ export default function DashboardPage() {
 
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
 
+  const router = useRouter();
+
   const handleToggleMiniNavBar = () => {
     // for toggling the mininavbar;
 
@@ -58,6 +61,8 @@ export default function DashboardPage() {
     // for toggling the Generate Study Plan pop up
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
+
+  console.log("API URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 
   return (
     <section
@@ -98,12 +103,13 @@ export default function DashboardPage() {
             <p className="sm:text-[1.125rem] text-[0.7rem] font-[400] z-50">
               I’m Simbi, ready to learn and have fun?
             </p>
-            <Link
-              href={"/study-plans"}
+            <button
+              onClick={() => router.push("/study-plans")}
+              // href={"/study-plans"}
               className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base"
             >
               Generate a new Study Plan
-            </Link>
+            </button>
             <Image
               src="/DashboardIcons/wavingSimbi.svg"
               alt="An image of simbi waving"

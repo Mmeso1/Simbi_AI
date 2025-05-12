@@ -7,6 +7,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 
 const step1Schema = z.object({
   name: z.string().min(1, "Plan name is required"),
@@ -101,6 +102,7 @@ export default function StudyForm({
   handleToggleGenerateStudyPlan: () => void;
 }) {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const methods = useForm<FormData>({
@@ -137,26 +139,52 @@ export default function StudyForm({
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setIsSubmitting(true);
       const token = localStorage.getItem("accessToken");
-      const response = await fetch("/api/studyPlan", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify(data),
-      });
 
-      if (response.ok) {
+      if (!token) {
+        throw new Error("No access token found. Please log in.");
+      }
+
+      const response = await axios.post(
+        "https://simbi-backend.onrender.com/api/v1/study-plan/generate",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status >= 200 && response.status < 300) {
         router.push("/study-plans");
+        console.log("successfully created data", { data });
+        handleToggleGenerateStudyPlan();
       } else {
-        const errorData = await response.json();
-        console.error("Failed to generate study plan:", errorData);
-        alert(`Error: ${errorData.error || "Failed to generate study plan"}`);
+        throw new Error(
+          response.data?.message || "Failed to generate study plan"
+        );
       }
     } catch (error) {
+      let errorMessage = "An unexpected error occurred";
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          errorMessage =
+            error.response.data?.message ||
+            error.response.data?.error ||
+            `Server error: ${error.response.status}`;
+        } else if (error.request) {
+          errorMessage = "Network error: Please check your internet connection";
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       console.error("Error submitting study plan:", error);
-      alert("An unexpected error occurred");
+      alert(`Error: ${errorMessage}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -749,8 +777,9 @@ export default function StudyForm({
                 <button
                   type="submit"
                   className="px-6 py-3 bg-lightblue text-white rounded-md hover:bg-blue-900 ml-auto"
+                  disabled={isSubmitting}
                 >
-                  Generate Study Plan
+                  {isSubmitting ? "Generating..." : "Generate Study Plan"}
                 </button>
               )}
             </div>
