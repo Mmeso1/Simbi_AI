@@ -12,7 +12,7 @@ export default function ProgressBar({ progress }: ProgressBarProps) {
 
   return (
     <div
-      className="relative mx-auto w-1/3 h-3.5 bg-[#1F125C] rounded-full border-2 border-white"
+      className="relative mx-auto md:w-1/3 w-full h-3.5 mt-10 mb-20 md:my-0 bg-[#1F125C] rounded-full border-2 border-white"
       style={{ "--fill": fill } as React.CSSProperties}
     >
       {/* Inner fill */}
