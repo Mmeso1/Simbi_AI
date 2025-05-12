@@ -11,9 +11,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Inter } from "next/font/google";
-import StudyForm from "@/components/study-plans/StudyForm";
 import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +44,8 @@ export default function DashboardPage() {
 
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
 
+  const router = useRouter();
+
   const handleToggleMiniNavBar = () => {
     // for toggling the mininavbar;
 
@@ -60,6 +62,8 @@ export default function DashboardPage() {
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
 
+  console.log("API URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
+
   return (
     <section
       className={
@@ -68,15 +72,6 @@ export default function DashboardPage() {
           : "flex poppins xl:flex-row flex-col overflow-x-hidden"
       }
     >
-      {/* Logic  for toggling the Generate Study Plan pop up  */}
-      {toggleGenerateStudyPlan && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%]  w-[95%]   -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
-          <StudyForm
-            handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
-          />
-        </div>
-      )}
-
       {toggleMiniNavBar && (
         <div className="w-[222px] fixed z-50 ">
           <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
@@ -109,7 +104,8 @@ export default function DashboardPage() {
               I’m Simbi, ready to learn and have fun?
             </p>
             <button
-              onClick={handleToggleGenerateStudyPlan}
+              onClick={() => router.push("/study-plans")}
+              // href={"/study-plans"}
               className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base"
             >
               Generate a new Study Plan
