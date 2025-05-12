@@ -1,5 +1,6 @@
 "use client";
 
+import useAuthStore from "@/store/authStore";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,38 +59,60 @@ export default function NavBar() {
 
   return (
     <div className="flex flex-col w-[148.96px] min-h-[357px] gap-[2rem] mt-[100px] text-left">
-      {navBarContents.map((nav) => (
-        <Link
-          href={nav.href}
-          key={nav.label}
-          aria-current={pathName === nav.href ? "page" : undefined}
-          className={`${baseLinkClasses} ${
-            pathName === nav.href ? activeLinkClasses : inactiveLinkClasses
-          }`}
-        >
-          <div className="flex items-center gap-[20px]">
+      {navBarContents.map((nav) => {
+        const isLogout = nav.label === "Logout";
+        const isActive = pathName === nav.href;
+
+        return isLogout ? (
+          <button
+            key={nav.label}
+            onClick={() => {
+              useAuthStore.getState().logout();
+              window.location.href = "/auth/signin";
+            }}
+            className={`${baseLinkClasses} ${inactiveLinkClasses}`}
+          >
+            <div className="flex items-center gap-[20px]">
+              <Image
+                src={nav.icon}
+                alt={`${nav.label} icon`}
+                width={24}
+                height={24}
+              />
+              <p>{nav.label}</p>
+            </div>
+          </button>
+        ) : (
+          <Link
+            href={nav.href}
+            key={nav.label}
+            aria-current={isActive ? "page" : undefined}
+            className={`${baseLinkClasses} ${
+              isActive ? activeLinkClasses : inactiveLinkClasses
+            }`}
+          >
+            <div className="flex items-center gap-[20px]">
+              <Image
+                src={nav.icon}
+                alt={`${nav.label} icon`}
+                width={24}
+                height={24}
+                priority={isActive}
+              />
+              <p>{nav.label}</p>
+            </div>
             <Image
-              src={nav.icon}
-              alt={`${nav.label} icon`}
-              width={24}
-              height={24}
-              priority={pathName === nav.href}
+              src="/DashboardIcons/ellipseIcon.svg"
+              alt="Active indicator"
+              width={8}
+              height={8}
+              className={
+                isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }
             />
-            <p>{nav.label}</p>
-          </div>
-          <Image
-            src="/DashboardIcons/ellipseIcon.svg"
-            alt="Active indicator"
-            width={8}
-            height={8}
-            className={
-              pathName === nav.href
-                ? "opacity-100"
-                : "opacity-0 group-hover:opacity-100"
-            }
-          />
-        </Link>
-      ))}
+          </Link>
+        );
+      })}
     </div>
   );
 }

@@ -43,7 +43,20 @@ export default function SignupPage() {
       return;
     }
     setMatchError("");
-    await register(form, () => router.push("/auth/signin"));
+    try {
+      const response = await register(form, () => {
+        // Temporarily comment out the rerouting for debugging
+        router.push("/auth/signin");
+        // console.log("Callback executed after registration.");
+      });
+      console.log("Registration response:", response);
+
+      if (error) {
+        console.log("Error:", error);
+      }
+    } catch (err) {
+      console.error("An error occurred during registration:", err);
+    }
   };
 
   return (
