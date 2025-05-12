@@ -147,7 +147,7 @@ export default function StudyPlanPage() {
           <span className="text-3xl block md:hidden text-dark">
             <FaBars onClick={handleToggleMiniNavBar} />
           </span>
-          <div className="block xl:hidden w-[73%] md:w-full">
+          <div className="block xl:hidden sm:w-[73%] w-[80%] md:w-full">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
             />
@@ -155,8 +155,8 @@ export default function StudyPlanPage() {
         </div>
       </header>
 
-      <div className="flex items-center xl:flex-row flex-col-reverse gap-y-6 justify-between mt-16 border-b-[0.95px] pb-5 xl:px-6 px-0  border-b-grayborder">
-        <div className="flex w-[446.91px] items-center justify-evenly">
+      <div className="flex items-center xl:flex-row flex-col-reverse gap-y-6 justify-between mt-16 border-b-[0.95px] pb-5 xl:px-6 px-0  border-b-grayborder overflow-hidden">
+        <div className="flex sm:w-[446.91px] w-[400px]  items-center justify-between">
           <div className="flex">
             <DashboardHeaders text="Study Plans" />
             <Image
@@ -167,13 +167,13 @@ export default function StudyPlanPage() {
               className="ml-4"
             />
           </div>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
             Daily
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem]  text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  text-deepdarkgray  hover:text-lightblue">
             Weekly
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
             Monthly
           </button>
         </div>
@@ -252,10 +252,10 @@ export default function StudyPlanPage() {
           <div className="lg:w-2/3 w-full">
             <div className="lg:hidden block rounded-[20px] lg:w-[330px] w-full min-h-[190px] bg-bluemaguerite p-4 relative mb-10">
               {/* Pep Talk Simbi */}
-              <h3 className="text-deeppurple font-semibold text-[2rem] leading-[40px]">
+              <h3 className="text-deeppurple font-semibold sm:text-[2rem] text-[1.5rem] leading-[40px]">
                 Simbi&apos;s Pep talk
               </h3>
-              <p className="text-deeppurple mt-3 font-normal">
+              <p className="text-deeppurple mt-3 sm:font-normal text-[0.75rem]">
                 Study Plan – let’s pretend you’ll stick to it 😉
               </p>
 
@@ -271,7 +271,7 @@ export default function StudyPlanPage() {
                 alt="Pep talking Simbi"
                 height={200}
                 width={130}
-                className="absolute hidden sm:block right-2 sm:right-7 -top-7"
+                className="absolute right-0 sm:right-7 -top-7"
               />
             </div>
 

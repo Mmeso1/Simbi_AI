@@ -91,7 +91,7 @@ export default function DashboardPage() {
             <span className="text-3xl block md:hidden text-dark">
               <FaBars onClick={handleToggleMiniNavBar} />
             </span>
-            <div className="block xl:hidden w-[73%] md:w-full">
+            <div className="block xl:hidden sm:w-[73%] w-[80%] md:w-full">
               <HeaderNotification
                 handleToggleUserNavBar={handleToggleUserNavBar}
               />
@@ -102,10 +102,10 @@ export default function DashboardPage() {
             <HeaderSearch />
           </div>
           <div className="bg-bluemaguerite h-[231px] mt-[60px] w-full rounded-[20px] text-deeppurple px-6 relative ">
-            <h1 className="font-semibold pt-7 sm:text-[2.5rem] text-[2rem] ">
+            <h1 className="font-semibold pt-7 sm:text-[2.5rem] text-[1.3rem] ">
               Welcome back
             </h1>
-            <p className="sm:text-[1.125rem] text-[1rem] font-[400] z-50">
+            <p className="sm:text-[1.125rem] text-[0.7rem] font-[400] z-50">
               I’m Simbi, ready to learn and have fun?
             </p>
             <button
