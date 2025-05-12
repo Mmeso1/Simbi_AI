@@ -33,6 +33,6 @@ export const config = {
       - that does NOT start with /_next or /favicon.ico or /robots.txt (internal)
       - so it will run on /, /profile, /settings, /courses, etc.
     */
-    "/((?!_next|favicon\\.ico|robots\\.txt).*)",
+    "/((?!_next|favicon\\.ico|robots\\.txt|.*\\.svg|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.webp|images|DashboardIcons|chatbot|logo\\.svg|delly\\.svg|progress-tip\\.svg).*)",
   ],
 };
