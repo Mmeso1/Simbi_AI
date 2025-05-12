@@ -3,7 +3,7 @@ import Image from "next/image";
 import "@/app/globals.css";
 import React from "react";
 import Link from "next/link";
-import { IoIosArrowDown } from "react-icons/io";
+// import { IoIosArrowDown } from "react-icons/io";
 import { roboto } from "@/lib/fonts";
 import Testimonials from "@/components/testimonials/testimony";
 import LanguageDropdown from '@/components/languagedropdown';
