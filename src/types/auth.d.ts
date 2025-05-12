@@ -46,3 +46,11 @@ export interface MeResponse {
     lastLogin: string | null;
   };
 }
+
+type ApiError = {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};

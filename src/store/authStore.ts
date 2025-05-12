@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import Cookies from "js-cookie";
 import { registerUser, loginUser, fetchCurrentUser } from "@/api/auth";
-import { RegisterData, LoginData, User, MeResponse } from "@/types/auth";
+import { RegisterData, LoginData, User, ApiError } from "@/types/auth";
 
 interface AuthState {
   user: User | null;
@@ -29,9 +29,10 @@ const useAuthStore = create<AuthState>((set) => ({
       console.log("Registering user with data:", data);
       await registerUser(data);
       callback();
-    } catch (err: any) {
-      set({ error: err.response?.data?.message || "Registration failed" });
-      console.error("Registration error:", err);
+    } catch (err: unknown) {
+      const apiError = err as ApiError;
+      set({ error: apiError.response?.data?.message || "Registration failed" });
+      console.log("Registration error:", apiError);
     } finally {
       set({ loading: false });
     }
@@ -65,9 +66,10 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ user: userRes.data.user });
       console.log("API user response:", userRes.data);
       callback();
-    } catch (err: any) {
-      set({ error: err.response?.data?.message || "Login failed" });
-      console.error("Login error:", err);
+    } catch (err: unknown) {
+      const apiError = err as ApiError;
+      set({ error: apiError.response?.data?.message || "Login failed" });
+      console.log("Login error:", apiError);
     } finally {
       set({ loading: false });
     }
