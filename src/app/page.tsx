@@ -1,14 +1,26 @@
 "use client";
 import Image from "next/image";
 import "@/app/globals.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 import { roboto } from "@/lib/fonts";
 import Testimonials from "@/components/testimonials/testimony";
 import { steps, testimonies } from "@/data/homepageData";
+import useAuthStore from "@/store/authStore";
 
 export default function Home() {
+  const { user } = useAuthStore();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check both user state and token presence
+    const hasToken =
+      document.cookie.includes("accessToken=") ||
+      localStorage.getItem("accessToken");
+    setIsLoggedIn(!!user || !!hasToken);
+  }, [user]);
+
   return (
     <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
@@ -46,16 +58,26 @@ export default function Home() {
               learn effectively with a touch of personality
             </p>
             <div className="mt-14 flex flex-col justify-center items-center">
-              <Link href="/auth/signup" className="w-full">
-                <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
-                  Get Started
-                </button>
-              </Link>
-              <Link href="/auth/signin" className="w-full mt-3">
-                <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full cursor-pointer">
-                  I Have an Account
-                </button>
-              </Link>
+              {!isLoggedIn ? (
+                <>
+                  <Link href="/auth/signup" className="w-full">
+                    <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
+                      Get Started
+                    </button>
+                  </Link>
+                  <Link href="/auth/signin" className="w-full mt-3">
+                    <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full cursor-pointer">
+                      I Have an Account
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <Link href="/dashboard" className="w-full">
+                  <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
+                    Go to Dashboard
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

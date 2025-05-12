@@ -7,10 +7,11 @@ import { TwoLinePasswordInput } from "@/components/auth/TwoLineInput";
 import FormInput from "@/components/auth/FormInput";
 import { useRouter } from "next/navigation";
 import { RegisterData } from "@/types/auth";
-import { registerUser } from "@/api/auth";
+import useAuthStore from "@/store/authStore";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { register, loading, error } = useAuthStore();
 
   const [form, setForm] = useState<RegisterData>({
     firstName: "",
@@ -22,8 +23,6 @@ export default function SignupPage() {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [matchError, setMatchError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -43,20 +42,8 @@ export default function SignupPage() {
       setMatchError("Passwords do not match");
       return;
     }
-
-    setLoading(true);
-    setServerError("");
-
-    try {
-      await registerUser(form);
-      router.push("/auth/signin");
-    } catch (error: any) {
-      const msg =
-        error?.response?.data?.message || "Something went wrong. Try again.";
-      setServerError(msg);
-    } finally {
-      setLoading(false);
-    }
+    setMatchError("");
+    await register(form, () => router.push("/auth/signin"));
   };
 
   return (
@@ -89,9 +76,9 @@ export default function SignupPage() {
         </h2>
 
         {/* Error message box */}
-        {serverError && (
+        {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-            {serverError}
+            {error}
           </div>
         )}
 
@@ -123,7 +110,7 @@ export default function SignupPage() {
 
           <FormInput
             name="username"
-            type="username"
+            type="user"
             placeholder="Your Username"
             value={form.username}
             onChange={handleChange}

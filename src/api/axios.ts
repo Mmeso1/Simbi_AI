@@ -25,11 +25,22 @@ const axiosInstance = axios.create({
 
 // Add a request interceptor that injects the token
 axiosInstance.interceptors.request.use((config) => {
-  const token = safeGetItem("accessToken");
+  // First try localStorage
+  let token = safeGetItem("accessToken");
   console.log(
     "Interceptor retrieving token:",
     token ? token.substring(0, 10) + "..." : "null"
   );
+
+  // If no token in localStorage, try cookies
+  if (!token && typeof document !== "undefined") {
+    const cookieToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("accessToken="))
+      ?.split("=")[1];
+    if (cookieToken) token = cookieToken;
+  }
+
   if (token && config.headers) {
     config.headers["Authorization"] = `Bearer ${token}`;
     console.log("Authorization header set");

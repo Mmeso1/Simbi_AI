@@ -12,11 +12,13 @@ export interface LoginData {
 }
 
 export interface User {
-  email: string;
   id?: string;
+  email: string;
   username?: string;
   firstName?: string;
   lastName?: string;
+  educationLevel?: string | null;
+  preferredStudyMethod?: string | null;
 }
 
 // response from logging in
@@ -25,4 +27,22 @@ export interface AuthResponse {
   message: string;
   access_token: string;
   refresh_token: string;
+}
+
+// response from getting user info
+export interface MeResponse {
+  status: string;
+  message: string;
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    educationLevel: string | null;
+    timezone: string;
+    preferredStudyMethod: string | null;
+    createdAt: string;
+    lastLogin: string | null;
+  };
 }

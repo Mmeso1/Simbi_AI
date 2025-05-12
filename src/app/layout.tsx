@@ -1,6 +1,7 @@
 import { poppins } from "@/lib/fonts";
 import "./globals.css";
-
+import ClientAuthProvider from "@/components/auth/ClientAuthProvider";
+import useAuthStore from "@/store/authStore";
 export const metadata = {
   title: "SIMBI – AI Study Buddy",
   description: "Your AI Study Buddy",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.variable}>{children}</body>
+      <body className={poppins.variable}>
+        <ClientAuthProvider>{children}</ClientAuthProvider>
+      </body>
     </html>
   );
 }
