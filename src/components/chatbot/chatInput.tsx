@@ -16,7 +16,6 @@ export default function ChatInput({ display }: ChatInputProps) {
   };
 
   const [isMobile, setIsMobile] = useState(false);
-  console.log("Display", display);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
@@ -33,20 +32,10 @@ export default function ChatInput({ display }: ChatInputProps) {
   };
 
   return (
-    <div className="flex w-full justify-center">
-      <div
-        className={`w-full max-w-6xl sm:px-4 px-0 mx-auto ${
-          display ? "md:-mb-40" : "mb-0"
-        }`}
-      >
-        {/* Centered Welcome */}
-        <div
-          className={`${
-            isMobile && display
-              ? "flex flex-col items-center text-center"
-              : "invisible"
-          }`}
-        >
+    <div className="flex flex-col justify-between w-full h-full">
+      {/* Centered Welcome - Top Content */}
+      {isMobile && display && (
+        <div className="flex flex-col items-center text-center mt-8">
           <h2 className="text-[27px] text-[#B3A4FF] font-light">Talk to</h2>
           <h1 className="text-4xl font-extrabold text-[#5D2FFF] mt-1">SIMBI</h1>
 
@@ -59,12 +48,14 @@ export default function ChatInput({ display }: ChatInputProps) {
             <ActionButton icon="/chatbot/code.svg" label="Code" />
           </div>
         </div>
-        {/* Input bar */}
+      )}
+
+      {/* Input Bar - Bottom Content */}
+      <div className="w-full max-w-6xl px-4 mx-auto mt-auto mb-8">
         <div
           className={`relative flex flex-col justify-center mx-auto w-full md:w-4/5 lg:w-3/4
-          ${
-            display ? "h-[250px]" : "h-[200px]"
-          } bg-white border border-[#7A5FFF] rounded-2xl px-6 mb-4`}
+          ${display ? "h-[250px]" : "h-[200px]"} 
+          bg-white border border-[#7A5FFF] rounded-2xl px-6`}
         >
           <textarea
             placeholder="Ask anything"
@@ -95,7 +86,6 @@ export default function ChatInput({ display }: ChatInputProps) {
                 </button>
               ))}
             </div>
-            {/* Microphone icon (left) */}
 
             <div className="flex items-center gap-4">
               <button className="cursor-pointer">
@@ -123,7 +113,8 @@ export default function ChatInput({ display }: ChatInputProps) {
             </div>
           </div>
 
-          {display && (
+          {/* Text to chat with Simbi */}
+          {!isMobile && display && (
             <div className="absolute -top-16 left-50">
               <Image
                 src="/chatbot/text.svg"
