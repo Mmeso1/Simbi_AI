@@ -115,12 +115,12 @@ export default function ChatLayout({
               </>
             )}
             <Image
-              src="/chatbot/pfp.png"
+              src="/chatbot/pfp.jpg"
               alt="Profile"
               width={40}
               height={40}
               className={`rounded-full ${
-                display ? "w-10 h-10" : "w-15 h-15"
+                display ? "w-5 h-5 md:w-10 md:h-10" : "w-15 h-15"
               } object-cover`}
             />
           </div>
