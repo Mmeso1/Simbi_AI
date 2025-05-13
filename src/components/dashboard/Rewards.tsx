@@ -23,7 +23,7 @@ export default function Rewards() {
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
           <p className="absolute rounded-[20px] w-[4px] h-[30px] text-lightblue right-14 bottom-10 semibold text-[2rem]">
-            15
+            0
           </p>
         </aside>
 
@@ -32,7 +32,7 @@ export default function Rewards() {
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
           <p className="absolute rounded-[20px] w-[4px] h-[30px] text-lightblue right-14 bottom-10 semibold text-[2rem]">
-            12
+            0
           </p>
         </aside>
         <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-6 relative">
@@ -40,7 +40,7 @@ export default function Rewards() {
 
           <div className="absolute rounded-[20px] w-[4px] h-[30px] bg-lightpurple bottom-4"></div>
           <p className="absolute rounded-[20px] w-[4px] h-[30px] text-lightblue right-14 bottom-10 semibold text-[2rem]">
-            10
+            0
           </p>
         </aside>
       </div>

@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Calendar, momentLocalizer, View } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Image from "next/image";
 import DashboardHeaders from "../dashboard/DashboardHeaders";
+import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 
 interface CalendarEvent {
   title: string;
@@ -22,21 +23,20 @@ const StudyScheduleCalendar = ({
 }) => {
   const [view, setView] = useState<View>("month");
   const [date, setDate] = useState<Date>(new Date(2025, 3, 25));
+  const { studies } = useGetStudyPlanStore();
 
-  const events: CalendarEvent[] = [
-    {
-      title: `Reading- Chemistry`,
-      start: new Date(2025, 3, 25, 13),
-      end: new Date(2025, 3, 25, 14),
-      allDay: false,
-    },
-    {
-      title: `Reading- Physics`,
-      start: new Date(2025, 3, 25, 10),
-      end: new Date(2025, 3, 25, 11),
-      allDay: false,
-    },
-  ];
+  const events = useMemo(() => {
+    return studies.flatMap((study) =>
+      study.planData.schedule.flatMap((day) =>
+        day.sessions.map((session) => ({
+          title: `Study - ${session.topic}`,
+          start: new Date(session.startTime),
+          end: new Date(session.endTime),
+          allDay: false,
+        }))
+      )
+    );
+  }, [studies]);
 
   const EventComponent = ({ event }: { event: CalendarEvent }) => {
     const [main, detail] = event.title.split("-");
