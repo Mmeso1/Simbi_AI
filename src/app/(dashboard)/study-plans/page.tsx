@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 import { inter } from "@/lib/fonts";
 import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
-
-// Fake Type for api mockup/ schema
+import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
+import { ViewFilter } from "@/types/user";
 
 export default function StudyPlanPage() {
   const monthsOfTheYear = [
@@ -33,11 +33,21 @@ export default function StudyPlanPage() {
   ];
 
   const router = useRouter();
-  const [task, setTask] = useState(true);
+
+  // set up store
+  const { studies } = useGetStudyPlanStore();
+  console.log(studies.length);
+
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
   // Generate Study Plan Pop up
   const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
+
+  const [view, setView] = useState<ViewFilter>("day"); // showing plans based on day, week, month
+
+  const handleToggleView = (text: ViewFilter) => {
+    setView(text);
+  };
 
   const handleToggleMiniNavBar = () => {
     // for toggling the mininavbar;
@@ -167,22 +177,40 @@ export default function StudyPlanPage() {
               className="ml-4"
             />
           </div>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button
+            onClick={() => handleToggleView("day")}
+            className={
+              view === "day"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-lightblue hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-lightblue  hover:text-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue"
+            }
+          >
             Daily
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem]  text-deepdarkgray  hover:text-lightblue">
+          <button
+            onClick={() => handleToggleView("week")}
+            className={
+              view === "week"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-lightblue hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-lightblue  hover:text-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue"
+            }
+          >
             Weekly
           </button>
-          <button className="font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7  after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue">
+          <button
+            onClick={() => handleToggleView("month")}
+            className={
+              view === "month"
+                ? "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-lightblue hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-lightblue  hover:text-lightblue"
+                : "font-semibold relative after:absolute after:left-0 xl:after:-bottom-9 after:-bottom-7   after:w-full after:h-[2.4px] after:bg-transparent hover:after:bg-lightblue transition-all text-[0.70rem] sm:text-[0.75rem] text-deepdarkgray  hover:text-lightblue"
+            }
+          >
             Monthly
           </button>
         </div>
         <div className="flex w-[350.37px]  h-[48px] gap-[16px] items-center justify-between">
           <button
             title="Click to toggle the view when we have to and not to study"
-            onClick={() => {
-              setTask((prevState) => !prevState);
-            }}
             className="flex w-[79.42px] h-[36.14px] gap-[7.57px] cursor-pointer rounded-[4.27px] items-center justify-center border-[0.95px] border-lightblue"
           >
             <Image
@@ -241,7 +269,7 @@ export default function StudyPlanPage() {
         </div>
       </div>
 
-      {task ? (
+      {studies.length < 1 ? (
         <div className="mt-16">
           <EmptyStudyPlan
             handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
@@ -278,6 +306,7 @@ export default function StudyPlanPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StudyCourses
                 handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+                view={view}
               />
             </div>
           </div>
