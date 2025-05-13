@@ -40,39 +40,29 @@ export const sections = [
         options: [
           "Less than 20 minutes",
           "20-40 minutes",
-          "40-60 minutes",
+          "1 hour",
           "Over one hour",
         ],
       },
       {
-        id: "work_type",
-        question: "Do you like structured routines or flexible schedules?",
-        options: [
-          "I prefer a fixed routine",
-          "I like flexibility",
-          "A bit of both",
-        ],
+        id: "study_struggle",
+        question: "What is your biggest struggle when studying?",
+        options: ["Lack of motivation", "Procrastination", "Time management"],
       },
       {
         id: "team_preference",
         question: "How often do you procrastinate on studying?",
-        options: ["Rarely", "Some times", "Often", "All the time"],
+        options: ["Rarely", "Sometimes", "Often", "All the time"],
       },
     ],
   },
-
   {
     title: "Personality and Tone",
     questions: [
       {
-        id: "study_assistant",
-        question: "What tone do you prefer for your study assistant?",
-        options: [
-          "Friendly and supportive",
-          "Motivational and energetic",
-          "Sassy and humourous",
-          "Serious and no-nonese",
-        ],
+        id: "education_level",
+        question: "What is your current level of education?",
+        options: ["University", "Secondary", "Priimary", "Professional level"],
       },
       {
         id: "personality",
