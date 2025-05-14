@@ -31,15 +31,15 @@ export default function ChatLayout({
         className={`flex-1 flex flex-col w-full transition-all duration-300
           ${sidebarOpen ? "md:ml-64" : ""}`}
       >
-        <header className="flex items-center justify-end p-8 z-10">
-          <Image
+        <header className="flex items-center justify-end fixed top-6 right-10">
+          {/* <Image
             src="/chatbot/sidebar-toggler.svg"
             alt="Toggle Sidebar"
             width={24}
             height={24}
             className="cursor-pointer mr-4"
             onClick={() => setSidebarOpen((o) => !o)}
-          />
+          /> */}
           {display && (
             <>
               <Image

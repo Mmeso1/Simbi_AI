@@ -2,7 +2,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useChatStore } from "@/store/chatStore";
+import { sendPrompt } from "@/api/chat";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 interface ChatInputProps {
   display?: boolean;
@@ -10,12 +13,21 @@ interface ChatInputProps {
 
 export default function ChatInput({ display }: ChatInputProps) {
   const bubbleOptions = ["Search", "Generate", "Create"];
+  const [isMobile, setIsMobile] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const chatId = useChatStore((s) => s.chatId);
+  const setChatId = useChatStore((s) => s.setChatId);
+  const addResponse = useChatStore((s) => s.addResponse);
+
+  const { listening, toggle } = useSpeechRecognition((transcript) => {
+    setInputValue((prev) => prev + transcript);
+  });
+
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
   };
-
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
@@ -25,17 +37,40 @@ export default function ChatInput({ display }: ChatInputProps) {
   }, []);
 
   const router = useRouter();
-  const { setPrompt } = useChatStore();
 
-  const handleSend = () => {
-    setPrompt(inputValue);
+  const handleSend = async () => {
+    if (!inputValue.trim()) return;
+    setIsLoading(true);
+
+    try {
+      const payload = { content: inputValue, chatId: chatId || "" };
+      const { chat, userMessage, aiMessage } = await sendPrompt(payload);
+
+      if (!chatId) setChatId(chat.id);
+
+      addResponse({ from: "user", text: userMessage.content });
+      addResponse({ from: "assistant", text: aiMessage.content });
+
+      setInputValue("");
+      return chat;
+    } catch (err) {
+      console.error(err);
+      toast.error("Oops! Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onClickSend = async () => {
+    const chat = await handleSend();
+    if (chat) router.push(`/chat/${chat.id}`);
   };
 
   return (
-    <div className="flex flex-col justify-between w-full h-full">
+    <div className="flex flex-col w-full h-full">
       {/* Centered Welcome - Top Content */}
       {isMobile && display && (
-        <div className="flex flex-col items-center text-center mt-8">
+        <div className="flex flex-col items-center text-center mt-36">
           <h2 className="text-[27px] text-[#B3A4FF] font-light">Talk to</h2>
           <h1 className="text-4xl font-extrabold text-[#5D2FFF] mt-1">SIMBI</h1>
 
@@ -51,17 +86,24 @@ export default function ChatInput({ display }: ChatInputProps) {
       )}
 
       {/* Input Bar - Bottom Content */}
-      <div className="w-full max-w-6xl px-4 mx-auto mt-auto mb-8">
+      <div
+        className={`w-full max-w-6xl px-4 mx-auto mt-auto mb-${
+          display ? "10" : "0"
+        }`}
+      >
         <div
           className={`relative flex flex-col justify-center mx-auto w-full md:w-4/5 lg:w-3/4
-          ${display ? "h-[250px]" : "h-[200px]"} 
+          ${display ? "h-[250px]" : "h-[150px]"} 
           bg-white border border-[#7A5FFF] rounded-2xl px-6`}
         >
           <textarea
             placeholder="Ask anything"
             onChange={handleInputChange}
             value={inputValue}
-            className="my-6 text-[rgba(30,30,47,0.84)] text-xl font-normal focus:outline-none resize-none w-full max-h-40 overflow-y-auto bg-transparent"
+            disabled={isLoading}
+            className={`my-6 text-[rgba(30,30,47,0.84)] text-base font-normal focus:outline-none resize-none w-full max-h-40 overflow-y-auto bg-transparent placeholder:text-base ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             rows={1}
           />
 
@@ -88,26 +130,36 @@ export default function ChatInput({ display }: ChatInputProps) {
             </div>
 
             <div className="flex items-center gap-4">
-              <button className="cursor-pointer">
+              <button
+                onClick={toggle}
+                className={`
+                  cursor-pointer transition-transform
+                  ${listening ? "animate-pulse-scale" : "scale-100"}
+                `}
+              >
                 <Image
                   src="/chatbot/microphone.svg"
                   alt="Microphone"
                   width={36}
                   height={36}
+                  className={listening ? "filter hue-rotate-200" : ""}
                 />
-              </button>{" "}
+              </button>
               {inputValue && (
                 <button
-                  onClick={() => {
-                    const chatID = encodeURIComponent(
-                      inputValue.trim().slice(0, 20)
-                    );
-                    router.push(`/chat/${chatID}`);
-                    handleSend();
-                  }}
-                  className="text-[#7A5FFF] font-extralight cursor-pointer"
+                  onClick={onClickSend}
+                  className={`text-[#7A5FFF] font-extralight cursor-pointer ${
+                    isLoading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
                 >
-                  Send
+                  {isLoading ? (
+                    <div
+                      className="w-5 h-5 rounded-full border-2 border-[#7A5FFF] border-t-transparent animate-spin mx-auto"
+                      style={{ background: "transparent" }}
+                    />
+                  ) : (
+                    "Send"
+                  )}
                 </button>
               )}
             </div>

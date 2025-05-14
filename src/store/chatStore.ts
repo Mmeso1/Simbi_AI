@@ -2,30 +2,29 @@
 import { create } from "zustand";
 
 export type ChatMessage = {
-  from: "user" | "ai";
+  from: "user" | "assistant";
   text: string;
 };
 
 type ChatState = {
+  chatId: string;
   prompt: string;
   responses: ChatMessage[];
   display: boolean;
-  setPrompt: (text: string) => void;
+
+  setChatId: (chatId: string) => void;
   addResponse: (msg: ChatMessage) => void;
   setDisplay: (display: boolean) => void;
   clearChat: () => void;
 };
 
 export const useChatStore = create<ChatState>((set) => ({
+  chatId: "",
   prompt: "",
   responses: [],
   display: false,
 
-  setPrompt: (text) =>
-    set(() => ({
-      prompt: text,
-      responses: [],
-    })),
+  setChatId: (id) => set(() => ({ chatId: id })),
 
   // add a new response bubble (user or AI)
   addResponse: (msg) =>
@@ -42,6 +41,7 @@ export const useChatStore = create<ChatState>((set) => ({
   // clear entire chat (prompt and responses)
   clearChat: () =>
     set(() => ({
+      chatId: "",
       prompt: "",
       responses: [],
     })),
