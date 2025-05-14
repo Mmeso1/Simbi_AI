@@ -7,7 +7,7 @@ import Link from "next/link";
 import { roboto } from "@/lib/fonts";
 import Testimonials from "@/components/testimonials/testimony";
 import { steps, testimonies } from "@/data/homepageData";
-import LanguageDropdown from '@/components/Languagedropdown';
+import LanguageDropdown from "@/components/Languagedropdown";
 import useAuthStore from "@/store/authStore";
 
 export default function Home() {
@@ -25,50 +25,40 @@ export default function Home() {
   return (
     <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
-      {/* Desktop-Only View */}
-      <div className="hidden lg:block">
-        <header className="flex justify-between items-center px-30 py-8 bg-white">
-          <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
-            <Image src="/logo.svg" alt="Simbi Logo" width={155} height={50} />
-          </div>
-          <div className="text-base font-medium"><LanguageDropdown /></div>
-        </header>
-      </div>
-
-      {/* Header */}
-      {/* Tablet & Mobile-Only View */}
-      <header className="block lg:hidden flex justify-between items-center px-6 md:px-16 py-6 bg-white">
-        <div className="flex items-center space-x-2">
+      <header className="flex justify-between items-center px-6 md:px-16 py-6 bg-white">
+        <div className="flex items-center space-x-2 w-32 md:w-40">
           <Image src="/logo.svg" alt="Simbi Logo" width={155} height={50} />
         </div>
-        <div className="text-base font-medium"><LanguageDropdown /></div>
+        <div className="text-base font-medium">
+          <LanguageDropdown />
+        </div>
       </header>
 
       {/* Hero Section */}
       {/* Desktop-Only View */}
-      <section className="hidden lg:block flex flex-col justify-center bg-[#E9E8FF] h-[78vh] text-center">
-        <div className="flex flex-row justify-center items-center gap-24">
-          <div className="">
+      <section className="flex flex-col justify-center bg-[#E9E8FF] h-auto md:h-[78vh] text-center">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-24 py-20 md:py-0">
+          <div className="order-2 md:order-1">
             <Image
               src="/images/hero.svg"
               alt="Simbi Character"
               width={250}
               height={250}
-              className="mx-auto"
+              className="w-40 md:w-auto mx-auto"
             />
           </div>
 
-          <div className="flex flex-col justify-center">
-            <h1 className="text-5xl font-normal leading-[60px]">
+          <div className="flex flex-col justify-center ">
+            <h1 className="text-3xl md:text-5xl font-semibold md:font-normal leading[24px] md:leading-[60px]">
               Meet Simbi!
               <br />
               Your AI Study Buddy.
             </h1>
-            <p className="mt-2 text-2xl text-[#6B7280] mx-auto leading-[32px]">
+            <p className="mt-2 text-base md:text-2xl text-[#6B7280] mx-auto leading-[18px] md:leading-[32px]">
               Simbi helps you plan, stay motivated and <br />
               learn effectively with a touch of personality
             </p>
-            <div className="mt-14 flex flex-col justify-center items-center">
+            <div className="mt-10 md:mt-14 flex flex-col justify-center items-center">
               {!isLoggedIn ? (
                 <>
                   <Link href="/auth/signup" className="w-full">
@@ -94,10 +84,9 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Hero Section */}
       {/* Tablet & Mobile-Only View */}
-      <section className="block lg:hidden flex flex-col justify-center bg-[#E9E8FF] min-h-[80vh] text-center px-6 md:px-16">
+      {/* <section className="lg:hidden flex flex-col justify-center bg-[#E9E8FF] min-h-[80vh] text-center px-6 md:px-16">
         <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24">
           <Image
             src="/images/hero.svg"
@@ -114,34 +103,35 @@ export default function Home() {
               Your AI Study Buddy.
             </h1>
             <p className="mt-4 text-lg md:text-2xl text-[#6B7280] leading-relaxed">
-              Simbi helps you plan, stay motivated and <br className="hidden md:block" />
+              Simbi helps you plan, stay motivated and{" "}
+              <br className="hidden md:block" />
               learn effectively with a touch of personality
             </p>
             <div className="mt-10 w-full flex flex-col gap-3">
-            {!isLoggedIn ? (
-              <>
-                <Link href="/auth/signup" className="w-full">
-                  <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full rounded-md">
-                    Get Started
+              {!isLoggedIn ? (
+                <>
+                  <Link href="/auth/signup" className="w-full">
+                    <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full rounded-md">
+                      Get Started
+                    </button>
+                  </Link>
+                  <Link href="/auth/signin" className="w-full">
+                    <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full">
+                      I Have an Account
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <Link href="/dashboard" className="w-full">
+                  <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
+                    Go to Dashboard
                   </button>
                 </Link>
-                <Link href="/auth/signin" className="w-full">
-                  <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full">
-                    I Have an Account
-                  </button>
-                </Link>
-              </>
-            ) : (
-              <Link href="/dashboard" className="w-full">
-                <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
-                  Go to Dashboard
-                </button>
-              </Link>
-            )}
+              )}
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features */}
       {/* Desktop-Only View */}
@@ -195,7 +185,6 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* Features */}
       {/* Tablet & Mobile-Only View */}
       <section className="block lg:hidden px-6 md:px-10 py-16 md:py-24">
@@ -236,9 +225,7 @@ export default function Home() {
                 height={200}
                 className="mx-auto object-cover"
               />
-              <h3 className="font-medium text-xl mt-4 text-left">
-                {title}
-              </h3>
+              <h3 className="font-medium text-xl mt-4 text-left">{title}</h3>
               <p className="text-sm text-gray-500 mt-1 text-left">
                 {description}
               </p>
@@ -247,14 +234,21 @@ export default function Home() {
         </div>
       </section>
 
-      
       {/* Simbi is here for */}
       <section className="bg-white py-16 px-6 md:px-12 flex flex-col md:flex-row items-center gap-10">
         <div className="md:w-1/2">
-          <Image src="/images/simbi-2.svg" alt="Simbi Character" width={250} height={300} className="mx-auto" />
+          <Image
+            src="/images/simbi-2.svg"
+            alt="Simbi Character"
+            width={250}
+            height={300}
+            className="mx-auto"
+          />
         </div>
         <div className="flex flex-col gap-4 md:w-1/2 text-left">
-          <h2 className="text-4xl md:text-5xl font-medium">Simbi is here for</h2>
+          <h2 className="text-4xl md:text-5xl font-medium">
+            Simbi is here for
+          </h2>
           <ul className="mt-4 space-y-4 text-lg md:text-2xl text-[#6B7280]">
             <li>Self-learners & exam preppers who want structure</li>
             <li>Procrastinators who need a motivational kick</li>
@@ -263,9 +257,6 @@ export default function Home() {
           </ul>
         </div>
       </section>
-
-
-      
 
       {/* Why Simbi Works */}
       {/* Desktop-Only View */}
@@ -374,10 +365,7 @@ export default function Home() {
                 height={67}
                 className="mx-auto mb-2 w-18 h-auto"
               />
-              <h3
-                className="text-xl font-medium"
-                style={{ color: textColor }}
-              >
+              <h3 className="text-xl font-medium" style={{ color: textColor }}>
                 {title}
               </h3>
               <p className="text-base text-black font-light">{description}</p>
@@ -391,7 +379,9 @@ export default function Home() {
       {/* Desktop-Only View */}
       <div className="hidden lg:block">
         <section className="flex justify-center items-center px-6 py-32 gap-10">
-          <h2 className="text-5xl font-medium max-w-1/6">Real talk from Simbi</h2>
+          <h2 className="text-5xl font-medium max-w-1/6">
+            Real talk from Simbi
+          </h2>
           <div className="bg-white rounded-xl shadow-[0_19px_50px_0_#957FFF87] max-w-[745px] py-8 px-9 ">
             <Image
               src="/images/quote.svg"
@@ -437,9 +427,19 @@ export default function Home() {
               You missed your flashcards again? Your neurons are screaming for
               mercy. Open the app before I start erasing your GPA.
             </p>
-            <Image src="/images/simbi-3.svg" alt="Simbi Character" width={100} height={100} />
+            <Image
+              src="/images/simbi-3.svg"
+              alt="Simbi Character"
+              width={100}
+              height={100}
+            />
           </div>
-          <p className={`mt-4 font-black text-xl ${roboto.className}`}>Simbi, <span className="poppins font-normal text-xs leading-[150%]">your best frenemy!</span></p>
+          <p className={`mt-4 font-black text-xl ${roboto.className}`}>
+            Simbi,{" "}
+            <span className="poppins font-normal text-xs leading-[150%]">
+              your best frenemy!
+            </span>
+          </p>
         </div>
       </section>
 
@@ -579,17 +579,22 @@ export default function Home() {
 
         <div className="mt-16">
           <h2 className="text-[#1E1E2F] text-3xl md:text-5xl font-medium leading-tight">
-            Study Smarter. Stay on track. Get <br className="hidden md:block" /> Roasted (lovingly)
+            Study Smarter. Stay on track. Get <br className="hidden md:block" />{" "}
+            Roasted (lovingly)
           </h2>
           <p className="mt-4 text-[#6B7280] text-lg md:text-2xl">
             Sign up and get acquainted with Simbi!
           </p>
           <div className="mt-8 flex flex-col md:flex-row justify-center gap-4">
             <Link href="/auth/signup">
-              <button className="bg-[#7A5FFF] text-white px-10 py-3 rounded-md text-sm">Get Started</button>
+              <button className="bg-[#7A5FFF] text-white px-10 py-3 rounded-md text-sm">
+                Get Started
+              </button>
             </Link>
             <Link href="/auth/signin">
-              <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-10 py-3 rounded-md">I Have an Account</button>
+              <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] px-10 py-3 rounded-md">
+                I Have an Account
+              </button>
             </Link>
           </div>
         </div>
@@ -655,12 +660,17 @@ export default function Home() {
         </div>
       </footer>
 
-
       {/* Footer */}
       {/* Tablet & Mobile-Only View */}
       <footer className="block lg:hidden bg-[#EDEBFB] py-10 px-6 text-sm text-gray-600">
         <div className="flex flex-col md:flex-row justify-between items-start gap-10">
-          <Image src="/logo.svg" alt="Simbi Logo" width={155} height={50} className="w-56" />
+          <Image
+            src="/logo.svg"
+            alt="Simbi Logo"
+            width={155}
+            height={50}
+            className="w-56"
+          />
 
           <div className="flex flex-col sm:flex-row gap-10">
             <div>
@@ -682,9 +692,24 @@ export default function Home() {
             <div>
               <p className="font-normal text-black text-base mb-4">Connect</p>
               <div className="flex items-center space-x-4">
-                <Image src="images/twitter.svg" alt="twitter" width={20} height={20} />
-                <Image src="images/linkedin.svg" alt="linkedin" width={20} height={20} />
-                <Image src="images/facebook.svg" alt="facebook" width={20} height={20} />
+                <Image
+                  src="images/twitter.svg"
+                  alt="twitter"
+                  width={20}
+                  height={20}
+                />
+                <Image
+                  src="images/linkedin.svg"
+                  alt="linkedin"
+                  width={20}
+                  height={20}
+                />
+                <Image
+                  src="images/facebook.svg"
+                  alt="facebook"
+                  width={20}
+                  height={20}
+                />
               </div>
             </div>
           </div>
