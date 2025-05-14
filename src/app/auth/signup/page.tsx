@@ -24,14 +24,24 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [matchError, setMatchError] = useState("");
 
+  // NEW: separate state for the checkbox
+  const [rememberMe, setRememberMe] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, checked } = e.target;
+
+    // SHORT-CIRCUIT the remember checkbox here:
+    if (name === "remember") {
+      setRememberMe(checked);
+      return; // don’t touch `form`
+    }
+
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
 
-    // live password match update
+    // live password-match check
     if (name === "password" && confirmPassword) {
       setMatchError(value !== confirmPassword ? "Passwords do not match" : "");
     }
@@ -161,6 +171,7 @@ export default function SignupPage() {
             id="remember"
             name="remember"
             type="checkbox"
+            checked={rememberMe}
             onChange={handleChange}
             className="mr-2 cursor-pointer"
           />

@@ -49,8 +49,7 @@ export default function PersonalizationLayout({
       </div>
 
       {/* Main Card */}
-      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto mb-16 rounded-4xl shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] overflow-hidden min-h-[70vh]">
-
+      <div className="flex flex-col md:flex-row w-full max-w-6xl md:mx-auto mb-16 md:rounded-4xl md:shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] overflow-hidden min-h-[70vh]">
         {/* Side Title (hidden on small screens) */}
         <section className="hidden md:flex md:basis-[40%] bg-[#7A5FFF] items-center justify-center p-6">
           <div className="text-white font-medium text-[clamp(1.5rem,3vw,2rem)] leading-snug text-center max-w-[90%]">
