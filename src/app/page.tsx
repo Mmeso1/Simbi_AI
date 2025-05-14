@@ -24,19 +24,19 @@ export default function Home() {
   return (
     <main className="bg-[#FDFDFF] text-[#1E1E2F">
       {/* Header */}
-      <header className="flex justify-between items-center px-30 py-8 bg-white">
+      <header className="flex justify-between items-center px-6 md:px-36 py-8 bg-white">
         <div className="flex items-ceimport Link from 'next/link';nter space-x-2">
           <Image src="/logo.svg" alt="Simbi Logo" width={155} height={50} />
         </div>
-        <div className="w-[343px] border border-[#C9C0D4] rounded-xl p-3 flex items-center justify-between">
+        <div className="md:w-[343px] w-[45%] border border-[#C9C0D4] rounded-xl p-3 flex items-center justify-between">
           <button className="text-base font-medium">Language</button>
           <IoIosArrowDown className="text-[#202024]" size={20} />
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="flex flex-col justify-center bg-[#E9E8FF] h-[78vh] text-center">
-        <div className="flex flex-row justify-center items-center gap-24">
+      <section className="flex flex-col justify-center py-10 lg:py-0 bg-[#E9E8FF] min-h-[78vh] text-center">
+        <div className="flex flex-col-reverse py-4 lg:flex-row justify-center items-center gap-24">
           <div className="">
             <Image
               src="/images/hero.svg"
