@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useChatStore } from "@/store/chatStore";
+import { useEffect, useState } from "react";
+import Sidebar from "@/components/chatbot/sidebar";
 
 export default function ChatLayout({
   children,
@@ -9,125 +10,66 @@ export default function ChatLayout({
   children: React.ReactNode;
 }) {
   const { display } = useChatStore();
+  const [, setIsMobile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  console.log("Display", display);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <aside
-        className="fixed top-0 left-0 
-          h-screen w-[250px] 
-          bg-[#1F125C] p-5 text-white 
-          overflow-auto"
+    <div className="flex h-screen w-full">
+      {/* Sidebar overlay on mobile, persistent on desktop */}
+      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+
+      {/* Main Content Area: static, with desktop margin */}
+      <div
+        className={`flex-1 flex flex-col w-full transition-all duration-300
+          ${sidebarOpen ? "md:ml-64" : ""}`}
       >
-        <div className="top-bar flex items-center justify-between mt-4">
+        <header className="flex items-center justify-end p-8 z-10">
           <Image
             src="/chatbot/sidebar-toggler.svg"
-            alt="Sidebar Toggler"
+            alt="Toggle Sidebar"
             width={24}
             height={24}
-            className="cursor-pointer"
+            className="cursor-pointer mr-4"
+            onClick={() => setSidebarOpen((o) => !o)}
           />
-          <div className="flex items-center justify-center gap-4">
-            <Image
-              src="/chatbot/search.svg"
-              alt="Chatbot"
-              className="cursor-pointer"
-              width={24}
-              height={24}
-            />
-            <Image
-              src="/chatbot/edit.svg"
-              alt="Another Image"
-              className="cursor-pointer"
-              width={24}
-              height={24}
-            />
-          </div>
-        </div>
-        <section className="my-8 space-y-5">
+          {display && (
+            <>
+              <Image
+                src="/chatbot/share.svg"
+                width={20}
+                height={20}
+                alt="share"
+                className="mr-4"
+              />
+              <Image
+                src="/chatbot/elipsis.svg"
+                width={20}
+                height={20}
+                alt="more"
+                className="mr-4"
+              />
+            </>
+          )}
           <Image
-            src="/chatbot/headerIcon.svg"
-            alt="header icon"
-            width={150}
-            height={150}
+            src="/chatbot/pfp.jpg"
+            alt="Profile"
+            width={40}
+            height={40}
+            className="w-10 h-10 rounded-full object-cover"
           />
-
-          <div className="menu-options space-y-5">
-            <button className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full">
-              <Image
-                src="/chatbot/explore.svg"
-                alt="explore icon"
-                width={22}
-                height={22}
-              />
-              <span>Explore Simbi</span>
-            </button>
-            <button className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full">
-              <Image
-                src="/chatbot/library.svg"
-                alt="library icon"
-                width={22}
-                height={22}
-              />
-              <span>Library</span>
-            </button>
-            <Link
-              href={"/"}
-              className="cursor-pointer flex items-center gap-7 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A5FFF] text-left text-sm w-full"
-            >
-              <span>Back to study plan</span>
-            </Link>
-          </div>
-        </section>
-
-        <section className="chat-history mt-24">
-          <div className="chat-history-item">
-            <h2 className="chat-day font-semibold mb-4">Today</h2>
-            <Link
-              href={"/"}
-              className="flex chat-title bg-[#4C417D] p-4 w-full cursor-pointer"
-            >
-              Introduction
-            </Link>
-          </div>
-        </section>
-      </aside>
-
-      {/* Main Area */}
-      <div className=" ml-[250px] flex flex-col flex-1 pt-12 px-12 ">
-        {/* Header */}
-        <header className="h-[60px] p-4 flex items-center">
-          <div className="flex items-center gap-4 ml-auto">
-            {display && (
-              <>
-                <Image
-                  src="/chatbot/share.svg"
-                  width={20}
-                  height={20}
-                  alt="share icon"
-                />
-                <Image
-                  src="/chatbot/elipsis.svg"
-                  width={20}
-                  height={20}
-                  alt="elipsis"
-                />
-              </>
-            )}
-            <Image
-              src="/chatbot/pfp.jpg"
-              alt="Profile"
-              width={40}
-              height={40}
-              className={`rounded-full ${
-                display ? "w-5 h-5 md:w-10 md:h-10" : "w-15 h-15"
-              } object-cover`}
-            />
-          </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 flex items-center bg-white">{children}</main>
+        <main className="w-full flex-1 flex items-center justify-center bg-white">
+          {children}
+        </main>
       </div>
     </div>
   );
