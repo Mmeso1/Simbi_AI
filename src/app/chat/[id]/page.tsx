@@ -5,23 +5,34 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { getChatMessages } from "@/api/chat";
 import { useParams } from "next/navigation";
 import { toast } from "react-hot-toast";
+
 export default function ChatPage() {
   const { prompt, responses, setDisplay, setChatId, addResponse, clearChat } =
     useChatStore();
   const params = useParams();
-  const chatId = params.id;
+  const chatId = params?.id ?? "";
 
-  // show the input when this page mounts
+  // This ref ensures we only initialize once, even under StrictMode
+  const initializedRef = useRef(false);
+
   useEffect(() => {
     setDisplay(true);
-    clearChat();
-    setChatId(chatId as string);
 
-    // fetch existing messages
+    // Only run our init logic once
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
+    clearChat();
+
+    if (!chatId) {
+      return;
+    }
+
+    // Existing chat: set ID and load history
+    setChatId(chatId as string);
     getChatMessages(chatId as string)
       .then((data) => {
         if (data.success) {
-          console.log(data);
           data.messages.forEach((m) =>
             addResponse({
               from: m.role === "user" ? "user" : "assistant",
@@ -34,7 +45,7 @@ export default function ChatPage() {
         console.error("Failed to load messages:", err);
         toast.error("Failed to load messages");
       });
-  }, [chatId, setDisplay, setChatId, addResponse, clearChat]);
+  }, [chatId, setDisplay, clearChat, setChatId, addResponse]);
 
   // ref to the bottom “sentinel”
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -78,7 +89,7 @@ export default function ChatPage() {
       </div>
 
       {/* 2) Sticky Input Bar */}
-      <div className="sticky bottom-5 inset-x-0 bg-white px-4 z-50">
+      <div className="sticky bottom-5 inset-x-0 bg-white px-4">
         <div className="w-full max-w-6xl mx-auto">
           <ChatInput display={false} />
         </div>

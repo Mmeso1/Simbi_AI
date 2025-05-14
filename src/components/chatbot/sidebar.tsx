@@ -6,6 +6,7 @@ import { useHistoryStore } from "@/store/chatHistory";
 import { getAllChats } from "@/api/chat";
 import { useParams } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { useChatStore } from "@/store/chatStore";
 
 interface SidebarProps {
   open: boolean;
@@ -33,6 +34,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
   const { chats, setChats } = useHistoryStore();
   const params = useParams();
   const currentId = params.id;
+  const clearChat = useChatStore((s) => s.clearChat);
 
   useEffect(() => {
     getAllChats()
@@ -98,7 +100,12 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
               width={24}
               height={24}
             />
-            <Link href="/chat">
+            <Link
+              href="/chat"
+              onClick={() => {
+                clearChat();
+              }}
+            >
               <Image
                 src="/chatbot/edit.svg"
                 alt="Edit"
