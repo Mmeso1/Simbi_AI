@@ -220,7 +220,7 @@ export default function EditStudyForm({
         </span>
       </header>
 
-      <div className="flex justify-between items-center sticky top-10 bg-graybg px-6 rounded-[12px] h-[60px] my-10">
+      <div className="flex justify-between items-center bg-graybg px-6 rounded-[12px] h-[60px] my-10">
         {steps.map((step) => (
           <div
             key={step.id}
@@ -265,11 +265,11 @@ export default function EditStudyForm({
                 </div>
                 <div className="flex flex-col md:w-1/2 w-full py-[8px] px-[10px] border-bluebg border-[1px] rounded-[8px]">
                   <span className="font-normal text-[0.75rem] text-deepdarkgray">
-                    Select Study Subjects
+                    Name of Subjects
                   </span>
                   <input
                     type="text"
-                    placeholder="Numbers, Algebra, Equation"
+                    placeholder="Algebra"
                     className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                     onChange={handleSubjectsChange}
                     value={subjects.join(", ")}

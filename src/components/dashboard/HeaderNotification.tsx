@@ -26,7 +26,7 @@ export default function HeaderNotification({
       <aside className="bg-bluemaguerite w-[70%] max-w-xs p-2 rounded-[10px] flex justify-between ">
         <div className="flex items-center gap-4">
           <Image
-            src="/DashboardIcons/dashboardUserImg.png"
+            src={"/chatbot/pfp.jpg"}
             alt="Image of the user"
             height={40}
             width={40}

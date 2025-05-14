@@ -1,5 +1,6 @@
 "use client";
 import { balooThambi2 } from "@/lib/fonts";
+import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import axios from "axios";
 
 import Image from "next/image";
@@ -12,6 +13,34 @@ export default function SessionTimerPage() {
   const searchParams = useSearchParams();
 
   const id = searchParams.get("id");
+
+  const { studies } = useGetStudyPlanStore();
+
+  // Extract the specific study
+  const study = studies.filter((study) => study.id === id);
+
+  const viewMileStone = study[0].planData.milestones.map((milestone) => (
+    <div
+      className="flex justify-between items-center mb-4 gap-5"
+      key={milestone.description}
+    >
+      <div className="flex">
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          defaultChecked={milestone.completed}
+        />
+        <p className="ml-3">{milestone.description}</p>
+      </div>
+      <div>
+        <p>Status</p>
+        <p className="text-gray-500">
+          {milestone.completed ? "Completed" : "In progress"}
+        </p>
+      </div>
+    </div>
+  ));
 
   const [loading, setLoading] = useState(false);
   console.log(loading);
@@ -229,12 +258,14 @@ export default function SessionTimerPage() {
             <h3 className="font-semibold text-[1.25rem]">Milestone Tracking</h3>
             <button
               onClick={() => router.push("/milestone")}
-              className="bg-lightblue rounded-[8px] py-[10px] px-[15px] text-white"
+              className="bg-lightblue hover:bg-blue-900 rounded-[8px] py-[10px] px-[15px] text-white"
             >
-              + Add Milestone
+              View Milestones
             </button>
           </div>
         </section>
+
+        <section className="-mt-10 pb-10">{viewMileStone}</section>
       </main>
     </section>
   );

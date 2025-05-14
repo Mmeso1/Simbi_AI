@@ -42,7 +42,7 @@ export default function NavBar() {
     },
     {
       label: "Let's chat",
-      icon: "/DashboardIcons/settingIcon.svg",
+      icon: "/DashboardIcons/chatSimbiIcon.svg",
       href: "/chat",
     },
     {
