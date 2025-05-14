@@ -59,7 +59,7 @@ export default function ChatLayout({
             </>
           )}
           <Image
-            src="/chatbot/pfp.png"
+            src="/chatbot/pfp.jpg"
             alt="Profile"
             width={40}
             height={40}
