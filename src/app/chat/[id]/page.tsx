@@ -41,8 +41,10 @@ export default function ChatPage() {
       </div>
 
       {/* 2) Input bar (sticky within the chat column) */}
-      <div className="fixed flex bottom-10 z-50 w-full max-w-5xl mx-auto px-4">
-        <ChatInput display={false} />
+      <div className="fixed bottom-10 inset-x-0 flex justify-center px-4 z-50">
+        <div className="w-full max-w-6xl">
+          <ChatInput display={false} />
+        </div>
       </div>
     </div>
   );
