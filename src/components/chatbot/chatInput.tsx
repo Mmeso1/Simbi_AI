@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useChatStore } from "@/store/chatStore";
 import { sendPrompt } from "@/api/chat";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 interface ChatInputProps {
   display?: boolean;
@@ -18,6 +20,10 @@ export default function ChatInput({ display }: ChatInputProps) {
   const chatId = useChatStore((s) => s.chatId);
   const setChatId = useChatStore((s) => s.setChatId);
   const addResponse = useChatStore((s) => s.addResponse);
+
+  const { listening, toggle } = useSpeechRecognition((transcript) => {
+    setInputValue((prev) => prev + transcript);
+  });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
@@ -39,10 +45,6 @@ export default function ChatInput({ display }: ChatInputProps) {
     try {
       const payload = { content: inputValue, chatId: chatId || "" };
       const { chat, userMessage, aiMessage } = await sendPrompt(payload);
-      console.log("Responses from prompt");
-      console.log("chat", chat);
-      console.log("userMessage", userMessage);
-      console.log("aiMessage", aiMessage);
 
       if (!chatId) setChatId(chat.id);
 
@@ -53,7 +55,7 @@ export default function ChatInput({ display }: ChatInputProps) {
       return chat;
     } catch (err) {
       console.error(err);
-      // show user‑facing error here
+      toast.error("Oops! Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -128,14 +130,21 @@ export default function ChatInput({ display }: ChatInputProps) {
             </div>
 
             <div className="flex items-center gap-4">
-              <button className="cursor-pointer">
+              <button
+                onClick={toggle}
+                className={`
+                  cursor-pointer transition-transform
+                  ${listening ? "animate-pulse-scale" : "scale-100"}
+                `}
+              >
                 <Image
                   src="/chatbot/microphone.svg"
                   alt="Microphone"
                   width={36}
                   height={36}
+                  className={listening ? "filter hue-rotate-200" : ""}
                 />
-              </button>{" "}
+              </button>
               {inputValue && (
                 <button
                   onClick={onClickSend}
