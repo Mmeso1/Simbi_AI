@@ -86,7 +86,7 @@ export default function ChatInput({ display }: ChatInputProps) {
       {/* Input Bar - Bottom Content */}
       <div
         className={`w-full max-w-6xl px-4 mx-auto mt-auto mb-${
-          display ? "8" : "0"
+          display ? "10" : "0"
         }`}
       >
         <div
@@ -99,7 +99,7 @@ export default function ChatInput({ display }: ChatInputProps) {
             onChange={handleInputChange}
             value={inputValue}
             disabled={isLoading}
-            className={`my-6 text-[rgba(30,30,47,0.84)] text-xl font-normal focus:outline-none resize-none w-full max-h-40 overflow-y-auto bg-transparent ${
+            className={`my-6 text-[rgba(30,30,47,0.84)] text-base font-normal focus:outline-none resize-none w-full max-h-40 overflow-y-auto bg-transparent placeholder:text-base ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             rows={1}
