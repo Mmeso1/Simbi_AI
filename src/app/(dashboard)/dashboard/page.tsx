@@ -14,6 +14,8 @@ import { Inter } from "next/font/google";
 import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
 import { useRouter } from "next/navigation";
+import EditStudyForm from "@/components/study-plans/EditStudyForm";
+import { Study } from "@/types/user";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,7 +26,7 @@ const inter = Inter({
 export default function DashboardPage() {
   const monthsOfTheYear = [
     "January",
-    "Febuary",
+    "February",
     "March",
     "April",
     "May",
@@ -37,50 +39,50 @@ export default function DashboardPage() {
     "December",
   ];
 
-  // Generate Study Plan Pop up
-  const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
-  const [toggleProductivity, setToggleProductivity] = useState<string>("Week"); // for productivity scorecard section
-  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
-
-  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
+  const [toggleEditGenerateStudyForm, setToggleEditGenerateStudyPlan] =
+    useState(false);
+  const [toggleProductivity, setToggleProductivity] = useState<string>("Week");
+  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
+  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false);
+  const [studyToEdit, setStudyToEdit] = useState<Study | null>(null);
 
   const router = useRouter();
 
   const handleToggleMiniNavBar = () => {
-    // for toggling the mininavbar;
-
     setToggleMiniNavBar((prevState) => !prevState);
   };
 
   const handleToggleUserNavBar = () => {
-    // for toggling the navbar on the headerNotification
     setToggleUserNavBar((prevState) => !prevState);
   };
 
-  const handleToggleGenerateStudyPlan = () => {
-    // for toggling the Generate Study Plan pop up
-    setToggleGenerateStudyPlan((prevState) => !prevState);
+  const handleToggleEditGenerateStudyPlan = (study?: Study) => {
+    if (study) {
+      setStudyToEdit(study);
+    }
+    setToggleEditGenerateStudyPlan((prevState) => !prevState);
   };
 
-  console.log("API URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
-
   return (
-    <section
-      className={
-        toggleGenerateStudyPlan
-          ? "flex poppins xl:flex-row flex-col overflow-x-hidden text-white"
-          : "flex poppins xl:flex-row flex-col overflow-x-hidden"
-      }
-    >
+    <section className={"flex poppins xl:flex-row flex-col overflow-x-hidden"}>
       {toggleMiniNavBar && (
         <div className="w-[222px] fixed z-50 ">
           <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
         </div>
       )}
 
-      <aside className="xl:w-[63%]  w-full min-h-screen xl:pb-20 border-r-0 xl:border-r-[0.9px] px-4 border-r-grayborder">
-        {/* Dashboard Middle section */}
+      {toggleEditGenerateStudyForm && studyToEdit && (
+        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+          <EditStudyForm
+            handleToggleEditGenerateStudyPlan={
+              handleToggleEditGenerateStudyPlan
+            }
+            studyToEdit={studyToEdit}
+          />
+        </div>
+      )}
 
+      <aside className="xl:w-[63%]  w-full min-h-screen xl:pb-20 border-r-0 xl:border-r-[0.9px] px-4 border-r-grayborder">
         <header className="mt-[30px]">
           <div className="flex  items-center justify-between mb-10">
             <span className="text-3xl block md:hidden text-dark">
@@ -101,11 +103,10 @@ export default function DashboardPage() {
               Welcome back
             </h1>
             <p className="sm:text-[1.125rem] text-[0.7rem] font-[400] z-50">
-              I’m Simbi, ready to learn and have fun?
+              I&apos;m Simbi, ready to learn and have fun?
             </p>
             <button
               onClick={() => router.push("/study-plans")}
-              // href={"/study-plans"}
               className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base"
             >
               Generate a new Study Plan
@@ -122,7 +123,6 @@ export default function DashboardPage() {
 
         <div className="mt-[40px]">
           <DashboardHeaders text="Study Streak" />
-
           <Streak />
         </div>
 
@@ -186,7 +186,6 @@ export default function DashboardPage() {
                 width={24}
               />
               <p className="font-normal text-lightblue text-[1.125rem]">
-                {" "}
                 Today, {new Date().getUTCDate()}{" "}
                 {monthsOfTheYear[new Date().getMonth()]}{" "}
                 {new Date().getFullYear()}
@@ -197,15 +196,15 @@ export default function DashboardPage() {
           <div className="mt-5 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-16">
               <StudyCourses
-                handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+                handleToggleEditGenerateStudyPlan={
+                  handleToggleEditGenerateStudyPlan
+                }
               />
             </div>
           </div>
         </section>
       </aside>
       <aside className="xl:w-[37%] w-full px-6 min-h-screen">
-        {/* for toggling the navbar on the headerNotification */}
-
         {toggleUserNavBar && (
           <div
             className={
@@ -256,7 +255,6 @@ export default function DashboardPage() {
           </div>
         )}
         <section className="mt-[30px]">
-          {/* Right side */}
           <div className="xl:block hidden">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
@@ -271,7 +269,7 @@ export default function DashboardPage() {
             <div className="border-[0.75px] border-grayborder rounded-[6px] mt-20 px-6 py-4">
               <h3 className="flex justify-between items-center">
                 <span className="font-semibold text-[0.875rem]">
-                  Simbi’s Study tips
+                  Simbi&apos;s Study tips
                 </span>
                 <Image
                   src="/DashboardIcons/dotIcon.svg"

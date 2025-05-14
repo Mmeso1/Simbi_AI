@@ -5,33 +5,35 @@ import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import FormatTime from "./FormatTime";
 import moment from "moment";
 import { Study, ViewFilter } from "@/types/user";
+import { useRouter } from "next/navigation";
+
+interface StudyCoursesProps {
+  handleToggleEditGenerateStudyPlan: (study: Study) => void;
+  view?: ViewFilter;
+}
 
 export default function StudyCourses({
-  handleToggleGenerateStudyPlan,
-  view = "day", // Default value for view prop
-}: {
-  handleToggleGenerateStudyPlan: () => void;
-  view?: ViewFilter; // Optional prop to toggle view between day, week, month
-}) {
+  handleToggleEditGenerateStudyPlan,
+  view = "day",
+}: StudyCoursesProps) {
   const [toggleStudyNav, setToggleStudyNav] = useState<string | null>(null);
 
   const handleToggleStudyNav = (id: string) => {
     setToggleStudyNav((prevState) => (prevState === id ? null : id));
   };
 
-  const { fetchStudies, isLoading, error, studies } = useGetStudyPlanStore();
+  const router = useRouter();
+
+  const { fetchStudies, isLoading, error, studies, deleteStudy } =
+    useGetStudyPlanStore();
 
   useEffect(() => {
     fetchStudies();
   }, [fetchStudies]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  // Function to filter studies by day, week, or month
   const filterStudiesByView = (
     studies: Study[],
-    view: ViewFilter = "day", // Make sure view is passed and used here
+    view: ViewFilter = "day",
     referenceDate: Date = new Date()
   ) => {
     return studies.filter((study) =>
@@ -49,8 +51,10 @@ export default function StudyCourses({
     );
   };
 
-  // Now pass the `view` prop to the filter function
   const filteredStudies = filterStudiesByView(studies, view);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
@@ -96,20 +100,28 @@ export default function StudyCourses({
                 className={`opacity-100 duration-1000 rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-16 right-0 z-50 px-6`}
               >
                 <span className="flex items-center gap-6 group w-full">
-                  <span className="font-normal cursor-pointer group-hover:text-lightblue duration-300 ">
+                  <span
+                    onClick={() =>
+                      router.push(`/sessionsTimer?id=${course.id}`)
+                    }
+                    className="font-normal cursor-pointer group-hover:text-lightblue duration-300 "
+                  >
                     Start Study Session
                   </span>
                 </span>
                 <span className="flex items-center gap-6 group w-full">
                   <span
-                    onClick={handleToggleGenerateStudyPlan}
+                    onClick={() => handleToggleEditGenerateStudyPlan(course)}
                     className="font-normal cursor-pointer group-hover:text-lightblue duration-300 "
                   >
                     Edit Study Plan
                   </span>
                 </span>
                 <span className="flex items-center gap-6 group w-full">
-                  <span className="font-normal cursor-pointer text-error group-hover:text-lightblue duration-300 ">
+                  <span
+                    onClick={() => deleteStudy(course.id)}
+                    className="font-normal cursor-pointer text-error group-hover:text-lightblue duration-300 "
+                  >
                     Deactivate Study Plan
                   </span>
                 </span>
