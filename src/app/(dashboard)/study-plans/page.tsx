@@ -6,8 +6,7 @@ import StudyCourses from "@/components/dashboard/StudyCourses";
 import EmptyStudyPlan from "@/components/study-plans/EmptyStudyPlan";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import StudyForm from "@/components/study-plans/StudyForm";
 import { useRouter } from "next/navigation";
 import { inter } from "@/lib/fonts";
@@ -15,11 +14,13 @@ import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import { ViewFilter } from "@/types/user";
+import EditStudyForm from "@/components/study-plans/EditStudyForm";
+import { Study } from "@/types/user";
 
 export default function StudyPlanPage() {
   const monthsOfTheYear = [
     "January",
-    "Febuary",
+    "February",
     "March",
     "April",
     "May",
@@ -33,48 +34,64 @@ export default function StudyPlanPage() {
   ];
 
   const router = useRouter();
+  const { studies, fetchStudies } = useGetStudyPlanStore();
+  const [studyToEdit, setStudyToEdit] = useState<Study | null>(null);
 
-  // set up store
-  const { studies } = useGetStudyPlanStore();
-  console.log(studies.length);
+  useEffect(() => {
+    fetchStudies();
+  }, [fetchStudies]);
 
-  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
-  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
-  // Generate Study Plan Pop up
-  const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
+  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
+  const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false);
+  const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false);
+  const [toggleEditGenerateStudyForm, setToggleEditGenerateStudyPlan] =
+    useState(false);
+  const [view, setView] = useState<ViewFilter>("day");
 
-  const [view, setView] = useState<ViewFilter>("day"); // showing plans based on day, week, month
+  const handleToggleEditGenerateStudyPlan = (study?: Study) => {
+    if (study) {
+      setStudyToEdit(study);
+    }
+    setToggleEditGenerateStudyPlan((prevState) => !prevState);
+  };
 
   const handleToggleView = (text: ViewFilter) => {
     setView(text);
   };
 
   const handleToggleMiniNavBar = () => {
-    // for toggling the mininavbar;
     setToggleMiniNavBar((prevState) => !prevState);
   };
 
   const handleToggleUserNavBar = () => {
-    // for toggling the navbar on the headerNotification
     setToggleUserNavBar((prevState) => !prevState);
   };
 
   const startStudySession = () => {
-    // Start study session by setting timer
     router.push("/sessionsTimer");
   };
 
   const handleToggleGenerateStudyPlan = () => {
-    // for toggling the Generate Study Plan pop up
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
+
   return (
     <section className="mx-auto w-[90%] pb-20">
-      {/* Logic  for toggling the Generate Study Plan pop up  */}
       {toggleGenerateStudyPlan && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%]  w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
           <StudyForm
             handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+          />
+        </div>
+      )}
+
+      {toggleEditGenerateStudyForm && studyToEdit && (
+        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+          <EditStudyForm
+            handleToggleEditGenerateStudyPlan={
+              handleToggleEditGenerateStudyPlan
+            }
+            studyToEdit={studyToEdit}
           />
         </div>
       )}
@@ -85,7 +102,6 @@ export default function StudyPlanPage() {
         </div>
       )}
 
-      {/* The message icon fixed to the bottom of the screen */}
       <Link href="/chat">
         <Image
           src="/DashboardIcons/messageSimbiIcon.svg"
@@ -95,7 +111,7 @@ export default function StudyPlanPage() {
           className="fixed bottom-10 z-50 right-20 cursor-pointer"
         />
       </Link>
-      {/* for toggling the navbar on the headerNotification */}
+
       {toggleUserNavBar && (
         <div
           className={
@@ -232,6 +248,7 @@ export default function StudyPlanPage() {
           </button>
         </div>
       </div>
+
       <div className="flex justify-between flex-col gap-3 md:flex-row items-center px-6 mt-3">
         <div className="flex items-center justify-center gap-6">
           <Image
@@ -279,12 +296,11 @@ export default function StudyPlanPage() {
         <div className="mt-16 flex w-full lg:flex-row flex-col gap-10">
           <div className="lg:w-2/3 w-full">
             <div className="lg:hidden block rounded-[20px] lg:w-[330px] w-full min-h-[190px] bg-bluemaguerite p-4 relative mb-10">
-              {/* Pep Talk Simbi */}
               <h3 className="text-deeppurple font-semibold sm:text-[2rem] text-[1.5rem] leading-[40px]">
                 Simbi&apos;s Pep talk
               </h3>
               <p className="text-deeppurple mt-3 sm:font-normal text-[0.75rem]">
-                Study Plan – let’s pretend you’ll stick to it 😉
+                Study Plan – let&apos;s pretend you&apos;ll stick to it 😉
               </p>
 
               <button
@@ -305,7 +321,9 @@ export default function StudyPlanPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StudyCourses
-                handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+                handleToggleEditGenerateStudyPlan={
+                  handleToggleEditGenerateStudyPlan
+                }
                 view={view}
               />
             </div>
@@ -313,12 +331,12 @@ export default function StudyPlanPage() {
 
           <div className="lg:w-1/3  w-full">
             <div className="hidden lg:block rounded-[20px] lg:w-[330px] w-full min-h-[190px] bg-bluemaguerite p-4 relative">
-              {/* Pep Talk Simbi */}
               <h3 className="text-deeppurple font-semibold text-[2rem] leading-[40px]">
                 Simbi&apos;s <br /> Pep talk
               </h3>
               <p className="text-deeppurple mt-3 font-normal">
-                Study Plan – let’s pretend <br /> you’ll stick to it 😉
+                Study Plan – let&apos;s pretend <br /> you&apos;ll stick to it
+                😉
               </p>
 
               <Image
@@ -331,13 +349,12 @@ export default function StudyPlanPage() {
             </div>
 
             <div className="mt-10 rounded-[8px] shadow-md  border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200">
-              {/* Urgent deadlines */}
               <h3 className="text-error font-medium">Urgent deadlines</h3>
               <div className="mt-2 px-2">
                 <div className="w-full grid grid-cols-1 gap-y-3 ">
                   <StudyCourses
-                    handleToggleGenerateStudyPlan={
-                      handleToggleGenerateStudyPlan
+                    handleToggleEditGenerateStudyPlan={
+                      handleToggleEditGenerateStudyPlan
                     }
                   />
                 </div>
@@ -345,13 +362,12 @@ export default function StudyPlanPage() {
             </div>
 
             <div className="mt-10 rounded-[8px] shadow-md border-[1px] min-h-[144px] w-full lg:w-[330px] p-4 border-gray-200">
-              {/* Missed deadlines */}
               <h3 className="text-error font-medium">Missed deadlines</h3>
               <div className="mt-2 px-2">
                 <div className="w-full grid grid-cols-1 gap-y-3 ">
                   <StudyCourses
-                    handleToggleGenerateStudyPlan={
-                      handleToggleGenerateStudyPlan
+                    handleToggleEditGenerateStudyPlan={
+                      handleToggleEditGenerateStudyPlan
                     }
                   />
                 </div>

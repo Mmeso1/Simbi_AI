@@ -11,21 +11,23 @@ export default function ChatPage() {
   }, [setDisplay]);
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 mx-40">
       {/* 1) Messages pane (scrollable) */}
       <div className="flex-1 overflow-y-scroll scrollbar-none px-4 py-6">
         {/* User prompt */}
-        <div className="mb-4 flex justify-end">
-          <div className="bg-[#E4DFFF] p-3 rounded-lg max-w-[75%]">
-            {prompt}
+        {prompt && (
+          <div className="mb-4 flex justify-end">
+            <div className="bg-[#E4DFFF] p-3 rounded-lg max-w-[75%]">
+              {prompt}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* AI & user responses */}
         {responses.map((msg, i) => (
           <div
             key={i}
-            className={`mb-4 flex ${
+            className={`mb-4 flex text-sm ${
               msg.from === "user" ? "justify-end" : "justify-start"
             }`}
           >
@@ -41,8 +43,10 @@ export default function ChatPage() {
       </div>
 
       {/* 2) Input bar (sticky within the chat column) */}
-      <div className="fixed flex bottom-10 z-50 w-full max-w-5xl mx-auto px-4">
-        <ChatInput display={false} />
+      <div className="fixed bottom-10 inset-x-0 flex justify-center px-4 z-50">
+        <div className="w-full max-w-6xl">
+          <ChatInput display={false} />
+        </div>
       </div>
     </div>
   );
