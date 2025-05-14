@@ -35,7 +35,6 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      {/* Desktop-Only View */}
       <section className="flex flex-col justify-center bg-[#E9E8FF] h-auto md:h-[78vh] text-center">
         <div className="flex flex-col md:flex-row justify-center items-center gap-24 py-20 md:py-0">
           <div className="order-2 md:order-1">
@@ -44,7 +43,7 @@ export default function Home() {
               alt="Simbi Character"
               width={250}
               height={250}
-              className="w-40 md:w-auto mx-auto"
+              className=" w-40 min-w-40 md:w-auto mx-auto"
             />
           </div>
 
@@ -83,55 +82,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Hero Section */}
-      {/* Tablet & Mobile-Only View */}
-      {/* <section className="lg:hidden flex flex-col justify-center bg-[#E9E8FF] min-h-[80vh] text-center px-6 md:px-16">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24">
-          <Image
-            src="/images/hero.svg"
-            alt="Simbi Character"
-            width={250}
-            height={250}
-            className="mx-auto"
-          />
-
-          <div className="flex flex-col justify-center max-w-lg">
-            <h1 className="text-4xl md:text-5xl font-normal leading-tight">
-              Meet Simbi!
-              <br />
-              Your AI Study Buddy.
-            </h1>
-            <p className="mt-4 text-lg md:text-2xl text-[#6B7280] leading-relaxed">
-              Simbi helps you plan, stay motivated and{" "}
-              <br className="hidden md:block" />
-              learn effectively with a touch of personality
-            </p>
-            <div className="mt-10 w-full flex flex-col gap-3">
-              {!isLoggedIn ? (
-                <>
-                  <Link href="/auth/signup" className="w-full">
-                    <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full rounded-md">
-                      Get Started
-                    </button>
-                  </Link>
-                  <Link href="/auth/signin" className="w-full">
-                    <button className="text-sm text-[#7A5FFF] border border-[#7A5FFF] p-3.5 rounded-md w-full">
-                      I Have an Account
-                    </button>
-                  </Link>
-                </>
-              ) : (
-                <Link href="/dashboard" className="w-full">
-                  <button className="bg-[#7A5FFF] text-white p-3.5 text-sm w-full cursor-pointer">
-                    Go to Dashboard
-                  </button>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* Features */}
       {/* Desktop-Only View */}
@@ -187,7 +137,7 @@ export default function Home() {
 
       {/* Features */}
       {/* Tablet & Mobile-Only View */}
-      <section className="block lg:hidden px-6 md:px-10 py-16 md:py-24">
+      <section className="block lg:hidden px-6 md:px-10 py-16 md:py-24 mx-16 sm:mx-0">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
@@ -235,7 +185,7 @@ export default function Home() {
       </section>
 
       {/* Simbi is here for */}
-      <section className="bg-white py-16 px-6 md:px-12 flex flex-col md:flex-row items-center gap-10">
+      <section className="hidden bg-white py-16 px-6 md:px-12 md:flex flex-row items-center gap-10">
         <div className="md:w-1/2">
           <Image
             src="/images/simbi-2.svg"
@@ -418,7 +368,7 @@ export default function Home() {
 
       {/* Real talk */}
       {/* Tablet & Mobile-Only View */}
-      <section className="block lg:hidden flex flex-col lg:flex-row justify-center items-center px-6 py-20 gap-10">
+      <section className=" lg:hidden flex flex-col lg:flex-row justify-center items-center px-6 py-20 gap-10">
         <h2 className="text-4xl font-medium max-w-sm">Real talk from Simbi</h2>
         <div className="bg-white rounded-xl shadow-lg max-w-xl py-8 px-6">
           <Image src="/images/quote.svg" alt="Quote" width={40} height={40} />

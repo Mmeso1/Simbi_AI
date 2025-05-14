@@ -10,7 +10,7 @@ export type Testimony = {
 
 export default function Testimonials({ name, title, text, color }: Testimony) {
   return (
-    <div className="relative">
+    <div className="relative mx-18 md:mx-0">
       {/* Background SVG */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
