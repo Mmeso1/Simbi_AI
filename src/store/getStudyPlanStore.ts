@@ -62,6 +62,8 @@ interface studyStore {
   error: string | null;
   studies: Study[];
   fetchStudies: () => Promise<void>;
+  deleteStudy: (id: string) => Promise<void>;
+  updateStudy: (id: string, updatedData: Study) => Promise<void>;
 }
 
 export const useGetStudyPlanStore = create<studyStore>((set) => ({
@@ -111,6 +113,83 @@ export const useGetStudyPlanStore = create<studyStore>((set) => ({
           error: "An unknown error occurred",
           isLoading: false,
         });
+      }
+    }
+  },
+
+  deleteStudy: async (id: string) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      set({ error: "Access token is missing" });
+      return;
+    }
+
+    try {
+      await axios.delete(
+        `https://simbi-backend.onrender.com/api/v1/study-plan/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      set((state) => ({
+        studies: state.studies.filter((study) => study.id !== id),
+      }));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        set({
+          error:
+            error.response?.data?.message ||
+            error.message ||
+            "Failed to delete study plan",
+        });
+      } else if (error instanceof Error) {
+        set({ error: error.message });
+      } else {
+        set({ error: "An unknown error occurred" });
+      }
+    }
+  },
+
+  updateStudy: async (id: string, updatedData: Study) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      set({ error: "Access token is missing" });
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `https://simbi-backend.onrender.com/api/v1/study-plan/${id}`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      set((state) => ({
+        studies: state.studies.map((study) =>
+          study.id === id ? response.data.data : study
+        ),
+      }));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        set({
+          error:
+            error.response?.data?.message ||
+            error.message ||
+            "Failed to update study plan",
+        });
+      } else if (error instanceof Error) {
+        set({ error: error.message });
+      } else {
+        set({ error: "An unknown error occurred" });
       }
     }
   },
