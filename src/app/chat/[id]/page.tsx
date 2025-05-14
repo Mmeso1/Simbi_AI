@@ -2,14 +2,39 @@
 import ChatInput from "@/components/chatbot/chatInput";
 import { useChatStore } from "@/store/chatStore";
 import { useEffect, useLayoutEffect, useRef } from "react";
-
+import { getChatMessages } from "@/api/chat";
+import { useParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 export default function ChatPage() {
-  const { prompt, responses, setDisplay } = useChatStore();
+  const { prompt, responses, setDisplay, setChatId, addResponse, clearChat } =
+    useChatStore();
+  const params = useParams();
+  const chatId = params.id;
 
   // show the input when this page mounts
   useEffect(() => {
     setDisplay(true);
-  }, [setDisplay]);
+    clearChat();
+    setChatId(chatId as string);
+
+    // fetch existing messages
+    getChatMessages(chatId as string)
+      .then((data) => {
+        if (data.success) {
+          console.log(data);
+          data.messages.forEach((m) =>
+            addResponse({
+              from: m.role === "user" ? "user" : "assistant",
+              text: m.content,
+            })
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load messages:", err);
+        toast.error("Failed to load messages");
+      });
+  }, [chatId, setDisplay, setChatId, addResponse, clearChat]);
 
   // ref to the bottom “sentinel”
   const bottomRef = useRef<HTMLDivElement>(null);
