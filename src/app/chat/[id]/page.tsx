@@ -58,7 +58,7 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-screen mx-20 md:mx-40">
       {/* 1) Messages pane */}
-      <div className="flex-1 overflow-y-auto scrollbar-none px-4 py-6">
+      <div className="flex-1 overflow-y-auto scrollbar-none px-4 py-6 pt-28">
         {prompt && (
           <div className="mb-4 flex justify-end">
             <div className="bg-[#E4DFFF] p-3 rounded-lg max-w-[75%]">

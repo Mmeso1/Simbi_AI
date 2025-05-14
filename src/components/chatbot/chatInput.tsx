@@ -67,10 +67,10 @@ export default function ChatInput({ display }: ChatInputProps) {
   };
 
   return (
-    <div className="flex flex-col justify-between w-full h-full">
+    <div className="flex flex-col w-full h-full">
       {/* Centered Welcome - Top Content */}
       {isMobile && display && (
-        <div className="flex flex-col items-center text-center mt-8">
+        <div className="flex flex-col items-center text-center mt-36">
           <h2 className="text-[27px] text-[#B3A4FF] font-light">Talk to</h2>
           <h1 className="text-4xl font-extrabold text-[#5D2FFF] mt-1">SIMBI</h1>
 
