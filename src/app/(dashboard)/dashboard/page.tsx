@@ -72,13 +72,15 @@ export default function DashboardPage() {
       )}
 
       {toggleEditGenerateStudyForm && studyToEdit && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
-          <EditStudyForm
-            handleToggleEditGenerateStudyPlan={
-              handleToggleEditGenerateStudyPlan
-            }
-            studyToEdit={studyToEdit}
-          />
+        <div className="w-full h-[100vh] fixed bg-white z-50">
+          <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+            <EditStudyForm
+              handleToggleEditGenerateStudyPlan={
+                handleToggleEditGenerateStudyPlan
+              }
+              studyToEdit={studyToEdit}
+            />
+          </div>
         </div>
       )}
 

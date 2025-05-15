@@ -8,9 +8,11 @@ import HeaderNotification from "@/components/dashboard/HeaderNotification";
 import HeaderSearch from "@/components/dashboard/HeaderSearch";
 
 import { FaBars } from "react-icons/fa";
+import Link from "next/link";
+import { inter } from "@/lib/fonts";
 
 const RewardPage = () => {
-  const [, setToggleUserNavBar] = useState<boolean>(false);
+  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
 
   const handleToggleUserNavBar = () => {
@@ -27,26 +29,83 @@ const RewardPage = () => {
   return (
     <>
       {toggleMiniNavBar && (
-        <div className="w-[222px] fixed z-50 ">
+        <div className="w-[222px] top-0 left-0 fixed z-50 ">
           <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
         </div>
       )}
+
+      {toggleUserNavBar && (
+        <div
+          className={
+            toggleUserNavBar
+              ? `${inter.className} opacity-100 duration-1000 rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6`
+              : `${inter.className} rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
+          }
+        >
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/cupIcon.png"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Upgrade Plan
+            </span>
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/customizeIcons.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Customize Simbi
+            </span>
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/purpleLogOutIcon.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Log Out
+            </span>
+          </Link>
+        </div>
+      )}
+
       <main className="min-h-screen bg-[#f9f9fc] px-4 sm:px-6 md:px-16 py-10 text-[#1d1042]">
         {/* Responsive header view */}
-        <div className="flex  items-center justify-between mb-10">
-          <span className="text-3xl block md:hidden text-dark">
-            <FaBars onClick={handleToggleMiniNavBar} />
-          </span>
-          <div className="block xl:hidden w-[73%] md:w-full">
+        <header className="mt-[5px] mb-[8vh] flex xl:flex-row flex-col-reverse gap-y-5 justify-between items-center">
+          <div className="xl:w-[40%] w-full">
+            <HeaderSearch />
+          </div>
+          <div className="xl:w-[30%] hidden md:block w-full">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
             />
           </div>
-        </div>
-
-        <div className="w-[60%] md:w-[52%]">
-          <HeaderSearch />
-        </div>
+          <div className="flex w-full md:hidden items-center justify-between mb-10">
+            <span className="text-3xl block md:hidden text-dark">
+              <FaBars onClick={handleToggleMiniNavBar} />
+            </span>
+            <div className="block xl:hidden sm:w-[73%] w-[80%] md:w-full">
+              <HeaderNotification
+                handleToggleUserNavBar={handleToggleUserNavBar}
+              />
+            </div>
+          </div>
+        </header>
 
         <div className="flex flex-row items-center justify-start gap-8 bg-[#F3F2FF] border-[#ECECEE] md:border-b md:bg-transparent rounded-xl md:rounded-none px-2 md:px-0">
           <Image
