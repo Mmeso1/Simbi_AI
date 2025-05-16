@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, List, Filter } from "lucide-react";
 import Image from "next/image";
 import clsx from "clsx";
@@ -10,6 +10,8 @@ import { FaBars } from "react-icons/fa";
 import HeaderSearch from "@/components/dashboard/HeaderSearch";
 import Link from "next/link";
 import { inter } from "@/lib/fonts";
+import axios from "axios";
+import {useGetStudyPlanStore} from "@/store/getStudyPlanStore";
 
 const tabs = ["Active", "Inactive", "Completed"];
 
@@ -108,6 +110,52 @@ export default function Milestone() {
     // for toggling the mininavbar;
     setToggleMiniNavBar((prevState) => !prevState);
   };
+      // async function fetchData() {
+      //   const baseURL =
+      //    process.env.NEXT_PUBLIC_API_BASE_URL  
+
+      //   const planId = useGetStudyPlanStore.getState().studies
+      //     console.log("Plan ID", planId);
+      //   try {
+      //     const response = await axios.get(`${baseURL}/api/v1/study-plan/:planId/milestones`, {
+      //       method: "GET",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      //       },
+      //     });
+
+      //     if (!response.ok) {
+      //       throw new Error("Network response was not ok");
+      //     }
+
+      //     const data = await response.json();
+      //     console.log(data);
+      //   } catch (error) {
+         
+      //   }
+      // }
+
+      const planId = useGetStudyPlanStore((state) => state.studies);
+      const [studyData, setStudyData] = useState(null);
+    
+      useEffect(() => {
+        // if (!planId) return;
+    
+        // const fetchData = async () => {
+        //   try {
+        //     const res = await fetch(
+        //       `${process.env.NEXT_PUBLIC_API_BASE_URL}/your-endpoint/${planId}`
+        //     );
+        //     const data = await res.json();
+        //     setStudyData(data);
+        //   } catch (err) {
+        //     console.error('Error fetching study data:', err);
+        //   }
+        // };
+          console.log("Plan ID", planId);
+        // fetchData();
+      }, [planId]);
 
   return (
     <>
