@@ -8,7 +8,7 @@ export default function Streak() {
     // Api request goes here for the streak section
     {
       title: "Consecutive Days",
-      info: "5 🔥",
+      info: "0 🔥",
     },
     {
       title: "Simbi's Mood",
@@ -16,7 +16,7 @@ export default function Streak() {
     },
     {
       title: "Weekly goal",
-      info: "5 milestones",
+      info: "0 milestones",
     },
   ];
 

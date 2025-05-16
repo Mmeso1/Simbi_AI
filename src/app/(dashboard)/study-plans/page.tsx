@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import StudyForm from "@/components/study-plans/StudyForm";
-import { useRouter } from "next/navigation";
 import { inter } from "@/lib/fonts";
 import { FaBars } from "react-icons/fa";
 import SideBar from "@/components/dashboard/SideBar";
@@ -33,7 +32,6 @@ export default function StudyPlanPage() {
     "December",
   ];
 
-  const router = useRouter();
   const { studies, fetchStudies } = useGetStudyPlanStore();
   const [studyToEdit, setStudyToEdit] = useState<Study | null>(null);
 
@@ -67,10 +65,6 @@ export default function StudyPlanPage() {
     setToggleUserNavBar((prevState) => !prevState);
   };
 
-  const startStudySession = () => {
-    router.push("/sessionsTimer");
-  };
-
   const handleToggleGenerateStudyPlan = () => {
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
@@ -78,21 +72,25 @@ export default function StudyPlanPage() {
   return (
     <section className="mx-auto w-[90%] pb-20">
       {toggleGenerateStudyPlan && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
-          <StudyForm
-            handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
-          />
+        <div className="w-full h-[100vh] fixed bg-white z-50">
+          <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+            <StudyForm
+              handleToggleGenerateStudyPlan={handleToggleGenerateStudyPlan}
+            />
+          </div>
         </div>
       )}
 
       {toggleEditGenerateStudyForm && studyToEdit && (
-        <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
-          <EditStudyForm
-            handleToggleEditGenerateStudyPlan={
-              handleToggleEditGenerateStudyPlan
-            }
-            studyToEdit={studyToEdit}
-          />
+        <div className="w-full h-[100vh] fixed bg-white z-50">
+          <div className="fixed top-1/2 left-1/2 h-[90vh] lg:w-[70%] w-[95%] -translate-x-1/2 -translate-y-1/2 shadow-2xl shadow-lightblue overflow-auto z-100 rounded-2xl bg-white">
+            <EditStudyForm
+              handleToggleEditGenerateStudyPlan={
+                handleToggleEditGenerateStudyPlan
+              }
+              studyToEdit={studyToEdit}
+            />
+          </div>
         </div>
       )}
 
@@ -241,10 +239,10 @@ export default function StudyPlanPage() {
             </span>
           </button>
           <button
-            onClick={startStudySession}
+            onClick={handleToggleGenerateStudyPlan}
             className="bg-lightblue hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold"
           >
-            Start a Study Session
+            Generate Study Plan
           </button>
         </div>
       </div>

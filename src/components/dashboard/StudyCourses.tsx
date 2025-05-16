@@ -97,7 +97,7 @@ export default function StudyCourses({
             />
             {toggleStudyNav === course.id && (
               <div
-                className={`opacity-100 duration-1000 rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-16 right-0 z-50 px-6`}
+                className={`opacity-100 duration-1000 rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-16 right-0 z-20 px-6`}
               >
                 <span className="flex items-center gap-6 group w-full">
                   <span

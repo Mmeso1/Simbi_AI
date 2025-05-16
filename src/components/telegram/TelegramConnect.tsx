@@ -9,18 +9,18 @@ export default function ConnectPage() {
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-[#b194f7] to-[#f7c59f] rounded-[30px] overflow-hidden p-4">
       {/* Absolute Telegram Icons */}
       {[
-        { top: '7%', left: '3%' },
-        { top: '-12%', right: '25%' },
-        { top: '5%', right: '-1%' },
-        { bottom: '35%', left: '-15%' },
-        { bottom: '30%', right: '-13%' },
+        { top: '10%', left: '10%' },
+        { top: '-15%', right: '40%' },
+        { top: '5%', right: '3%' },
+        { bottom: '25%', left: '-5%' },
+        { bottom: '20%', right: '-1%' },
       ].map((pos, i) => (
         <Image
           key={i}
           src="/DashboardIcons/teleg.png"
           alt="Telegram icon"
-          width={142.2560577392578}
-          height={154.2216339111328}
+          width={170}
+          height={150}
           className="absolute animate-pulse"
           style={{ ...pos }}
         />

@@ -7,6 +7,9 @@ import clsx from "clsx";
 import SideBar from "@/components/dashboard/SideBar";
 import HeaderNotification from "@/components/dashboard/HeaderNotification";
 import { FaBars } from "react-icons/fa";
+import HeaderSearch from "@/components/dashboard/HeaderSearch";
+import Link from "next/link";
+import { inter } from "@/lib/fonts";
 
 const tabs = ["Active", "Inactive", "Completed"];
 
@@ -85,7 +88,7 @@ const upcomingMilestones = [
 
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
-  const [, setToggleUserNavBar] = useState<boolean>(false);
+  const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
 
   const filteredMilestones = milestones.filter((milestone) => {
@@ -103,29 +106,89 @@ export default function Milestone() {
 
   const handleToggleMiniNavBar = () => {
     // for toggling the mininavbar;
-
     setToggleMiniNavBar((prevState) => !prevState);
   };
 
   return (
     <>
       {toggleMiniNavBar && (
-        <div className="w-[222px] fixed z-50 ">
+        <div className="w-[222px] top-0 left-0 fixed z-50 ">
           <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
         </div>
       )}
+
+      {toggleUserNavBar && (
+        <div
+          className={
+            toggleUserNavBar
+              ? `${inter.className} opacity-100 duration-1000 rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6`
+              : `${inter.className} rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
+          }
+        >
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/cupIcon.png"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Upgrade Plan
+            </span>
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/customizeIcons.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Customize Simbi
+            </span>
+          </Link>
+          <Link href="" className="flex items-center gap-6 group w-full">
+            <span>
+              <Image
+                src="/DashboardIcons/purpleLogOutIcon.svg"
+                alt="Cup Icon"
+                height={18}
+                width={18}
+              />
+            </span>
+            <span className="font-normal group-hover:text-lightblue duration-300 ">
+              Log Out
+            </span>
+          </Link>
+        </div>
+      )}
+
       <div className="p-4 sm:p-6 space-y-10">
         {/* Responsive header */}
-        <div className="flex  items-center justify-between mb-10">
-          <span className="text-3xl block md:hidden text-dark">
-            <FaBars onClick={handleToggleMiniNavBar} />
-          </span>
-          <div className="block xl:hidden w-[73%] md:w-full">
+        <header className="mt-[30px] flex xl:flex-row flex-col-reverse gap-y-5 justify-between items-center">
+          <div className="xl:w-[40%] w-full">
+            <HeaderSearch />
+          </div>
+          <div className="xl:w-[30%] hidden md:block w-full">
             <HeaderNotification
               handleToggleUserNavBar={handleToggleUserNavBar}
             />
           </div>
-        </div>
+          <div className="flex w-full md:hidden items-center justify-between mb-10">
+            <span className="text-3xl block md:hidden text-dark">
+              <FaBars onClick={handleToggleMiniNavBar} />
+            </span>
+            <div className="block xl:hidden sm:w-[73%] w-[80%] md:w-full">
+              <HeaderNotification
+                handleToggleUserNavBar={handleToggleUserNavBar}
+              />
+            </div>
+          </div>
+        </header>
 
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
           Milestone Tracker

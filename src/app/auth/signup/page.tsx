@@ -28,7 +28,7 @@ export default function SignupPage() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, checked } = e.target;
 
     // SHORT-CIRCUIT the remember checkbox here:
     if (name === "remember") {
