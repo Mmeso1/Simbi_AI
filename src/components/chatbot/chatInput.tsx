@@ -87,7 +87,9 @@ export default function ChatInput({ display }: ChatInputProps) {
 
       {/* Input Bar - Bottom Content */}
       <div
-        className={`w-full max-w-6xl px-4 mx-auto mb-${display ? "10" : "0"}`}
+        className={`w-full max-w-6xl px-4 mx-auto mt-auto mb-${
+          display ? "10" : "0"
+        }`}
       >
         <div
           className={`relative flex flex-col justify-center mx-auto w-full md:w-4/5 lg:w-3/4

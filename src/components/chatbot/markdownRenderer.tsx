@@ -22,6 +22,14 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       remarkPlugins={[remarkGfm]}
       components={{
         p({ children, ...props }) {
+          const containsPre = React.Children.toArray(children).some(
+            (child: any) => typeof child === "object" && child?.type === "pre"
+          );
+
+          if (containsPre) {
+            // Return without a <p> to avoid invalid nesting
+            return <>{children}</>;
+          }
           return (
             <p className="mb-4" {...props}>
               {children}
