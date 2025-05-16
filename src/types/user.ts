@@ -55,3 +55,17 @@ interface Session {
 }
 
 export type ViewFilter = "day" | "week" | "month";
+
+export type UserData = {
+  createdAt: string;
+  educationLevel: string | null;
+  email: string;
+  firstName: string;
+  id: string;
+  lastLogin: string | null;
+  lastName: string;
+  preAssesmentQuestions: null;
+  preferredStudyMethod: null;
+  timezone: string;
+  username: string;
+};

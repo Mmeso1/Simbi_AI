@@ -15,6 +15,8 @@ import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import { ViewFilter } from "@/types/user";
 import EditStudyForm from "@/components/study-plans/EditStudyForm";
 import { Study } from "@/types/user";
+import useAuthStore from "@/store/authStore";
+import { useRouter } from "next/navigation";
 
 export default function StudyPlanPage() {
   const monthsOfTheYear = [
@@ -69,6 +71,8 @@ export default function StudyPlanPage() {
     setToggleGenerateStudyPlan((prevState) => !prevState);
   };
 
+  const router = useRouter();
+
   return (
     <section className="mx-auto w-[90%] pb-20">
       {toggleGenerateStudyPlan && (
@@ -118,7 +122,7 @@ export default function StudyPlanPage() {
               : `${inter.className} rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
           }
         >
-          <Link href="" className="flex items-center gap-6 group w-full">
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/cupIcon.png"
@@ -127,11 +131,14 @@ export default function StudyPlanPage() {
                 width={18}
               />
             </span>
-            <span className="font-normal group-hover:text-lightblue duration-300 ">
+            <span
+              onClick={() => router.push("/telegram")}
+              className="font-normal group-hover:text-lightblue duration-300 "
+            >
               Upgrade Plan
             </span>
-          </Link>
-          <Link href="" className="flex items-center gap-6 group w-full">
+          </span>
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/customizeIcons.svg"
@@ -143,8 +150,8 @@ export default function StudyPlanPage() {
             <span className="font-normal group-hover:text-lightblue duration-300 ">
               Customize Simbi
             </span>
-          </Link>
-          <Link href="" className="flex items-center gap-6 group w-full">
+          </span>
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/purpleLogOutIcon.svg"
@@ -153,10 +160,16 @@ export default function StudyPlanPage() {
                 width={18}
               />
             </span>
-            <span className="font-normal group-hover:text-lightblue duration-300 ">
+            <span
+              onClick={() => {
+                useAuthStore.getState().logout();
+                window.location.href = "/auth/signin";
+              }}
+              className="font-normal group-hover:text-lightblue duration-300 "
+            >
               Log Out
             </span>
-          </Link>
+          </span>
         </div>
       )}
 

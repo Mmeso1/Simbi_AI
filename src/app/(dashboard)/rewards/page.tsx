@@ -6,10 +6,10 @@ import { useState } from "react";
 import SideBar from "@/components/dashboard/SideBar";
 import HeaderNotification from "@/components/dashboard/HeaderNotification";
 import HeaderSearch from "@/components/dashboard/HeaderSearch";
-
 import { FaBars } from "react-icons/fa";
-import Link from "next/link";
 import { inter } from "@/lib/fonts";
+import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/authStore";
 
 const RewardPage = () => {
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
@@ -25,6 +25,8 @@ const RewardPage = () => {
 
     setToggleMiniNavBar((prevState) => !prevState);
   };
+
+  const router = useRouter();
 
   return (
     <>
@@ -42,7 +44,7 @@ const RewardPage = () => {
               : `${inter.className} rounded-[16px] w-[220px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-24 right-5 z-50 px-6 opacity-0 duration-1000`
           }
         >
-          <Link href="" className="flex items-center gap-6 group w-full">
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/cupIcon.png"
@@ -51,11 +53,14 @@ const RewardPage = () => {
                 width={18}
               />
             </span>
-            <span className="font-normal group-hover:text-lightblue duration-300 ">
+            <span
+              onClick={() => router.push("/telegram")}
+              className="font-normal group-hover:text-lightblue duration-300 "
+            >
               Upgrade Plan
             </span>
-          </Link>
-          <Link href="" className="flex items-center gap-6 group w-full">
+          </span>
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/customizeIcons.svg"
@@ -67,8 +72,8 @@ const RewardPage = () => {
             <span className="font-normal group-hover:text-lightblue duration-300 ">
               Customize Simbi
             </span>
-          </Link>
-          <Link href="" className="flex items-center gap-6 group w-full">
+          </span>
+          <span className="flex hover:cursor-pointer items-center gap-6 group w-full">
             <span>
               <Image
                 src="/DashboardIcons/purpleLogOutIcon.svg"
@@ -77,10 +82,16 @@ const RewardPage = () => {
                 width={18}
               />
             </span>
-            <span className="font-normal group-hover:text-lightblue duration-300 ">
+            <span
+              onClick={() => {
+                useAuthStore.getState().logout();
+                window.location.href = "/auth/signin";
+              }}
+              className="font-normal group-hover:text-lightblue duration-300 "
+            >
               Log Out
             </span>
-          </Link>
+          </span>
         </div>
       )}
 
