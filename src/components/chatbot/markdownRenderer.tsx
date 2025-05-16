@@ -27,7 +27,6 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           );
 
           if (containsPre) {
-            // Return without a <p> to avoid invalid nesting
             return <>{children}</>;
           }
           return (
