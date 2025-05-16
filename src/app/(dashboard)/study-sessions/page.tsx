@@ -195,7 +195,7 @@ export default function StudyPlanPage() {
       <div className="flex items-center xl:flex-row flex-col-reverse gap-y-6 justify-between mt-16 border-b-[0.95px] pb-5 xl:px-6 px-0  border-b-grayborder overflow-hidden">
         <div className="flex sm:w-[446.91px] w-[400px]  items-center justify-between">
           <div className="flex">
-            <DashboardHeaders text="Study Plans" />
+            <DashboardHeaders text="Study Sessions" />
             <Image
               src="/DashboardIcons/arrowDownIcon.svg"
               alt="arrow down"
@@ -255,7 +255,7 @@ export default function StudyPlanPage() {
             onClick={handleToggleGenerateStudyPlan}
             className="bg-lightblue hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold"
           >
-            Generate Study Plan
+            Generate Study Session
           </button>
         </div>
       </div>

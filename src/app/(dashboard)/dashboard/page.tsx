@@ -110,9 +110,9 @@ export default function DashboardPage() {
             </p>
             <button
               onClick={() => router.push("/study-plans")}
-              className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base"
+              className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[258px] px-1 text-base"
             >
-              Generate a new Study Plan
+              Generate A New Study Session
             </button>
             <Image
               src="/DashboardIcons/wavingSimbi.svg"

@@ -31,7 +31,7 @@ export default function HeaderNotification({
             alt="Image of the user"
             height={40}
             width={40}
-            className="rounded-[10px]"
+            className="rounded-[50%] w-[40px] h-[40px] object-cover"
           />
           <div className="flex flex-col font-medium ">
             <h3 className="text-[0.875rem]">
