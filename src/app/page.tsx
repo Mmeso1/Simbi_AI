@@ -253,7 +253,7 @@ export default function Home() {
       </section>
 
       {/* Simbi is here for */}
-      <section className="bg-white py-16 px-6 md:px-12 flex flex-col md:flex-row items-center gap-10 hidden md:flex">
+      <section className="bg-white py-16 px-6 md:px-12 flex-col md:flex-row items-center gap-10 hidden md:flex">
         <div className="md:w-1/2">
           <Image
             src="/images/simbi-2.svg"
