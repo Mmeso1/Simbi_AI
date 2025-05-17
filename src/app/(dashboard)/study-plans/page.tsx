@@ -318,7 +318,7 @@ export default function StudyPlanPage() {
                 onClick={handleToggleGenerateStudyPlan}
                 className="font-medium cursor-pointer  hover:bg-blue-900 poppins h-[48px] mt-7 rounded-[8px] bg-lightblue text-white w-[242px] text-base "
               >
-                Generate a new Study Plan
+                Generate a new Study Session
               </button>
 
               <Image

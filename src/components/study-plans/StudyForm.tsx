@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
+import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
+import { toast } from "react-hot-toast";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0); // Normalize to start of day
@@ -27,7 +29,7 @@ const formSchema = z
     (data) => {
       const start = new Date(data.startDate);
       const end = new Date(data.endDate); // end data => add const end
-      console.log(end);
+      // console.log(end);
       return start >= today;
     },
     {
@@ -63,8 +65,10 @@ export default function StudyForm({
 }: {
   handleToggleGenerateStudyPlan: () => void;
 }) {
+  const { fetchStudies } = useGetStudyPlanStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const [subjectsInput, setSubjectsInput] = useState("");
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -91,6 +95,8 @@ export default function StudyForm({
         throw new Error("No access token found. Please log in.");
       }
 
+      console.log("Form data:", data);
+
       const response = await axios.post(
         "https://simbi-backend.onrender.com/api/v1/study-plan/generate",
         data,
@@ -103,9 +109,11 @@ export default function StudyForm({
       );
 
       if (response.status >= 200 && response.status < 300) {
-        router.push("/study-plans");
-        console.log("successfully created data", { data });
+        console.log("Successfully created data", { data });
         handleToggleGenerateStudyPlan();
+        router.push("/study-plans");
+        await fetchStudies();
+        toast.success("Study plan generated successfully!");
       } else {
         throw new Error(
           response.data?.message || "Failed to generate study plan"
@@ -149,12 +157,13 @@ export default function StudyForm({
   };
 
   const handleSubjectsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const subjectsArray = value
+    const raw = e.target.value;
+    setSubjectsInput(raw);
+    const arr = raw
       .split(",")
       .map((s) => s.trim())
-      .filter((s) => s);
-    setValue("subjects", subjectsArray);
+      .filter(Boolean);
+    setValue("subjects", arr, { shouldValidate: true });
   };
 
   return (
@@ -219,10 +228,10 @@ export default function StudyForm({
                 </span>
                 <input
                   type="text"
-                  placeholder="Algebra"
+                  placeholder="Algebra, Geometry"
                   className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                   onChange={handleSubjectsChange}
-                  value={subjects.join(", ")}
+                  value={subjectsInput}
                 />
                 {errors.subjects && (
                   <p className="text-sm text-red-600 mt-1">
