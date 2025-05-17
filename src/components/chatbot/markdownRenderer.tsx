@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactNode } from "react";
+import { ReactNode, ReactElement } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -23,7 +23,8 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       components={{
         p({ children, ...props }) {
           const containsPre = React.Children.toArray(children).some(
-            (child: any) => typeof child === "object" && child?.type === "pre"
+            (child): child is ReactElement =>
+              React.isValidElement(child) && child.type === "pre"
           );
 
           if (containsPre) {

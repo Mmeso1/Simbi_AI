@@ -6,6 +6,7 @@ import axios from "@/api/axios";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import { getStudySessions } from "@/api/studySession";
 import { balooThambi2 } from "@/lib/fonts";
+import { SessionData } from "@/types/studySession";
 
 export default function SessionTimerPage() {
   const router = useRouter();
@@ -13,8 +14,8 @@ export default function SessionTimerPage() {
   const { studies, fetchStudies } = useGetStudyPlanStore();
 
   const [loading, setLoading] = useState(true);
-  const [sessions, setSessions] = useState<any[]>([]);
-  const [upcomingSessions, setUpcomingSessions] = useState<any[]>([]);
+  const [sessions, setSessions] = useState<SessionData[]>([]);
+  const [upcomingSessions, setUpcomingSessions] = useState<SessionData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [currentSessionDate, setCurrentSessionDate] = useState<string | null>(
     null
@@ -66,25 +67,6 @@ export default function SessionTimerPage() {
     load();
   }, [studyId]);
 
-  // countdown effect
-  useEffect(() => {
-    if (!isRunning) return;
-    if (timeLeft <= 0) {
-      handleComplete();
-      return;
-    }
-    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    return () => clearInterval(timer);
-  }, [isRunning, timeLeft]);
-
-  const handleStart = () => {
-    if (timeLeft > 0) setIsRunning(true);
-  };
-
-  const handlePause = () => {
-    setIsRunning(false);
-  };
-
   const handleComplete = useCallback(async () => {
     setIsRunning(false);
     toast.success("Session complete!");
@@ -96,7 +78,26 @@ export default function SessionTimerPage() {
       console.error(err);
       toast.error("Failed to update completion");
     }
-  }, [studyId]);
+  }, [studyId, fetchStudies]);
+
+  // countdown effect
+  useEffect(() => {
+    if (!isRunning) return;
+    if (timeLeft <= 0) {
+      handleComplete();
+      return;
+    }
+    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isRunning, timeLeft, handleComplete]);
+
+  const handleStart = () => {
+    if (timeLeft > 0) setIsRunning(true);
+  };
+
+  const handlePause = () => {
+    setIsRunning(false);
+  };
 
   // get study plan for tips
   const study = studies.find((s) => s.id === studyId);

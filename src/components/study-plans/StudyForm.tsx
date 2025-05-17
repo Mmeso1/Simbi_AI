@@ -28,7 +28,7 @@ const formSchema = z
   .refine(
     (data) => {
       const start = new Date(data.startDate);
-      const end = new Date(data.endDate); // end data => add const end
+      // const end = new Date(data.endDate);
       // console.log(end);
       return start >= today;
     },
@@ -142,7 +142,7 @@ export default function StudyForm({
   };
 
   const daysAvailable = watch("daysAvailable") || [];
-  const subjects = watch("subjects") || [];
+  // const subjects = watch("subjects") || [];
 
   const toggleDay = (day: Day) => {
     const newDays = daysAvailable.includes(day)

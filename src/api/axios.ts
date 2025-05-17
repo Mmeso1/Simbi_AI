@@ -32,10 +32,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   let token = safeGetItem("accessToken");
   if (!token && typeof document !== "undefined") {
-    token = document.cookie
+    const cookie = document.cookie
       .split("; ")
-      .find((c) => c.startsWith("accessToken="))
-      ?.split("=")[1]!;
+      .find((c) => c.startsWith("accessToken="));
+    token = cookie ? cookie.split("=")[1] : null;
   }
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -52,22 +52,20 @@ axiosInstance.interceptors.response.use(
     if (err.response?.status === 401 && !orig._retry) {
       orig._retry = true;
       try {
-        // call your refresh endpoint (no auth header needed)
+        // call refresh endpoint (no auth header needed)
         const { data } = await axios.post(
           `${baseURL}/auth/refresh`,
           {},
           {
-            withCredentials: true, // if your refreshToken is in an httpOnly cookie
+            withCredentials: true,
           }
         );
         const newToken = data.accessToken;
         safeSetItem("accessToken", newToken);
 
-        // update header & retry original
         orig.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(orig);
       } catch {
-        // refresh failed: redirect to login (or handle as you like)
         window.location.href = "/auth/signin";
       }
     }

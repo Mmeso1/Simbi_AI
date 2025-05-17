@@ -6,7 +6,6 @@ import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import FormatTime from "./FormatTime";
 import moment from "moment";
 import { Study, ViewFilter } from "@/types/user";
-import { useRouter } from "next/navigation";
 
 interface StudyCoursesProps {
   handleToggleEditGenerateStudyPlan: (study: Study) => void;
@@ -22,8 +21,6 @@ export default function StudyCourses({
   const handleToggleStudyNav = (id: string) => {
     setToggleStudyNav((prevState) => (prevState === id ? null : id));
   };
-
-  const router = useRouter();
 
   const { fetchStudies, isLoading, error, studies, deleteStudy } =
     useGetStudyPlanStore();
