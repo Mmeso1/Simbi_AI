@@ -24,7 +24,7 @@ export default function RootLayout({
           position="top-right"
           toastOptions={{
             duration: 3000,
-            style: { borderRadius: "8px", background: "#333", color: "#fff" },
+            style: { borderRadius: "8px", background: "#fff", color: "#333" },
           }}
         />
       </body>

@@ -1,11 +1,12 @@
 import Image from "next/image";
 
+import useAuthStore from "@/store/authStore";
+
 export default function HeaderNotification({
   handleToggleUserNavBar,
 }: {
   handleToggleUserNavBar: () => void;
 }) {
-  // Api fetching goes here
   return (
     <div className="flex justify-between items-center">
       <aside className="relative hover:bg-gray-300 duration-300 hover:p-4 rounded-full hover:scale-105">
@@ -30,10 +31,12 @@ export default function HeaderNotification({
             alt="Image of the user"
             height={40}
             width={40}
-            className="rounded-[10px]"
+            className="rounded-[50%] w-[40px] h-[40px] object-cover"
           />
           <div className="flex flex-col font-medium ">
-            <h3 className="text-[0.875rem]">Grace Fernades</h3>
+            <h3 className="text-[0.875rem]">
+              {useAuthStore.getState().user?.username}
+            </h3>
             <p className="text-[0.75rem] text-lightblue">Basic plan</p>
           </div>
         </div>

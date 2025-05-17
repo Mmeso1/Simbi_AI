@@ -60,12 +60,22 @@ export default function PersonalizationLayout({
         {/* Right Content Area */}
         <section className="flex-1 bg-white p-6 relative flex flex-col justify-between">
           <main className="flex-1">{children}</main>
-          <button
-            onClick={handleNext}
-            className="text-white text-base sm:text-lg md:text-xl bg-[#7A5FFF] px-6 py-3 mt-6 rounded-lg self-end"
-          >
-            {currentSection < sections.length - 1 ? "Next" : "Finish"}
-          </button>
+          <div className="flex justify-between mt-6">
+            {currentSection === 0 && (
+              <button
+                onClick={() => router.push("/dashboard")}
+                className="text-[#7A5FFF] text-sm sm:text-base underline"
+              >
+                Skip
+              </button>
+            )}
+            <button
+              onClick={handleNext}
+              className="text-white text-base sm:text-lg md:text-xl bg-[#7A5FFF] px-6 py-3 rounded-lg"
+            >
+              {currentSection < sections.length - 1 ? "Next" : "Finish"}
+            </button>
+          </div>
         </section>
       </div>
     </div>

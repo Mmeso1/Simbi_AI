@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { getChatMessages } from "@/api/chat";
 import { useParams } from "next/navigation";
 import { toast } from "react-hot-toast";
+import MarkdownRenderer from "@/components/chatbot/markdownRenderer";
 
 export default function ChatPage() {
   const { prompt, responses, setDisplay, setChatId, addResponse, clearChat } =
@@ -79,7 +80,11 @@ export default function ChatPage() {
                 msg.from === "user" ? "bg-[#E4DFFF]" : "bg-white shadow"
               }`}
             >
-              {msg.text}
+              {msg.from === "assistant" ? (
+                <MarkdownRenderer content={msg.text} />
+              ) : (
+                msg.text
+              )}
             </div>
           </div>
         ))}

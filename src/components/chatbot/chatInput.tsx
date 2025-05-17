@@ -94,7 +94,7 @@ export default function ChatInput({ display }: ChatInputProps) {
         <div
           className={`relative flex flex-col justify-center mx-auto w-full md:w-4/5 lg:w-3/4
           ${display ? "h-[250px]" : "h-[150px]"} 
-          bg-white border border-[#7A5FFF] rounded-2xl px-6`}
+          bg-white border border-[#7A5FFF] rounded-2xl px-6 pb-2`}
         >
           <textarea
             placeholder="Ask anything"
@@ -104,7 +104,7 @@ export default function ChatInput({ display }: ChatInputProps) {
             className={`my-6 text-[rgba(30,30,47,0.84)] text-base font-normal focus:outline-none resize-none w-full max-h-40 overflow-y-auto bg-transparent placeholder:text-base ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
-            rows={1}
+            rows={3}
           />
 
           {/* Bubbles */}
