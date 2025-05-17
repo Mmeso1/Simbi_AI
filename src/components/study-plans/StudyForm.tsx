@@ -320,9 +320,13 @@ export default function StudyForm({
                   className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                 >
                   <option value=""></option>
+                  <option value="1h">1 hour</option>
                   <option value="2h">2 hours</option>
                   <option value="3h">3 hours</option>
                   <option value="5h">5 hours</option>
+                  <option value="6h">6 hours</option>
+                  <option value="7h">7 hours</option>
+                  <option value="8h">8 hours</option>
                 </select>
                 {errors.dailyStudyDuration && (
                   <p className="text-sm text-red-600 mt-1">
