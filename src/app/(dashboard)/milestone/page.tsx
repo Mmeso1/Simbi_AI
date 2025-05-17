@@ -136,7 +136,9 @@ export default function Milestone() {
       //   }
       // }
 
-      const planId = useGetStudyPlanStore((state) => state.studies);
+      const [planIds, setPlanIds] = useState<string[]>([]);
+const getPlanIds = useGetStudyPlanStore((state) => state.studies);
+console.log(getPlanIds)
       const [studyData, setStudyData] = useState(null);
     
       useEffect(() => {
@@ -153,9 +155,10 @@ export default function Milestone() {
         //     console.error('Error fetching study data:', err);
         //   }
         // };
-          console.log("Plan ID", planId);
+        setPlanIds(getPlanIds.map(plan => plan.id));
+          console.log("Plan ID", planIds);
         // fetchData();
-      }, [planId]);
+      }, []);
 
   return (
     <>
