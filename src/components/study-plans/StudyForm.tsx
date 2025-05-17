@@ -111,9 +111,9 @@ export default function StudyForm({
       if (response.status >= 200 && response.status < 300) {
         console.log("Successfully created data", { data });
         handleToggleGenerateStudyPlan();
+        toast.success("Study plan generated successfully!");
         router.push("/study-plans");
         await fetchStudies();
-        toast.success("Study plan generated successfully!");
       } else {
         throw new Error(
           response.data?.message || "Failed to generate study plan"

@@ -7,6 +7,7 @@ import { TwoLinePasswordInput } from "@/components/auth/TwoLineInput";
 import FormInput from "@/components/auth/FormInput";
 import { LoginData } from "@/types/auth";
 import useAuthStore from "@/store/authStore";
+import Link from "next/link";
 
 export default function SignIn() {
   const router = useRouter();
@@ -84,21 +85,11 @@ export default function SignIn() {
           />
         </div>
 
-        <div className="flex items-center">
-          <input
-            id="remember"
-            name="remember"
-            type="checkbox"
-            onChange={handleChange}
-            className="mr-2 cursor-pointer"
-          />
-          <label
-            htmlFor="remember"
-            className="text-[#7A5FFF] text-sm cursor-pointer"
-          >
-            Remember Me
-          </label>
-        </div>
+        <Link href="/auth/signup">
+          <p className="block text-[#4976F4] text-sm hover:underline cursor-pointer">
+            Don't have an account?
+          </p>
+        </Link>
 
         <div className="flex justify-end">
           <p className="text-[#6B7280] text-opacity-40 cursor-pointer">

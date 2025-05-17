@@ -166,23 +166,6 @@ export default function SignupPage() {
           )}
         </div>
 
-        <div className="flex items-center">
-          <input
-            id="remember"
-            name="remember"
-            type="checkbox"
-            checked={rememberMe}
-            onChange={handleChange}
-            className="mr-2 cursor-pointer"
-          />
-          <label
-            htmlFor="remember"
-            className="text-[#7A5FFF] text-sm cursor-pointer"
-          >
-            Remember Me
-          </label>
-        </div>
-
         <Link href="/auth/signin">
           <p className="block text-[#4976F4] text-sm hover:underline cursor-pointer ml-5">
             Already have an account?
