@@ -45,7 +45,7 @@ export default function PersonalizationLayout({
 
       {/* Progress Bar (always full width of content area) */}
       <div className="w-full mb-10">
-        <ProgressBar progress={percent} />
+        <ProgressBar progress={percent} className="w-full md:w-1/3" />
       </div>
 
       {/* Main Card */}

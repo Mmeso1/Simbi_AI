@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, List, Filter } from "lucide-react";
 import Image from "next/image";
 import clsx from "clsx";
@@ -11,47 +11,40 @@ import HeaderSearch from "@/components/dashboard/HeaderSearch";
 import { inter } from "@/lib/fonts";
 import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/navigation";
+import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
+import ProgressBar from "@/components/personalization/ProgressBar";
 
 const tabs = ["Active", "Inactive", "Completed"];
 
-const milestones = [
-  {
-    subject: "Reading - Chemistry",
-    next: "Study atomic Structure",
-    progress: 40,
-    daysLeft: 10,
-    comment: "Keep up the good work!",
-    bgColor: "bg-pink-100",
-    pillColor: "bg-pink-200",
-  },
-  {
-    subject: "Reading - Mathematics",
-    next: "Study Calculus",
-    progress: 10,
-    daysLeft: 10,
-    comment: "Ghosting Math? Rude",
-    bgColor: "bg-green-100",
-    pillColor: "bg-green-200",
-  },
-  {
-    subject: "Reading - Biology",
-    next: "Study Human Digestive System",
-    progress: 60,
-    daysLeft: 10,
-    comment: "Study now, flex later",
-    bgColor: "bg-yellow-100",
-    pillColor: "bg-yellow-300",
-  },
-  {
-    subject: "Reading - Physics",
-    next: "Study Thermodynamics",
-    progress: 90,
-    daysLeft: 1,
-    comment: "Okay now I’m impressed",
-    bgColor: "bg-yellow-100",
-    pillColor: "bg-yellow-300",
-  },
-];
+// const milestones = [
+//   {
+//     subject: "Reading - Chemistry",
+//     next: "Study atomic Structure",
+//     progress: 40,
+//     daysLeft: 10,
+//     comment: "Keep up the good work!",
+//     bgColor: "bg-pink-100",
+//     pillColor: "bg-pink-200",
+//   },
+//   {
+//     subject: "Reading - Mathematics",
+//     next: "Study Calculus",
+//     progress: 10,
+//     daysLeft: 10,
+//     comment: "Ghosting Math? Rude",
+//     bgColor: "bg-green-100",
+//     pillColor: "bg-green-200",
+//   },
+//   {
+//     subject: "Reading - Biology",
+//     next: "Study Human Digestive System",
+//     progress: 60,
+//     daysLeft: 10,
+//     comment: "Study now, flex later",
+//     bgColor: "bg-yellow-100",
+//     pillColor: "bg-yellow-300",
+//   },
+// ];
 
 const earnedMilestones = [
   {
@@ -87,10 +80,47 @@ const upcomingMilestones = [
   },
 ];
 
+interface IMilestone {
+  subject: string,
+  next: string,
+  progress: number,
+  daysLeft: number,
+  comment: string,
+  bgColor: string,
+  pillColor: string,
+}
+
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
+  const {studies, fetchStudies} = useGetStudyPlanStore();
+  const [milestones, setMilestones] = useState<IMilestone[]>([]);
+
+  useEffect(() => {
+    fetchStudies();
+  }, [fetchStudies]);
+
+
+  useEffect(() => {
+    console.log("in milstone", studies);
+    const milestones = studies.map((study) => {
+      return {
+        subject: study.name,
+        next: study.subjects[1] || " ",
+        progress: study.planData.milestones.filter(
+          (milestone) => milestone.completed
+        ).length / study.planData.milestones.length,
+        daysLeft: new Date(study.endDate).getDate() - new Date().getDate(),
+        comment: "Keep up the good work!",
+        bgColor: "bg-yellow-100",
+        pillColor: "bg-yellow-300",
+      }
+    })
+
+    setMilestones(milestones);
+  }, [studies]);
+
 
   const filteredMilestones = milestones.filter((milestone) => {
     if (selectedTab === "Active")
@@ -110,6 +140,7 @@ export default function Milestone() {
     setToggleMiniNavBar((prevState) => !prevState);
   };
 
+  console.log(milestones);
   const router = useRouter();
 
   return (
@@ -272,20 +303,15 @@ export default function Milestone() {
                   <div className="text-gray-400">•••</div>
                 </div>
 
-                <div className="flex items-center mt-4 space-x-4">
-                  <Image
+                <div className="flex items-center mt-4 space-x-4 w-full">
+                  {/* <Image
                     src="/DashboardIcons/progress.png"
                     alt=""
                     width={24}
                     height={24}
                     className="rounded-full"
-                  />
-                  <div className="flex-1 h-2 bg-violet-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-2 bg-violet-500"
-                      style={{ width: `${m.progress}%` }}
-                    />
-                  </div>
+                  /> */}
+                  <ProgressBar progress={m.progress} className="w-full" />
                   <span className="text-sm font-medium text-gray-800">
                     {m.progress}%
                   </span>
