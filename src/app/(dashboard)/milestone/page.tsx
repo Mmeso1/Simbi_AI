@@ -291,15 +291,15 @@ export default function Milestone() {
               {monthsOfTheYear[new Date().getMonth()]}{" "}
               {new Date().getFullYear()}
             </p>
-            <button className="px-2 py-1 bg-violet-100 rounded-md">
+            {/* <button className="px-2 py-1 bg-violet-100 rounded-md">
               {"<"}
-            </button>
-            <button className="px-4 py-1 bg-violet-500 text-white rounded-md">
+            </button> */}
+            <button className="px-4 py-1 bg-violet-500 text-white rounded-md leading-relaxed">
               Today
             </button>
-            <button className="px-2 py-1 bg-violet-100 rounded-md">
+            {/* <button className="px-2 py-1 bg-violet-100 rounded-md">
               {">"}
-            </button>
+            </button> */}
           </div>
           <div className="flex space-x-2">
             <button className="p-2 sm:p-3 bg-gray-100 rounded-2xl">
@@ -312,16 +312,12 @@ export default function Milestone() {
         </div>
 
         {/* Subject Milestones and Pep Talk/Score */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-50">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-60">
           <div className="xl:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {filteredMilestones.map((m, idx) => (
               <div
                 key={idx}
-                className={clsx(
-                  "p-4 rounded-2xl shadow-sm",
-                  m.bgColor,
-                  " sm:w-[280px] h-[250px]"
-                )}
+                className={clsx("p-4 rounded-2xl shadow-sm", m.bgColor, " sm:w-[300px] h-[200px]")}
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -351,7 +347,7 @@ export default function Milestone() {
                   <span className="text-gray-700">{m.comment}</span>
                   <span
                     className={clsx(
-                      "px-3 py-1 rounded-full text-sm",
+                      "px-3 py-1 rounded-full text-sm leading-relaxed " ,
                       m.pillColor
                     )}
                   >
