@@ -10,6 +10,7 @@ export interface Study {
   createdAt: string;
   updatedAt: string;
   subjects: string[];
+  percentage: number;
 
   planData: {
     tips: string[];
