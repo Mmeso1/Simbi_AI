@@ -1,109 +1,196 @@
-"use client";
-import { balooThambi2 } from "@/lib/fonts";
+import React, { useEffect, useState, useCallback } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import axiosInstance from "@/api/axios";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
+import { getStudySessions } from "@/api/studySession";
+import { balooThambi2 } from "@/lib/fonts";
+import { SessionData } from "@/types/studySession";
+import { Milestone } from "@/types/studyPlan";
 import axios from "axios";
 
-import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+function formatTime(totalSeconds: number) {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const HH = String(hours).padStart(2, "0");
+  const MM = String(minutes).padStart(2, "0");
+  const SS = String(seconds).padStart(2, "0");
+
+  return `${HH}:${MM}:${SS}`;
+}
 
 export default function SessionTimerPage() {
   const router = useRouter();
+  const { studyId } = useParams();
+  const { studies, fetchStudies } = useGetStudyPlanStore();
 
-  const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [sessions, setSessions] = useState<SessionData[]>([]);
+  const [upcomingSessions, setUpcomingSessions] = useState<SessionData[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const [currentSessionDate, setCurrentSessionDate] = useState<string | null>(
+    null
+  );
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [milestones, setMilestones] = useState<Milestone[]>([]);
 
-  const id = searchParams.get("id");
+  // load study sessions
+  useEffect(() => {
+    fetchStudies();
+    async function load() {
+      try {
+        setLoading(true);
+        const data = await getStudySessions(studyId as string);
+        setSessions(data);
+        // find today's session or first
+        const todayStr = new Date().toISOString().split("T")[0];
 
-  const { studies } = useGetStudyPlanStore();
+        // compute end of week (7 days from today)
+        const weekEnd = new Date();
+        weekEnd.setDate(weekEnd.getDate() + 7);
+        const weekEndStr = weekEnd.toISOString().split("T")[0];
 
-  // Extract the specific study
-  const study = studies.filter((study) => study.id === id);
+        // filter sessions in upcoming week
+        const upcomingWeek = data.filter(
+          (s) => s.date > todayStr && s.date <= weekEndStr
+        );
+        setUpcomingSessions(upcomingWeek);
 
-  const viewMileStone = study[0].planData.milestones.map((milestone) => (
-    <div
-      className="flex justify-between items-center mb-4 gap-5"
-      key={milestone.description}
-    >
-      <div className="flex">
-        <input
-          type="checkbox"
-          name=""
-          id=""
-          defaultChecked={milestone.completed}
-        />
-        <p className="ml-3">{milestone.description}</p>
-      </div>
-      <div>
-        <p>Status</p>
-        <p className="text-gray-500">
-          {milestone.completed ? "Completed" : "In progress"}
-        </p>
-      </div>
-    </div>
-  ));
+        // find today's session
+        const todayIdx = data.findIndex((s) => s.date === todayStr);
+        if (todayIdx >= 0) {
+          setCurrentIndex(todayIdx);
+          setCurrentSessionDate(todayStr);
 
-  const [loading, setLoading] = useState(false);
-  console.log(loading);
-  const fetchStudyPlan = useCallback(async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem("accessToken");
-
-      if (!token) throw new Error("No access token found. Please log in.");
-
-      const response = await axios.get(
-        `https://simbi-backend.onrender.com/api/v1/study-plan/${id}/sessions`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          // try to restore saved state
+          const saved = JSON.parse(localStorage.getItem("timerState") || "{}");
+          if (saved.date === todayStr && typeof saved.timeLeft === "number") {
+            setTimeLeft(saved.timeLeft);
+            setIsRunning(false);
+          } else {
+            setTimeLeft(data[todayIdx].duration);
+          }
         }
+
+        // load milestones
+        const study = studies.find((s) => s.id === studyId);
+        if (study) {
+          setMilestones(study.planData.milestones);
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load sessions");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [studyId, fetchStudies]);
+
+  // Persist timer whenever the user closes or refreshes
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.setItem(
+        "timerState",
+        JSON.stringify({
+          date: currentSessionDate,
+          timeLeft,
+        })
+      );
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [currentSessionDate, timeLeft]);
+
+  const handleComplete = useCallback(async () => {
+    setIsRunning(false);
+    toast.success("Session complete!");
+    console.log("study id from handle complete", studyId);
+    try {
+      const payload = {
+        planId: studyId,
+        sessionId: sessions[currentIndex]?.id,
+        timeSpent: String(sessions[currentIndex]?.duration),
+      };
+      console.log("→ POST /study-plan/complete-session payload:", payload);
+
+      const response = await axiosInstance.post(
+        "/study-plan/complete-session",
+        payload
       );
 
-      if (response.status >= 200 && response.status < 300) {
-        console.log("fetching sessionTimer ", response.data.data);
-      } else {
-        throw new Error(response.data?.message || "Failed to fetch study plan");
-      }
+      console.log(response.data);
+      toast.success(response.data.message);
+
+      // Mark the next incomplete milestone as completed in local state
+      setMilestones((prev) => {
+        const idx = prev.findIndex((m) => !m.completed);
+        if (idx !== -1) prev[idx].completed = true;
+        return [...prev];
+      });
+
+      await fetchStudies();
+      router.push("/study-plans");
     } catch (error) {
-      let errorMessage = "An unexpected error occurred";
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          errorMessage =
-            error.response.data?.message ||
-            error.response.data?.error ||
-            `Server error: ${error.response.status}`;
-        } else if (error.request) {
-          errorMessage = "Network error: Please check your internet connection";
-        }
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
+      console.error("Complete‑session error →", error);
+
+      let message = "Failed to complete session";
+
+      if (axios.isAxiosError(error) && error.response) {
+        // show raw server payload
+        console.log("Server response data:", error.response.data);
+
+        // extract the server’s message if present
+        message = error.response.data?.message || message;
       }
 
-      console.error("Error fetching study plan:", error);
-      alert(`Error: ${errorMessage}`);
-    } finally {
-      setLoading(false);
+      toast.error(message);
     }
-  }, [id]);
+  }, [studyId, fetchStudies, sessions, currentIndex]);
 
+  // countdown effect
   useEffect(() => {
-    if (id) fetchStudyPlan();
-  }, [id, fetchStudyPlan]);
-
-  // Setting up state to get users time input
-  const [hours, setHours] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(0);
-  const [seconds, setSeconds] = useState<number>(0);
+    if (!isRunning) return;
+    if (timeLeft <= 0) {
+      handleComplete();
+      return;
+    }
+    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isRunning, timeLeft, handleComplete]);
 
   const handleStart = () => {
-    // Convert user input to seconds and check if it is valid
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    if (totalSeconds > 0) {
-      router.push(`sessionsTimer/countdown?time=${totalSeconds}`);
-    }
+    if (timeLeft > 0) setIsRunning(true);
   };
+
+  const handlePause = () => {
+    setIsRunning(false);
+  };
+
+  // get study plan for tips
+  const study = studies.find((s) => s.id === studyId);
+  if (!study)
+    return (
+      <section className="w-full text-center py-20">
+        <p>No study plan found.</p>
+      </section>
+    );
+
+  if (loading)
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent" />
+      </div>
+    );
+
+  const todayStr = new Date().toISOString().split("T")[0];
+  const hasTodaySession = currentSessionDate === todayStr;
 
   return (
     <section className="w-[90%] mx-auto">
@@ -135,52 +222,69 @@ export default function SessionTimerPage() {
       </header>
 
       <main>
-        <div className="w-full p-[30px] shadow-md rounded-[16px] bg-bgwhite">
+        <div className="w-full p-[30px] shadow-md rounded-[16px] bg-bgwhite mb-16">
           <div className="flex justify-between">
             <p className="font-semibold text-[1.25rem]">Study Timer</p>
-            <button
-              onClick={handleStart}
-              className="rounded-[8px] hover:bg-blue-900 py-[10px] bg-lightblue px-[20px] text-white"
-            >
-              Start
-            </button>
+            {!isRunning ? (
+              <>
+                <button
+                  onClick={handleStart}
+                  disabled={!hasTodaySession}
+                  className={`rounded-[8px] py-[10px] px-[20px] text-white ${
+                    hasTodaySession
+                      ? "bg-lightblue hover:bg-blue-900"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  Start
+                </button>
+
+                {/* {timeLeft <= 0 && currentSessionDate === todayStr && (
+                  <button
+                    onClick={() => {
+                      // reset to today’s full duration
+                      setTimeLeft(sessions[currentIndex].duration);
+                      setIsRunning(false);
+                    }}
+                    className="ml-4 text-sm text-lightblue underline"
+                  >
+                    Reset Timer
+                  </button>
+                )} */}
+              </>
+            ) : (
+              <button
+                onClick={handlePause}
+                className="rounded-[8px] hover:bg-blue-900 py-[10px] bg-gray-500 px-[20px] text-white"
+              >
+                Pause
+              </button>
+            )}
           </div>
-          <div className="flex items-center mt-10 font-medium text-[4rem] text-black justify-center  mx-auto gap-[10px]">
-            <input
-              type="number"
-              min={0}
-              max={23}
-              value={hours}
-              onChange={(e) => setHours(parseInt(e.target.value) || 0)}
-              placeholder="00"
-              className="border-0 w-[100px] text-center focus:outline-lightblue placeholder:text-black"
-            />
-            <span>:</span>
-            <input
-              type="number"
-              min={0}
-              max={60}
-              value={minutes}
-              onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
-              placeholder="00"
-              className="border-0 w-[100px] text-center focus:outline-lightblue placeholder:text-black"
-            />
-            <span>:</span>
-            <input
-              type="number"
-              min={0}
-              max={60}
-              value={seconds}
-              onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-              placeholder="00"
-              className="border-0 w-[100px] text-center focus:outline-lightblue placeholder:text-black"
-            />
+          <div className="flex flex-col items-center justify-center font-medium text-[4rem] text-black gap-[10px]">
+            <div className="flex gap-[10px]">
+              <span>{formatTime(timeLeft)}</span>
+            </div>
+            {!hasTodaySession ? (
+              <p className="text-sm text-gray-600 mt-2">No session today</p>
+            ) : (
+              <p className="text-sm text-gray-600 mt-2">
+                {sessions[currentIndex]?.topic}
+              </p>
+            )}
+            {hasTodaySession && timeLeft <= 0 && (
+              <p className="mt-2 text-green-600 text-base font-normal flex items-center space-x-2">
+                <span>🎉</span>
+                <span>Well done! Today&apos;s session is complete.</span>
+              </p>
+            )}
           </div>
 
+          {/* Simbi's current State */}
           <div className="mt-10">
-            <p className="font-semibold text-center lg:text-left text-[1.25rem]">
+            {/* <p className="font-semibold text-center lg:text-left text-[1.25rem]">
               Simbi&apos;s Current State
-            </p>
+            </p> */}
 
             <div className="my-7  flex justify-between items-center flex-wrap w-full lg:w-[80%] mx-auto">
               <div className="shadow-md cursor-pointer group flex flex-col items-center  gap-[10px] hover:shadow-md duration-1000 rounded-[8px] ease-in-out hover:shadow-lightblue w-[30%] hover:scale-105">
@@ -237,21 +341,40 @@ export default function SessionTimerPage() {
           </div>
         </div>
 
-        <section className="my-10 min-h-[90px] px-[28px] py-[20px] flex gap-[30px] bg-softLightBlue rounded-[8px]">
-          <Image
-            src="/DashboardIcons/suggestingSimbi.svg"
-            alt="Suggesting Simbi"
-            height={27.9}
-            width={36.42}
-          />
-          <div>
-            <h3 className="font-semibold">Simbi&apos;s Suggestion</h3>
-            <p className="font-normal text-[0.875rem]">
-              You have been studying well. Keep up the momentum for another 15
-              minutes before taking a short break
-            </p>
-          </div>
-        </section>
+        {/* Session Cards */}
+        <div className="grid grid-cols-1 md:flex md:flex-col gap-4 mb-12">
+          <h3 className="font-semibold text-[1.25rem]">Upcoming</h3>
+          {upcomingSessions.map((sess) => (
+            <div
+              key={sess.id}
+              className="bg-white flex justify-between opacity-60"
+            >
+              <div className="flex flex-col ">
+                <h5 className="font-semibold text-base mb-2">{sess.topic}</h5>
+                <p>{sess.notes}</p>
+              </div>
+
+              <div>
+                <p className="text-sm text-gray-600 mb-1">{sess.date}</p>
+                <p className="text-sm text-gray-600">
+                  Duration:{" "}
+                  {sess.duration >= 3600
+                    ? `${Math.floor(sess.duration / 3600)} hr ${Math.floor(
+                        (sess.duration % 3600) / 60
+                      )} min`
+                    : `${Math.floor(sess.duration / 60)} min`}
+                </p>
+              </div>
+            </div>
+          ))}
+          {upcomingSessions.length === 0 && (
+            <div className="bg-white flex justify-between">
+              <h5 className="font-normal text-base mb-2">
+                No upcoming sessions
+              </h5>
+            </div>
+          )}
+        </div>
 
         <section className="pb-20">
           <div className="flex justify-between items-center">
@@ -265,7 +388,27 @@ export default function SessionTimerPage() {
           </div>
         </section>
 
-        <section className="-mt-10 pb-10">{viewMileStone}</section>
+        <section className="-mt-10 pb-10">
+          {milestones.map((m) => (
+            <div
+              key={m.description}
+              className="flex justify-between items-center mb-4 gap-5"
+            >
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={m.completed}
+                  disabled
+                  className="mr-2"
+                />
+                <p className="ml-3">{m.description}</p>
+              </div>
+              <p className="text-gray-500">
+                {m.completed ? "Completed" : "In progress"}
+              </p>
+            </div>
+          ))}
+        </section>
       </main>
     </section>
   );

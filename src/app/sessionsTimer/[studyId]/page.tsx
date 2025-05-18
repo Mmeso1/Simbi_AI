@@ -1,5 +1,4 @@
 "use client";
-
 import SessionTimerPage from "@/components/sessionTimer/SessionTimer";
 import { Suspense } from "react";
 

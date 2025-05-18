@@ -21,7 +21,7 @@ export default function NavBar() {
       href: "/dashboard",
     },
     {
-      label: "Study plans",
+      label: "Study Plans",
       icon: "/DashboardIcons/CategoryIcon.svg",
       href: "/study-plans",
     },

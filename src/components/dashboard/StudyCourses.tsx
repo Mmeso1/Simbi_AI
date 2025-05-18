@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import FormatTime from "./FormatTime";
 import moment from "moment";
 import { Study, ViewFilter } from "@/types/user";
-import { useRouter } from "next/navigation";
 
 interface StudyCoursesProps {
   handleToggleEditGenerateStudyPlan: (study: Study) => void;
@@ -21,8 +21,6 @@ export default function StudyCourses({
   const handleToggleStudyNav = (id: string) => {
     setToggleStudyNav((prevState) => (prevState === id ? null : id));
   };
-
-  const router = useRouter();
 
   const { fetchStudies, isLoading, error, studies, deleteStudy } =
     useGetStudyPlanStore();
@@ -100,14 +98,12 @@ export default function StudyCourses({
                 className={`opacity-100 duration-1000 rounded-[16px] w-[230px] h-[146px] border-[1px] border-grayborder flex flex-col justify-center items-center gap-4 absolute bg-white top-16 right-0 z-20 px-6`}
               >
                 <span className="flex items-center gap-6 group w-full">
-                  <span
-                    onClick={() =>
-                      router.push(`/sessionsTimer?id=${course.id}`)
-                    }
-                    className="font-normal cursor-pointer group-hover:text-lightblue duration-300 "
+                  <Link
+                    href={`/sessionsTimer/${course.id}`}
+                    className="font-normal cursor-pointer group-hover:text-lightblue duration-300"
                   >
                     Start Study Session
-                  </span>
+                  </Link>
                 </span>
                 <span className="flex items-center gap-6 group w-full">
                   <span

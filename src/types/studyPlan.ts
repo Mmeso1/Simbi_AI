@@ -1,4 +1,4 @@
-export interface Study {
+interface Study {
   id: string;
   name: string;
   userId: string;
@@ -33,7 +33,7 @@ interface Overview {
   totalHours: number;
 }
 
-interface Milestone {
+export interface Milestone {
   completed: boolean;
   targetDate: string;
   description: string;
@@ -54,18 +54,13 @@ interface Session {
   resources: string[];
 }
 
-export type ViewFilter = "day" | "week" | "month";
+interface studyStore {
+  isLoading: boolean;
+  error: string | null;
+  studies: Study[];
+  fetchStudies: () => Promise<void>;
+  deleteStudy: (id: string) => Promise<void>;
+  updateStudy: (id: string, updatedData: Study) => Promise<void>;
+}
 
-export type UserData = {
-  createdAt: string;
-  educationLevel: string | null;
-  email: string;
-  firstName: string;
-  id: string;
-  lastLogin: string | null;
-  lastName: string;
-  preAssesmentQuestions: null;
-  preferredStudyMethod: null;
-  timezone: string;
-  username: string;
-};
+export type { Study, studyStore };
