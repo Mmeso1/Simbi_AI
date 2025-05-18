@@ -33,7 +33,7 @@ interface Overview {
   totalHours: number;
 }
 
-interface Milestone {
+export interface Milestone {
   completed: boolean;
   targetDate: string;
   description: string;

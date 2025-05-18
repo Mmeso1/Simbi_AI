@@ -111,8 +111,8 @@ export default function StudyForm({
       if (response.status >= 200 && response.status < 300) {
         console.log("Successfully created data", { data });
         handleToggleGenerateStudyPlan();
-        toast.success("Study plan generated successfully!");
         router.push("/study-plans");
+        toast.success("Study plan generated successfully!");
         await fetchStudies();
       } else {
         throw new Error(
@@ -320,6 +320,7 @@ export default function StudyForm({
                   className="font-medium text-[0.875rem] placeholder:text-[0.875rem] border-0 outline-0 text-dark py-2"
                 >
                   <option value=""></option>
+                  <option value="1m">1 min</option>
                   <option value="1h">1 hour</option>
                   <option value="2h">2 hours</option>
                   <option value="3h">3 hours</option>
