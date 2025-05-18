@@ -13,6 +13,7 @@ import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import ProgressBar from "@/components/personalization/ProgressBar";
+import axiosInstance from "@/api/axios";
 
 const tabs = ["Active", "Inactive", "Completed"];
 

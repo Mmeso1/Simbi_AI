@@ -11,12 +11,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
+import styles from "@/styles/ComingSoon.module.css";
 
 export default function SchedulePage() {
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false); // for toggling the navbar on the headerNotification
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
   // Generate Study Plan Pop up
   const [toggleGenerateStudyPlan, setToggleGenerateStudyPlan] = useState(false); // for toggling study form
+  const comingSoon = true;
 
   const handleToggleUserNavBar = () => {
     // for toggling the navbar on the headerNotification
@@ -35,7 +37,7 @@ export default function SchedulePage() {
 
   const router = useRouter();
   return (
-    <section className="mx-auto w-[90%]">
+    <section className="mx-auto w-[90%] relative">
       {toggleMiniNavBar && (
         <div className="w-[222px] top-0 left-0 fixed z-50 ">
           <SideBar handleToggleMiniNavBar={handleToggleMiniNavBar} />
@@ -149,6 +151,11 @@ export default function SchedulePage() {
       {/* for toggling the navbar on the headerNotification */}
 
       <p className="hidden">{toggleUserNavBar}</p>
+      {comingSoon && (
+        <div className={styles["coming-soon-overlay"]}>
+          <div className={styles["coming-soon-badge"]}>Coming Soon</div>
+        </div>
+      )}
     </section>
   );
 }
