@@ -13,6 +13,7 @@ import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import ProgressBar from "@/components/personalization/ProgressBar";
+import axiosInstance from "@/api/axios";
 
 const tabs = ["Active", "Inactive", "Completed"];
 
@@ -81,26 +82,25 @@ const upcomingMilestones = [
 ];
 
 interface IMilestone {
-  subject: string,
-  next: string,
-  progress: number,
-  daysLeft: number,
-  comment: string,
-  bgColor: string,
-  pillColor: string,
+  subject: string;
+  next: string;
+  progress: number;
+  daysLeft: number;
+  comment: string;
+  bgColor: string;
+  pillColor: string;
 }
 
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
-  const {studies, fetchStudies} = useGetStudyPlanStore();
+  const { studies, fetchStudies } = useGetStudyPlanStore();
   const [milestones, setMilestones] = useState<IMilestone[]>([]);
 
   useEffect(() => {
     fetchStudies();
   }, [fetchStudies]);
-
 
   useEffect(() => {
     console.log("in milstone", studies);
@@ -108,19 +108,18 @@ export default function Milestone() {
       return {
         subject: study.name,
         next: study.subjects[1] || " ",
-        progress: study.planData.milestones.filter(
-          (milestone) => milestone.completed
-        ).length / study.planData.milestones.length,
+        progress:
+          study.planData.milestones.filter((milestone) => milestone.completed)
+            .length / study.planData.milestones.length,
         daysLeft: new Date(study.endDate).getDate() - new Date().getDate(),
         comment: "Keep up the good work!",
         bgColor: "bg-yellow-100",
         pillColor: "bg-yellow-300",
-      }
-    })
+      };
+    });
 
     setMilestones(milestones);
   }, [studies]);
-
 
   const filteredMilestones = milestones.filter((milestone) => {
     if (selectedTab === "Active")
