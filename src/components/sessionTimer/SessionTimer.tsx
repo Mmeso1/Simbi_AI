@@ -2,12 +2,13 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import axios from "@/api/axios";
+import axiosInstance from "@/api/axios";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
 import { getStudySessions } from "@/api/studySession";
 import { balooThambi2 } from "@/lib/fonts";
 import { SessionData } from "@/types/studySession";
 import { Milestone } from "@/types/studyPlan";
+import axios from "axios";
 
 function formatTime(totalSeconds: number) {
   const hours = Math.floor(totalSeconds / 3600);
@@ -112,11 +113,18 @@ export default function SessionTimerPage() {
     toast.success("Session complete!");
     console.log("study id from handle complete", studyId);
     try {
-      const response = await axios.post(`/study-plan/complete-session`, {
+      const payload = {
         planId: studyId,
-        sessionId: sessions[currentIndex].id,
-        timeSpent: sessions[currentIndex].duration,
-      });
+        sessionId: sessions[currentIndex]?.id,
+        timeSpent: String(sessions[currentIndex]?.duration),
+      };
+      console.log("→ POST /study-plan/complete-session payload:", payload);
+
+      const response = await axiosInstance.post(
+        "/study-plan/complete-session",
+        payload
+      );
+
       console.log(response.data);
       toast.success(response.data.message);
 
@@ -129,9 +137,20 @@ export default function SessionTimerPage() {
 
       await fetchStudies();
       router.push("/study-plans");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to complete session");
+    } catch (error) {
+      console.error("Complete‑session error →", error);
+
+      let message = "Failed to complete session";
+
+      if (axios.isAxiosError(error) && error.response) {
+        // show raw server payload
+        console.log("Server response data:", error.response.data);
+
+        // extract the server’s message if present
+        message = error.response.data?.message || message;
+      }
+
+      toast.error(message);
     }
   }, [studyId, fetchStudies, sessions, currentIndex]);
 
@@ -253,6 +272,12 @@ export default function SessionTimerPage() {
                 {sessions[currentIndex]?.topic}
               </p>
             )}
+            {hasTodaySession && timeLeft <= 0 && (
+              <p className="mt-2 text-green-600 text-base font-normal flex items-center space-x-2">
+                <span>🎉</span>
+                <span>Well done! Today&apos;s session is complete.</span>
+              </p>
+            )}
           </div>
 
           {/* Simbi's current State */}
@@ -332,7 +357,12 @@ export default function SessionTimerPage() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">{sess.date}</p>
                 <p className="text-sm text-gray-600">
-                  Duration: {sess.duration} min
+                  Duration:{" "}
+                  {sess.duration >= 3600
+                    ? `${Math.floor(sess.duration / 3600)} hr ${Math.floor(
+                        (sess.duration % 3600) / 60
+                      )} min`
+                    : `${Math.floor(sess.duration / 60)} min`}
                 </p>
               </div>
             </div>
