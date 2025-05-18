@@ -25,7 +25,7 @@ export default function SignupPage() {
   const [matchError, setMatchError] = useState("");
 
   // NEW: separate state for the checkbox
-  const [rememberMe, setRememberMe] = useState(false);
+  const [, setRememberMe] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;

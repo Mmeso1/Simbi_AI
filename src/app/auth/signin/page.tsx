@@ -87,7 +87,7 @@ export default function SignIn() {
 
         <Link href="/auth/signup">
           <p className="block text-[#4976F4] text-sm hover:underline cursor-pointer">
-            Don't have an account?
+            Don&apos;t have an account?
           </p>
         </Link>
 
