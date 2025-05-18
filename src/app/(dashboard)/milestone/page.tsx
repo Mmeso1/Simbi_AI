@@ -113,7 +113,6 @@ const colorPairs = [
   { bgColor: "bg-purple-100", pillColor: "bg-purple-200" },
 ];
 
-
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
@@ -128,25 +127,19 @@ export default function Milestone() {
   useEffect(() => {
     console.log("in milestone", studies);
     const milestones = studies.map((study) => {
-      
       const randomIndex = Math.floor(Math.random() * colorPairs.length);
       const { bgColor, pillColor } = colorPairs[randomIndex];
 
       return {
         subject: study.name,
         next: study.subjects[1] || " ",
-        progress:
-          (study.planData.milestones.filter((milestone) => milestone.completed)
-            .length /
-            study.planData.milestones.length) *
-          100, // progress as percentage
+        progress: Math.round(study.percentage * 10) / 10,
         daysLeft: new Date(study.endDate).getDate() - new Date().getDate(),
         comment: "Keep up the good work!",
         bgColor,
         pillColor,
       };
     });
-
 
     setMilestones(milestones);
   }, [studies]);
@@ -324,9 +317,13 @@ export default function Milestone() {
             {filteredMilestones.map((m, idx) => (
               <div
                 key={idx}
-                className={clsx("p-4 rounded-2xl shadow-sm", m.bgColor, " sm:w-[280px] h-[250px]")}
+                className={clsx(
+                  "p-4 rounded-2xl shadow-sm",
+                  m.bgColor,
+                  " sm:w-[280px] h-[250px]"
+                )}
               >
-                <div className="flex justify-between items-start"> 
+                <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-base sm:text-lg font-semibold">
                       {m.subject}

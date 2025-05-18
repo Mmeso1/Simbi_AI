@@ -9,6 +9,7 @@ interface Study {
   endDate: string;
   createdAt: string;
   updatedAt: string;
+  percentage: number;
   subjects: string[];
 
   planData: {
