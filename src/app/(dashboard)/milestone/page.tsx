@@ -46,6 +46,21 @@ const tabs = ["Active", "Inactive", "Completed"];
 //   },
 // ];
 
+const monthsOfTheYear = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const earnedMilestones = [
   {
     title: "3 days Study Streak",
@@ -81,46 +96,60 @@ const upcomingMilestones = [
 ];
 
 interface IMilestone {
-  subject: string,
-  next: string,
-  progress: number,
-  daysLeft: number,
-  comment: string,
-  bgColor: string,
-  pillColor: string,
+  subject: string;
+  next: string;
+  progress: number;
+  daysLeft: number;
+  comment: string;
+  bgColor: string;
+  pillColor: string;
 }
+
+const colorPairs = [
+  { bgColor: "bg-pink-100", pillColor: "bg-pink-200" },
+  { bgColor: "bg-green-100", pillColor: "bg-green-200" },
+  { bgColor: "bg-yellow-100", pillColor: "bg-yellow-300" },
+  { bgColor: "bg-blue-100", pillColor: "bg-blue-200" },
+  { bgColor: "bg-purple-100", pillColor: "bg-purple-200" },
+];
+
 
 export default function Milestone() {
   const [selectedTab, setSelectedTab] = useState("Active");
   const [toggleUserNavBar, setToggleUserNavBar] = useState<boolean>(false);
   const [toggleMiniNavBar, setToggleMiniNavBar] = useState(false); // for toggling the mininavbar;
-  const {studies, fetchStudies} = useGetStudyPlanStore();
+  const { studies, fetchStudies } = useGetStudyPlanStore();
   const [milestones, setMilestones] = useState<IMilestone[]>([]);
 
   useEffect(() => {
     fetchStudies();
   }, [fetchStudies]);
 
-
   useEffect(() => {
-    console.log("in milstone", studies);
+    console.log("in milestone", studies);
     const milestones = studies.map((study) => {
+      
+      const randomIndex = Math.floor(Math.random() * colorPairs.length);
+      const { bgColor, pillColor } = colorPairs[randomIndex];
+
       return {
         subject: study.name,
         next: study.subjects[1] || " ",
-        progress: study.planData.milestones.filter(
-          (milestone) => milestone.completed
-        ).length / study.planData.milestones.length,
+        progress:
+          (study.planData.milestones.filter((milestone) => milestone.completed)
+            .length /
+            study.planData.milestones.length) *
+          100, // progress as percentage
         daysLeft: new Date(study.endDate).getDate() - new Date().getDate(),
         comment: "Keep up the good work!",
-        bgColor: "bg-yellow-100",
-        pillColor: "bg-yellow-300",
-      }
-    })
+        bgColor,
+        pillColor,
+      };
+    });
+
 
     setMilestones(milestones);
   }, [studies]);
-
 
   const filteredMilestones = milestones.filter((milestone) => {
     if (selectedTab === "Active")
@@ -264,7 +293,11 @@ export default function Milestone() {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 flex-wrap">
           <div className="flex flex-wrap items-center gap-2 text-violet-600 text-sm sm:text-base font-medium">
             <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Today, 23 April 2025</span>
+            <p className="font-normal text-lightblue text-[1.125rem]">
+              Today, {new Date().getUTCDate()}{" "}
+              {monthsOfTheYear[new Date().getMonth()]}{" "}
+              {new Date().getFullYear()}
+            </p>
             <button className="px-2 py-1 bg-violet-100 rounded-md">
               {"<"}
             </button>
@@ -291,9 +324,9 @@ export default function Milestone() {
             {filteredMilestones.map((m, idx) => (
               <div
                 key={idx}
-                className={clsx("p-4 rounded-2xl shadow-sm", m.bgColor)}
+                className={clsx("p-4 rounded-2xl shadow-sm", m.bgColor, " sm:w-[280px] h-[250px]")}
               >
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start"> 
                   <div>
                     <h3 className="text-base sm:text-lg font-semibold">
                       {m.subject}
@@ -354,11 +387,11 @@ export default function Milestone() {
 
             <div className="bg-purple-100 rounded-2xl p-4">
               <p className="text-sm text-gray-600">Total token</p>
-              <p className="text-base sm:text-lg font-semibold">15 tokens</p>
+              <p className="text-base sm:text-lg font-semibold">0 tokens</p>
             </div>
             <div className="bg-green-100 rounded-2xl p-4">
               <p className="text-sm text-gray-600">Total Study hours</p>
-              <p className="text-base sm:text-lg font-semibold">10 hours</p>
+              <p className="text-base sm:text-lg font-semibold">0 hours</p>
             </div>
           </div>
         </div>
