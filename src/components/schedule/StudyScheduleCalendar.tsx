@@ -144,11 +144,6 @@ const StudyScheduleCalendar = ({
           />
         </div>
       </main>
-      {comingSoon && (
-        <div className={styles["coming-soon-overlay"]}>
-          <div className={styles["coming-soon-badge"]}>Coming Soon</div>
-        </div>
-      )}
     </div>
   );
 };
