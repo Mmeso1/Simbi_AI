@@ -5,14 +5,15 @@ import React from "react";
 
 interface ProgressBarProps {
   progress: number;
+  className?: string;
 }
 
-export default function ProgressBar({ progress }: ProgressBarProps) {
+export default function ProgressBar({ progress, className }: ProgressBarProps) {
   const fill = `${Math.min(Math.max(progress, 0), 100)}%`;
 
   return (
     <div
-      className="relative mx-auto md:w-1/3 w-full h-3.5 mt-10 mb-20 md:my-0 bg-[#1F125C] rounded-full border-2 border-white"
+      className={`relative mx-auto h-3.5 mt-10 mb-20 md:my-0 bg-[#1F125C] rounded-full border-2 border-white ${className}`}
       style={{ "--fill": fill } as React.CSSProperties}
     >
       {/* Inner fill */}
