@@ -6,7 +6,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Image from "next/image";
 import DashboardHeaders from "../dashboard/DashboardHeaders";
 import { useGetStudyPlanStore } from "@/store/getStudyPlanStore";
-import styles from "@/styles/ComingSoon.module.css";
 
 interface CalendarEvent {
   title: string;
@@ -25,7 +24,6 @@ const StudyScheduleCalendar = ({
   const [view, setView] = useState<View>("month");
   const [date, setDate] = useState<Date>(new Date(2025, 3, 25));
   const { studies } = useGetStudyPlanStore();
-  const comingSoon = true;
 
   const events = useMemo(() => {
     return studies.flatMap((study) =>
