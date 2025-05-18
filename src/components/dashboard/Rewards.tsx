@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Rewards() {
   return (
     <section className="w-full">
-      <div className="flex mt-5 gap-y-10 gap-x-1 font-normal justify-between text-sm flex-wrap">
+      <div className="relative flex mt-5 gap-y-10 gap-x-1 font-normal justify-between text-sm flex-wrap opacity-20">
         <aside className="bg-bluemaguerite hover:scale-105 duration-800 rounded-[20px] xl:size-[150px] size-[155px] p-4 relative">
           <h3 className="text-[0.75rem] font-medium">
             Current <br /> NFT <br /> badge

@@ -25,7 +25,7 @@ export default function SignupPage() {
   const [matchError, setMatchError] = useState("");
 
   // NEW: separate state for the checkbox
-  const [rememberMe, setRememberMe] = useState(false);
+  const [, setRememberMe] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
@@ -164,23 +164,6 @@ export default function SignupPage() {
           {matchError && (
             <p className="text-red-500 text-sm mt-1">{matchError}</p>
           )}
-        </div>
-
-        <div className="flex items-center">
-          <input
-            id="remember"
-            name="remember"
-            type="checkbox"
-            checked={rememberMe}
-            onChange={handleChange}
-            className="mr-2 cursor-pointer"
-          />
-          <label
-            htmlFor="remember"
-            className="text-[#7A5FFF] text-sm cursor-pointer"
-          >
-            Remember Me
-          </label>
         </div>
 
         <Link href="/auth/signin">
