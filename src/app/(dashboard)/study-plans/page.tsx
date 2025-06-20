@@ -235,22 +235,7 @@ export default function StudyPlanPage() {
             Monthly
           </button>
         </div>
-        <div className="flex w-[350.37px]  h-[48px] gap-[16px] items-center justify-between">
-          <button
-            title="Click to toggle the view when we have to and not to study"
-            className="flex w-[79.42px] h-[36.14px] gap-[7.57px] cursor-pointer rounded-[4.27px] items-center justify-center border-[0.95px] border-lightblue"
-          >
-            <Image
-              src="/DashboardIcons/filterIcon.svg"
-              alt="Filter image icon"
-              height={10.47}
-              width={11.11}
-              className=""
-            />
-            <span className="text-lightblue font-semibold text-[0.875rem]">
-              Filter
-            </span>
-          </button>
+        <div className="flex lg:w-[350.37px]  h-[48px] gap-[16px] items-center justify-between">
           <button
             onClick={handleToggleGenerateStudyPlan}
             className="bg-lightblue hover:bg-blue-900 duration-300 text-white rounded-[8px] px-[20px] py-[12px] font-semibold"
@@ -271,9 +256,6 @@ export default function StudyPlanPage() {
           <p className="font-normal text-lightblue text-[1.125rem]">
             Today, {new Date().getUTCDate()}{" "}
             {monthsOfTheYear[new Date().getMonth()]} {new Date().getFullYear()}
-          </p>
-          <p className="bg-lightblue text-white py-2 px-3 rounded-[3.81px]">
-            Today
           </p>
         </div>
 

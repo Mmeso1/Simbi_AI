@@ -51,8 +51,47 @@ export default function StudyCourses({
 
   const filteredStudies = filterStudiesByView(studies, view);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen flex flex-col items-center justify-center bg-[#F9F8FF]">
+        <div className="flex flex-col items-center justify-center">
+          <div className="mb-12 relative">
+            <Image
+              src="/images/hero.svg"
+              alt="Simbi Character"
+              width={150}
+              height={150}
+              className="animate-bounce"
+              priority
+            />
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-[#7A5FFF] border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-[#501EE3] text-xl font-medium">Wait a moment </p>
+          </div>
+        </div>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="w-full h-[70vh] flex flex-col items-center justify-center bg-[#F9F8FF]">
+        <div className="flex flex-col items-center justify-center">
+          <div className="mb-12 relative">
+            <Image
+              src="/DashboardIcons/sitting simbi.svg"
+              alt="Simbi Character"
+              width={150}
+              height={150}
+              priority
+            />
+          </div>
+          <div className="flex flex-col items-center">
+            <p className="text-[#501EE3] text-xl font-medium">Error: {error}</p>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <>
