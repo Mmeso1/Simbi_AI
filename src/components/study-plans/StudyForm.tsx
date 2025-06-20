@@ -406,11 +406,13 @@ export default function StudyForm({
             </div>
             <div className="flex items-center md:w-1/2 w-full">
               <button
-                type="submit"
-                className="px-6 py-3 bg-lightblue text-white rounded-md hover:bg-blue-900 ml-auto"
                 disabled={isSubmitting}
+                className="w-full bg-[#7A5FFF] text-white py-3 rounded-lg transition-all hover:opacity-90 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                {isSubmitting ? "Generating..." : "Generate Study Plan"}
+                {isSubmitting && (
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                )}
+                {isSubmitting ? "Generating..." : "Generate"}
               </button>
             </div>
           </div>
