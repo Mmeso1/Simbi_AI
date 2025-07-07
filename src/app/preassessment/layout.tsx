@@ -1,6 +1,6 @@
 "use client";
 import { usePersonalizationStore } from "@/store/usePersonalization";
-import { sections } from "@/data/personalizationData";
+import { sections } from "@/data/preassessmentData";
 import ProgressBar from "@/components/personalization/ProgressBar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -44,12 +44,12 @@ export default function PersonalizationLayout({
       </div>
 
       {/* Progress Bar (always full width of content area) */}
-      <div className="w-full mb-10">
+      {/* <div className="w-full mb-10">
         <ProgressBar progress={percent} className="w-full md:w-1/3" />
-      </div>
+      </div> */}
 
       {/* Main Card */}
-      <div className="flex flex-col md:flex-row w-full max-w-6xl md:mx-auto mb-16 md:rounded-4xl md:shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] overflow-hidden min-h-[70vh]">
+      <div className="flex flex-col w-full max-w-6xl md:mx-auto mb-16 md:rounded-2xl md:shadow-[0_19px_86.9px_rgba(149,127,255,0.53)] overflow-hidden min-h-[70vh]">
         {/* Side Title (hidden on small screens) */}
         <section className="hidden md:flex md:basis-[40%] bg-[#7A5FFF] items-center justify-center p-6">
           <div className="text-white font-medium text-[clamp(1.5rem,3vw,2rem)] leading-snug text-center max-w-[90%]">
@@ -58,22 +58,26 @@ export default function PersonalizationLayout({
         </section>
 
         {/* Right Content Area */}
-        <section className="flex-1 bg-white p-6 relative flex flex-col justify-between">
+        <section className="flex-1 bg-white p-6 mb-6 relative flex flex-col justify-between">
           <main className="flex-1">{children}</main>
-          <div className="flex justify-between mt-6">
+          <p className="mt-6 text-sm sm:text-lg font-medium self-start">
+            THANK YOU...
+          </p>
+          <div className="flex justify-between">
             {currentSection === 0 && (
               <button
                 onClick={() => router.push("/dashboard")}
-                className="text-[#7A5FFF] text-sm sm:text-base underline"
+                className="text-[#4976F4] text-sm sm:text-base underline"
               >
-                Skip
+                Skip for now
               </button>
             )}
             <button
               onClick={handleNext}
               className="text-white text-base sm:text-lg md:text-xl bg-[#7A5FFF] px-6 py-3 rounded-lg"
             >
-              {currentSection < sections.length - 1 ? "Next" : "Finish"}
+              {/* {currentSection < sections.length - 1 ? "Next" : "Finish"} */}
+              Submit
             </button>
           </div>
         </section>

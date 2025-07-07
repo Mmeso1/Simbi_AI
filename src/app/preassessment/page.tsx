@@ -1,6 +1,6 @@
 "use client";
 
-import { sections } from "@/data/personalizationData";
+import { sections } from "@/data/preassessmentData";
 import SingleQuestion from "@/components/personalization/SIngleQuestion";
 import { useEffect } from "react";
 import { usePersonalizationStore } from "@/store/usePersonalization";

@@ -30,7 +30,7 @@ export default function SignIn() {
   // call the store’s login action
   const handleSubmit = async () => {
     const res = await login(form, () => {
-      router.push("/personalization");
+      router.push("/preassessment");
     });
     console.log(res);
   };
